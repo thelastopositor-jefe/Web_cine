@@ -1,7 +1,7 @@
 export const CAROUSEL_ITEMS = [
   {
     id: 1,
-    title: "FUERZA ABUSIVA",
+    title: "",
     tagline: "Una serie de sci-fi, acción y comedia ambientada en un futuro hostil. Hay misiones peligrosas, armamento pesado y cerveza.",
     category: "TRAILER",
     thumbnail: "/images/carousel/carousel01.jpg",

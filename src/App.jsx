@@ -1603,8 +1603,8 @@ export default function App() {
       <button type="button" disabled={!uid} onClick={(event) => {
         event.stopPropagation();
         openPublicProfile(uid);
-      }} className={`inline-flex items-center gap-2 text-left ${uid ? 'hover:text-red-300' : 'cursor-default'}`}>
-        {profile?.photo ? <img src={profile.photo} alt="" className="h-6 w-6 rounded-full object-cover bg-[#292930]" />
+      }} className={`inline-flex items-center gap-2 text-left ${uid ? 'hover:text-gold-300' : 'cursor-default'}`}>
+        {profile?.photo ? <img src={profile.photo} alt="" className="h-6 w-6 rounded-full object-cover bg-[#292B2E]" />
           : <span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded-full bg-[#34343d]"><User className="h-3.5 w-3.5" /></span>}
         <span>{name}</span>
       </button>
@@ -1910,12 +1910,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-gray-100 font-sans flex flex-col selection:bg-red-600 selection:text-white">
+    <div className="min-h-screen bg-[#101113] text-gray-100 font-sans flex flex-col selection:bg-gold-600 selection:text-white">
 
       {/* ==========================================
           TOPBAR / NAVEGACIÓN RESPONSIVA
       ========================================== */}
-      <header className="sticky top-0 z-40 bg-[#161618]/95 backdrop-blur-md border-b border-[#2e2e34] px-3 sm:px-4 lg:px-8 py-3 flex items-center justify-between gap-2 sm:gap-4 w-full">
+      <header className="sticky top-0 z-40 bg-[#17191B]/95 backdrop-blur-md border-b border-[#343537] px-3 sm:px-4 lg:px-8 py-3 flex items-center justify-between gap-2 sm:gap-4 w-full">
         {/* Logo */}
         <button
           type="button"
@@ -1940,7 +1940,7 @@ export default function App() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={event => { if (event.key === 'Enter' && searchQuery.trim()) trackAnalyticsEvent('toonknight_search', { query_length: searchQuery.trim().length }); }}
-              className="w-full bg-[#1a1a1e] border border-[#2e2e34] text-sm rounded-full pl-10 pr-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+              className="w-full bg-[#1B1D20] border border-[#343537] text-sm rounded-full pl-10 pr-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-gold-500 transition-colors"
             />
             {searchQuery && <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-white">Limpiar</button>}
           </div>
@@ -1948,20 +1948,20 @@ export default function App() {
 
         {/* Navegación de escritorio */}
         <nav className="hidden md:flex items-center gap-1 lg:gap-2 shrink-0">
-          <button onClick={() => setActiveTab('explorar')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'explorar' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Explorar</button>
-          <button onClick={() => setActiveTab('productos')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'productos' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Productos</button>
-          <button onClick={() => setActiveTab('educacion')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'educacion' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Cursos</button>
-          <button onClick={() => setActiveTab('comunidad')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'comunidad' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Comunidad</button>
-          <button onClick={() => setActiveTab('noticias')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'noticias' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Actualidad</button>
-          <button onClick={() => setActiveTab('recursos')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'recursos' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Recursos</button>
-          <button onClick={() => setActiveTab('empleo')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'empleo' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Oportunidades</button>
-          {user && <button onClick={() => setActiveTab('mensajes')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'mensajes' ? 'bg-[#222226] text-red-400' : 'text-gray-400 hover:text-white'}`}>Mensajes</button>}
+          <button onClick={() => setActiveTab('explorar')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'explorar' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Explorar</button>
+          <button onClick={() => setActiveTab('productos')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'productos' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Productos</button>
+          <button onClick={() => setActiveTab('educacion')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'educacion' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Cursos</button>
+          <button onClick={() => setActiveTab('comunidad')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'comunidad' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Comunidad</button>
+          <button onClick={() => setActiveTab('noticias')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'noticias' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Actualidad</button>
+          <button onClick={() => setActiveTab('recursos')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'recursos' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Recursos</button>
+          <button onClick={() => setActiveTab('empleo')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'empleo' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Oportunidades</button>
+          {user && <button onClick={() => setActiveTab('mensajes')} className={`px-3 py-2 rounded-lg text-sm font-medium ${activeTab === 'mensajes' ? 'bg-[#222326] text-gold-400' : 'text-gray-400 hover:text-white'}`}>Mensajes</button>}
           {isAdmin && <button onClick={() => setActiveTab('admin')} className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1 ${activeTab === 'admin' ? 'bg-amber-500/20 text-amber-400' : 'text-amber-400 hover:bg-amber-500/10'}`}><ShieldCheck className="w-4 h-4" /><span>Moderación</span></button>}
         </nav>
 
         {/* Acciones y menú móvil */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          <button onClick={() => { setShowPublishWarning(true); setMobileMenuOpen(false); }} className="bg-red-600 hover:bg-red-500 text-white text-xs sm:text-sm font-semibold px-2.5 sm:px-4 py-2 rounded-full flex items-center gap-1.5 whitespace-nowrap">
+          <button onClick={() => { setShowPublishWarning(true); setMobileMenuOpen(false); }} className="bg-gold-600 hover:bg-gold-500 text-white text-xs sm:text-sm font-semibold px-2.5 sm:px-4 py-2 rounded-full flex items-center gap-1.5 whitespace-nowrap">
             <Plus className="w-4 h-4" /><span className="hidden sm:inline">Publicar</span>
           </button>
           {user && <NotificationsBell user={user} onOpenNotification={notification => {
@@ -1979,7 +1979,7 @@ export default function App() {
             }
           }} />}
           {user ? (
-            <button onClick={() => { setActiveTab('perfil'); setMobileMenuOpen(false); }} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full overflow-hidden border-2 border-[#2e2e34] hover:border-red-500 shrink-0" title={user.name} aria-label="Mi perfil">
+            <button onClick={() => { setActiveTab('perfil'); setMobileMenuOpen(false); }} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full overflow-hidden border-2 border-[#343537] hover:border-gold-500 shrink-0" title={user.name} aria-label="Mi perfil">
               <img src={user.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'} alt={user.name || 'Perfil'} className="w-full h-full object-cover" />
             </button>
           ) : (
@@ -1987,8 +1987,8 @@ export default function App() {
               <LogIn className="w-4 h-4" /><span className="hidden lg:inline">Iniciar sesión</span>
             </button>
           )}
-          {user && <button type="button" onClick={handleLogout} className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold text-gray-300 hover:text-white px-2.5 py-2 rounded-lg border border-[#2e2e34] hover:bg-[#222226] whitespace-nowrap"><LogIn className="w-4 h-4 rotate-180" />Cerrar sesión</button>}
-          <button type="button" onClick={() => setMobileMenuOpen(open => !open)} className="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#222226]" aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={mobileMenuOpen}>
+          {user && <button type="button" onClick={handleLogout} className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold text-gray-300 hover:text-white px-2.5 py-2 rounded-lg border border-[#343537] hover:bg-[#222326] whitespace-nowrap"><LogIn className="w-4 h-4 rotate-180" />Cerrar sesión</button>}
+          <button type="button" onClick={() => setMobileMenuOpen(open => !open)} className="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#222326]" aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={mobileMenuOpen}>
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -1996,19 +1996,19 @@ export default function App() {
 
       {/* Menú desplegable móvil */}
       {mobileMenuOpen && (
-        <nav className="md:hidden sticky top-[57px] z-30 bg-[#161618] border-b border-[#2e2e34] px-4 py-3 shadow-xl space-y-1">
+        <nav className="md:hidden sticky top-[57px] z-30 bg-[#17191B] border-b border-[#343537] px-4 py-3 shadow-xl space-y-1">
           {[['explorar', 'Explorar'], ['productos', 'Productos'], ['educacion', 'Cursos'], ['comunidad', 'Comunidad'], ['noticias', 'Actualidad'], ['recursos', 'Recursos'], ['empleo', 'Oportunidades']].map(([tab, label]) => (
-            <button key={tab} onClick={() => { setActiveTab(tab); setMobileMenuOpen(false); }} className={`block w-full text-left px-3 py-3 rounded-lg text-sm font-medium ${activeTab === tab ? 'bg-[#222226] text-red-400' : 'text-gray-200 hover:bg-[#222226]'}`}>{label}</button>
+            <button key={tab} onClick={() => { setActiveTab(tab); setMobileMenuOpen(false); }} className={`block w-full text-left px-3 py-3 rounded-lg text-sm font-medium ${activeTab === tab ? 'bg-[#222326] text-gold-400' : 'text-gray-200 hover:bg-[#222326]'}`}>{label}</button>
           ))}
-          {isAdmin && <button onClick={() => { setActiveTab('admin'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-amber-400 hover:bg-[#222226]">Moderación</button>}
-          {user && <button onClick={() => { setActiveTab('mensajes'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-gray-200 hover:bg-[#222226]">Mensajes</button>}
-          {user && <button onClick={() => { setActiveTab('perfil'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-red-400 hover:bg-[#222226]">Mi perfil</button>}
-          {user && <button onClick={() => { setMobileMenuOpen(false); handleLogout(); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-gray-400 hover:bg-[#222226] hover:text-white">Cerrar sesión</button>}
-          {!user && <button onClick={() => { setMobileMenuOpen(false); handleGoogleLogin(); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-gray-200 hover:bg-[#222226]">Iniciar sesión con Google</button>}
+          {isAdmin && <button onClick={() => { setActiveTab('admin'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-amber-400 hover:bg-[#222326]">Moderación</button>}
+          {user && <button onClick={() => { setActiveTab('mensajes'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-gray-200 hover:bg-[#222326]">Mensajes</button>}
+          {user && <button onClick={() => { setActiveTab('perfil'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-gold-400 hover:bg-[#222326]">Mi perfil</button>}
+          {user && <button onClick={() => { setMobileMenuOpen(false); handleLogout(); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-gray-400 hover:bg-[#222326] hover:text-white">Cerrar sesión</button>}
+          {!user && <button onClick={() => { setMobileMenuOpen(false); handleGoogleLogin(); }} className="block w-full text-left px-3 py-3 rounded-lg text-sm font-medium text-gray-200 hover:bg-[#222326]">Iniciar sesión con Google</button>}
           <div className="px-3 pt-2 md:hidden">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input type="search" placeholder="Buscar proyectos..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-[#1a1a1e] border border-[#2e2e34] text-sm rounded-xl pl-9 pr-3 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-red-500" />
+              <input type="search" placeholder="Buscar proyectos..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-[#1B1D20] border border-[#343537] text-sm rounded-xl pl-9 pr-3 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-gold-500" />
             </div>
           </div>
         </nav>
@@ -2042,7 +2042,7 @@ export default function App() {
 
             {/* HERO / CARRUSEL DESTACADO */}
             {carouselItems.length > 0 && (
-              <section className="relative w-full bg-black sm:h-[440px] lg:h-[560px] sm:bg-[#1a1a1e] overflow-hidden border-b border-[#2e2e34]">
+              <section className="relative w-full bg-black sm:h-[440px] lg:h-[560px] sm:bg-[#1B1D20] overflow-hidden border-b border-[#343537]">
                 {/* Imagen de fondo nítida con gradiente solo en la izquierda */}
 <div className="relative aspect-video w-full sm:absolute sm:inset-0 sm:aspect-auto sm:h-full">
   <img
@@ -2051,13 +2051,13 @@ export default function App() {
     className="w-full h-full object-contain sm:object-cover opacity-100 scale-100"
   />
   {/* Gradiente más suave: deja ver mejor la imagen sin perder legibilidad del texto */}
-  <div className="absolute inset-0 bg-gradient-to-t from-[#121212]/55 via-transparent to-transparent sm:bg-gradient-to-r sm:from-[#121212]/75 sm:via-[#121212]/35 sm:to-transparent" />
+  <div className="absolute inset-0 bg-gradient-to-t from-[#101113]/55 via-transparent to-transparent sm:bg-gradient-to-r sm:from-[#101113]/75 sm:via-[#101113]/35 sm:to-transparent" />
 </div>
 
                 {/* Contenido Hero */}
                 <div className="relative max-w-7xl mx-auto h-auto sm:h-full px-4 sm:px-6 lg:px-12 pt-5 sm:pt-0 flex flex-col justify-start sm:justify-end pb-7 sm:pb-12">
                   <div className="max-w-2xl space-y-4">
-                    <span className="text-xs font-bold tracking-widest text-red-400 uppercase bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20 inline-block">
+                    <span className="text-xs font-bold tracking-widest text-gold-400 uppercase bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/20 inline-block">
                       {carouselItems[heroIndex]?.category || 'DESTACADO'}
                     </span>
                     <h1 className="text-2xl sm:text-4xl lg:text-6xl font-black text-white tracking-tight leading-tight sm:leading-none">
@@ -2073,7 +2073,7 @@ export default function App() {
                         onClick={() => trackAnalyticsEvent('toonknight_carousel_click', { carousel_item_id: carouselItems[heroIndex]?.id || heroIndex })}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/30 transition-all hover:scale-105"
+                        className="bg-gold-600 hover:bg-gold-500 text-white font-semibold px-6 py-3 rounded-xl flex items-center gap-2 shadow-lg shadow-gold-600/30 transition-all hover:scale-105"
                       >
                         <Play className="w-5 h-5 fill-current" />
                         {carouselItems[heroIndex]?.linkText || 'Ver proyecto'}
@@ -2082,20 +2082,20 @@ export default function App() {
                   </div>
 
                   {/* Controles del Carrusel */}
-                  <div className="absolute right-4 top-4 sm:right-6 sm:top-auto sm:bottom-12 flex items-center gap-4 bg-[#1a1a1e]/80 backdrop-blur-md px-4 py-2 rounded-full border border-[#2e2e34]">
+                  <div className="absolute right-4 top-4 sm:right-6 sm:top-auto sm:bottom-12 flex items-center gap-4 bg-[#1B1D20]/80 backdrop-blur-md px-4 py-2 rounded-full border border-[#343537]">
                     <span className="text-xs font-mono text-gray-400">
                       0{heroIndex + 1} / 0{carouselItems.length}
                     </span>
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => setHeroIndex((prev) => (prev === 0 ? carouselItems.length - 1 : prev - 1))}
-                        className="p-1.5 hover:bg-[#2e2e34] rounded-full text-gray-300 hover:text-white"
+                        className="p-1.5 hover:bg-[#343537] rounded-full text-gray-300 hover:text-white"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => setHeroIndex((prev) => (prev === carouselItems.length - 1 ? 0 : prev + 1))}
-                        className="p-1.5 hover:bg-[#2e2e34] rounded-full text-gray-300 hover:text-white"
+                        className="p-1.5 hover:bg-[#343537] rounded-full text-gray-300 hover:text-white"
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>
@@ -2114,7 +2114,7 @@ export default function App() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {visibleFeaturedProjects.map((item, index) => (
-                    <button key={item.id} type="button" onClick={() => { trackAnalyticsEvent('toonknight_featured_click', { project_id: item.id }); openProject(item); }} className="min-w-0 text-left bg-[#1a1a1e] hover:bg-[#222226] border border-[#2e2e34] p-3.5 rounded-xl flex flex-col gap-3 transition-all hover:border-amber-500/50 group">
+                    <button key={item.id} type="button" onClick={() => { trackAnalyticsEvent('toonknight_featured_click', { project_id: item.id }); openProject(item); }} className="min-w-0 text-left bg-[#1B1D20] hover:bg-[#222326] border border-[#343537] p-3.5 rounded-xl flex flex-col gap-3 transition-all hover:border-amber-500/50 group">
                       <span className={`relative block w-full ${item.hasHonorFrame ? 'honor-project-thumbnail' : ''}`}><img src={item.thumbnail} alt={item.title} className="w-full aspect-video rounded-lg object-cover" /></span>
                       <span className={`relative block flex-1 min-w-0 ${item.hasHonorFrame ? 'honor-featured-details' : ''}`}><span className="block text-[10px] font-bold tracking-wider text-amber-400 uppercase">Destacado {index + 1}</span><span className="block text-sm font-semibold text-white truncate group-hover:text-amber-300 transition-colors">{item.title}</span><span className="block text-xs text-gray-400 truncate">{projectDisplayName(item)}</span>{item.hasHonorFrame && <img src="/images/escudo-de-honor.webp" alt="Escudo de Honor" className="honor-badge-image honor-badge-image-small" />}</span>
                     </button>
@@ -2135,14 +2135,14 @@ export default function App() {
                   <div
                     key={item.id}
                     onClick={() => openProject(item)}
-                    className="bg-[#1a1a1e] hover:bg-[#222226] border border-[#2e2e34] p-3.5 rounded-xl flex items-center gap-4 cursor-pointer transition-all hover:border-gray-600 group"
+                    className="bg-[#1B1D20] hover:bg-[#222326] border border-[#343537] p-3.5 rounded-xl flex items-center gap-4 cursor-pointer transition-all hover:border-gray-600 group"
                   >
-                    <span className="text-xl font-bold text-gray-500 group-hover:text-red-400 font-mono">
+                    <span className="text-xl font-bold text-gray-500 group-hover:text-gold-400 font-mono">
                       0{idx + 1}
                     </span>
                     <span className={`relative block shrink-0 ${item.hasHonorFrame ? 'honor-project-thumbnail' : ''}`}><img src={item.thumbnail} alt={item.title} className="h-12 w-16 rounded-lg object-cover" />{item.hasHonorFrame && <img src="/images/escudo-de-honor.webp" alt="Escudo de Honor" className="honor-badge-image honor-badge-image-small" />}</span>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold text-white truncate group-hover:text-red-400 transition-colors">
+                      <h4 className="text-sm font-semibold text-white truncate group-hover:text-gold-400 transition-colors">
                         {item.title}
                       </h4>
                       <p className="text-xs text-gray-400 truncate">{projectDisplayName(item)} • {item.year}</p>
@@ -2154,7 +2154,7 @@ export default function App() {
 
             {/* BARRA DE FILTROS DESPLEGABLES */}
             <section className="max-w-7xl mx-auto px-6 lg:px-12 space-y-6">
-              <div className="bg-[#1a1a1e] border border-[#2e2e34] p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+              <div className="bg-[#1B1D20] border border-[#343537] p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-4">
 
                   {/* Filtro Animación */}
@@ -2163,7 +2163,7 @@ export default function App() {
                     <select
                       value={filterType}
                       onChange={(e) => setFilterType(e.target.value)}
-                      className="bg-[#121212] border border-[#2e2e34] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-red-500"
+                      className="bg-[#101113] border border-[#343537] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-gold-500"
                     >
                       <option value="Todos">Todos</option>
                       <option value="Acción real">Acción real</option>
@@ -2180,7 +2180,7 @@ export default function App() {
                     <select
                       value={filterGenre}
                       onChange={(e) => setFilterGenre(e.target.value)}
-                      className="bg-[#121212] border border-[#2e2e34] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-red-500"
+                      className="bg-[#101113] border border-[#343537] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-gold-500"
                     >
                       <option value="Todos">Todos</option>
                       <option value="Acción">Acción</option>
@@ -2202,7 +2202,7 @@ export default function App() {
                     <select
                       value={filterYear}
                       onChange={(e) => setFilterYear(e.target.value)}
-                      className="bg-[#121212] border border-[#2e2e34] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-red-500"
+                      className="bg-[#101113] border border-[#343537] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-gold-500"
                     >
                       <option value="Todos">Todos</option>
                       <option value="2026">2026</option>
@@ -2217,7 +2217,7 @@ export default function App() {
                     <select
                       value={filterFormat}
                       onChange={(e) => setFilterFormat(e.target.value)}
-                      className="bg-[#121212] border border-[#2e2e34] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-red-500"
+                      className="bg-[#101113] border border-[#343537] text-xs rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:border-gold-500"
                     >
                       <option value="Todos">Todos</option>
                       <option value="Cortometraje">Cortometraje</option>
@@ -2241,7 +2241,7 @@ export default function App() {
                       setFilterYear('Todos');
                       setFilterFormat('Todos');
                     }}
-                    className="text-xs text-red-400 hover:text-red-300 font-medium underline"
+                    className="text-xs text-gold-400 hover:text-gold-300 font-medium underline"
                   >
                     Limpiar filtros
                   </button>
@@ -2258,7 +2258,7 @@ export default function App() {
                 {filteredProjects.map((project) => (
                   <div
                     key={project.id}
-                    className={`bg-[#1a1a1e] border border-[#2e2e34] rounded-xl overflow-hidden group hover:border-gray-500 transition-all flex flex-col justify-between ${project.hasHonorFrame ? 'honor-project-card' : ''}`}
+                    className={`bg-[#1B1D20] border border-[#343537] rounded-xl overflow-hidden group hover:border-gray-500 transition-all flex flex-col justify-between ${project.hasHonorFrame ? 'honor-project-card' : ''}`}
                   >
                     {/* Miniatura con Duración */}
                     <div
@@ -2284,7 +2284,7 @@ export default function App() {
                             e.stopPropagation();
                             handleDeleteProject(project.id);
                           }}
-                          className="absolute top-2 right-2 p-1.5 bg-red-600/80 hover:bg-red-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="absolute top-2 right-2 p-1.5 bg-gold-600/80 hover:bg-gold-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                           title="Eliminar proyecto inmediatamente"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -2297,7 +2297,7 @@ export default function App() {
                       <div>
                         <h3
                           onClick={() => openProject(project)}
-                          className="text-base font-bold text-white group-hover:text-red-400 cursor-pointer truncate transition-colors"
+                          className="text-base font-bold text-white group-hover:text-gold-400 cursor-pointer truncate transition-colors"
                         >
                           {project.title}
                         </h3>
@@ -2308,10 +2308,10 @@ export default function App() {
 
                       {/* Badges de Categoría */}
                       <div className={`flex items-center gap-2 pt-2 flex-wrap ${project.hasHonorFrame ? 'honor-project-categories' : ''}`}>
-                        <span className="text-[10px] font-bold bg-[#222226] text-gray-300 px-2 py-0.5 rounded border border-[#2e2e34]">
+                        <span className="text-[10px] font-bold bg-[#222326] text-gray-300 px-2 py-0.5 rounded border border-[#343537]">
                           {project.type}
                         </span>
-                        <span className="text-[10px] font-bold bg-[#222226] text-gray-300 px-2 py-0.5 rounded border border-[#2e2e34]">
+                        <span className="text-[10px] font-bold bg-[#222326] text-gray-300 px-2 py-0.5 rounded border border-[#343537]">
                           {project.format}
                         </span>
                         {(project.campaignUrl || normalizeFilterText(project.format) === 'crowdfunding') && <span className="text-[10px] font-bold bg-amber-950/70 text-amber-300 px-2 py-0.5 rounded border border-amber-800/70">En campaña</span>}
@@ -2330,21 +2330,21 @@ export default function App() {
         {activeTab === 'productos' && (
           <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 space-y-8">
             <div>
-              <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">RECURSOS RECOMENDADOS</span>
+              <span className="text-xs font-semibold text-gold-400 uppercase tracking-wider">RECURSOS RECOMENDADOS</span>
               <h1 className="text-3xl font-bold text-white">Equipamiento y software para cineastas</h1>
               <p className="text-gray-400 text-sm mt-1">Cámaras, objetivos, iluminación, sonido, edición y herramientas para cineastas.</p>
-              {isAdmin && <button onClick={openNewProduct} className="mt-4 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4" />Agregar producto</button>}
+              {isAdmin && <button onClick={openNewProduct} className="mt-4 bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4" />Agregar producto</button>}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[#2e2e34] bg-[#1a1a1e] p-4">
-              <label className="text-xs text-gray-400">Categoría<select value={productCategoryFilter} onChange={e => setProductCategoryFilter(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg p-2 text-white"><option>Todos</option><option>Software</option><option>Hardware</option><option>Accesorio</option></select></label>
-              <label className="text-xs text-gray-400">Área audiovisual<select value={productTechniqueFilter} onChange={e => setProductTechniqueFilter(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg p-2 text-white"><option>Todos</option>{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
-              <label className="text-xs text-gray-400">Uso profesional<select value={productUseFilter} onChange={e => setProductUseFilter(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg p-2 text-white"><option>Todos</option>{['Grabación y cámara','Fotografía cinematográfica','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Postproducción','Efectos visuales','Producción','Preproducción','Guion y storyboard','Dirección','Streaming','Animación','Almacenamiento y copias','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
-              <label className="text-xs text-gray-400">Tipo de equipo / subtipo<select value={productSubtypeFilter} onChange={e => setProductSubtypeFilter(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg p-2 text-white"><option>Todos</option>{['Cámara','Objetivo','Trípode','Estabilizador / gimbal','Slider / dolly','Drone','Monitor de cámara','Grabador externo','Micrófono','Grabadora de audio','Auriculares','Kit de iluminación','Panel LED','Foco','Modificador de luz','Reflector','Soporte / grip','Teleprompter','Capturadora','Ordenador','Monitor de edición','Almacenamiento','Accesorio','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[#343537] bg-[#1B1D20] p-4">
+              <label className="text-xs text-gray-400">Categoría<select value={productCategoryFilter} onChange={e => setProductCategoryFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option><option>Software</option><option>Hardware</option><option>Accesorio</option></select></label>
+              <label className="text-xs text-gray-400">Área audiovisual<select value={productTechniqueFilter} onChange={e => setProductTechniqueFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
+              <label className="text-xs text-gray-400">Uso profesional<select value={productUseFilter} onChange={e => setProductUseFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Grabación y cámara','Fotografía cinematográfica','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Postproducción','Efectos visuales','Producción','Preproducción','Guion y storyboard','Dirección','Streaming','Animación','Almacenamiento y copias','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
+              <label className="text-xs text-gray-400">Tipo de equipo / subtipo<select value={productSubtypeFilter} onChange={e => setProductSubtypeFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Cámara','Objetivo','Trípode','Estabilizador / gimbal','Slider / dolly','Drone','Monitor de cámara','Grabador externo','Micrófono','Grabadora de audio','Auriculares','Kit de iluminación','Panel LED','Foco','Modificador de luz','Reflector','Soporte / grip','Teleprompter','Capturadora','Ordenador','Monitor de edición','Almacenamiento','Accesorio','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {products.filter(prod => (productCategoryFilter === 'Todos' || prod.category === productCategoryFilter) && (productTechniqueFilter === 'Todos' || (prod.techniques || []).includes(productTechniqueFilter)) && (productUseFilter === 'Todos' || (prod.uses || []).includes(productUseFilter)) && (productSubtypeFilter === 'Todos' || prod.subtype === productSubtypeFilter)).map((prod) => (
-                <article key={prod.id} className="bg-[#1a1a1e] border border-[#2e2e34] rounded-2xl overflow-hidden flex flex-col hover:border-red-500/40 transition-colors">
+                <article key={prod.id} className="bg-[#1B1D20] border border-[#343537] rounded-2xl overflow-hidden flex flex-col hover:border-gold-500/40 transition-colors">
                   <div className="relative aspect-[4/3] bg-[#111115] overflow-hidden">
                     <img
                       src={prod.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80'}
@@ -2355,12 +2355,12 @@ export default function App() {
                   </div>
                   <div className="p-3.5 flex flex-col gap-2.5 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-[10px] font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full border border-red-500/20">{prod.category}</span>
+                      <span className="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded-full border border-gold-500/20">{prod.category}</span>
                       <span className="text-[11px] font-semibold text-gray-200 text-right">{prod.price}</span>
                     </div>
                     <h3 className="text-sm sm:text-base font-bold text-white leading-snug line-clamp-2" title={prod.title}>{prod.title}</h3>
                     <details className="group/details text-xs">
-                      <summary className="cursor-pointer select-none text-red-400 hover:text-red-300 font-semibold py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-400 rounded">
+                      <summary className="cursor-pointer select-none text-gold-400 hover:text-gold-300 font-semibold py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 rounded">
                         <span className="group-open/details:hidden">Ver descripción +</span>
                         <span className="hidden group-open/details:inline">Ocultar descripción −</span>
                       </summary>
@@ -2373,7 +2373,7 @@ export default function App() {
                         {prod.description && <p className="whitespace-pre-line">{prod.description}</p>}
                         <div className="flex flex-wrap gap-1">
                           {[...(prod.techniques || []), ...(prod.uses || []), ...(prod.subtype ? [prod.subtype] : [])].map(tag => (
-                            <span key={tag} className="text-[10px] rounded-full bg-[#292930] px-2 py-1 text-gray-300">{tag}</span>
+                            <span key={tag} className="text-[10px] rounded-full bg-[#292B2E] px-2 py-1 text-gray-300">{tag}</span>
                           ))}
                         </div>
                       </div>
@@ -2383,15 +2383,15 @@ export default function App() {
                         href={prod.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full bg-[#222226] hover:bg-red-600 text-gray-200 hover:text-white text-xs font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 border border-[#2e2e34] transition-all"
+                        className="w-full bg-[#222326] hover:bg-gold-600 text-gray-200 hover:text-white text-xs font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 border border-[#343537] transition-all"
                       >
                         <span>Obtener recurso</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                       {isAdmin && (
                         <div className="grid grid-cols-2 gap-2">
-                          <button onClick={() => openEditProduct(prod)} className="rounded-lg border border-red-500/30 bg-red-500/10 py-1.5 text-xs font-semibold text-red-300 hover:bg-red-500/20">Editar</button>
-                          <button onClick={() => handleDeleteProduct(prod)} className="rounded-lg border border-red-500/30 bg-red-500/10 py-1.5 text-xs font-semibold text-red-300 hover:bg-red-500/20">Eliminar</button>
+                          <button onClick={() => openEditProduct(prod)} className="rounded-lg border border-gold-500/30 bg-gold-500/10 py-1.5 text-xs font-semibold text-gold-300 hover:bg-gold-500/20">Editar</button>
+                          <button onClick={() => handleDeleteProduct(prod)} className="rounded-lg border border-gold-500/30 bg-gold-500/10 py-1.5 text-xs font-semibold text-gold-300 hover:bg-gold-500/20">Eliminar</button>
                         </div>
                       )}
                     </div>
@@ -2407,13 +2407,13 @@ export default function App() {
         ------------------------------------------ */}
         {activeTab === 'educacion' && (
           <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 space-y-8">
-            <div><span className="text-xs font-semibold text-red-400 uppercase tracking-wider">FORMACIÓN PARA CREADORES</span><h1 className="text-3xl font-bold text-white">Cursos</h1><p className="text-sm text-gray-400 mt-1">Cursos y tutoriales de cine y producción audiovisual: dirección, guion, fotografía, iluminación, sonido, montaje, VFX y animación.</p>{isAdmin && <button onClick={openNewEducation} className="mt-4 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4"/>Agregar curso</button>}</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[#2e2e34] bg-[#1a1a1e] p-4">
-              <label className="text-xs text-gray-400">Área audiovisual<select value={educationTechniqueFilter} onChange={e => setEducationTechniqueFilter(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg p-2 text-white"><option>Todos</option>{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
-              <label className="text-xs text-gray-400">Especialidad<select value={educationTopicFilter} onChange={e => setEducationTopicFilter(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg p-2 text-white"><option>Todos</option>{['Dirección','Guion','Producción','Dirección de fotografía','Cámara y ópticas','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Interpretación','Dirección de arte','Vestuario y maquillaje','Casting','Distribución y festivales','Efectos visuales','Animación','Storyboard','Postproducción','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
-              <label className="text-xs text-gray-400">Software utilizado<select value={educationSoftwareFilter} onChange={e => setEducationSoftwareFilter(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg p-2 text-white"><option>Todos</option>{['DaVinci Resolve','Premiere Pro','Final Cut Pro','After Effects','Avid Media Composer','Pro Tools','Audition','Reaper','Blender','Cinema 4D','Unreal Engine','Nuke','Photoshop','Lightroom','Storyboard Pro','Otro','No requiere software'].map(x => <option key={x}>{x}</option>)}</select></label>
+            <div><span className="text-xs font-semibold text-gold-400 uppercase tracking-wider">FORMACIÓN PARA CREADORES</span><h1 className="text-3xl font-bold text-white">Cursos</h1><p className="text-sm text-gray-400 mt-1">Cursos y tutoriales de cine y producción audiovisual: dirección, guion, fotografía, iluminación, sonido, montaje, VFX y animación.</p>{isAdmin && <button onClick={openNewEducation} className="mt-4 bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4"/>Agregar curso</button>}</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[#343537] bg-[#1B1D20] p-4">
+              <label className="text-xs text-gray-400">Área audiovisual<select value={educationTechniqueFilter} onChange={e => setEducationTechniqueFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
+              <label className="text-xs text-gray-400">Especialidad<select value={educationTopicFilter} onChange={e => setEducationTopicFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Dirección','Guion','Producción','Dirección de fotografía','Cámara y ópticas','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Interpretación','Dirección de arte','Vestuario y maquillaje','Casting','Distribución y festivales','Efectos visuales','Animación','Storyboard','Postproducción','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
+              <label className="text-xs text-gray-400">Software utilizado<select value={educationSoftwareFilter} onChange={e => setEducationSoftwareFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['DaVinci Resolve','Premiere Pro','Final Cut Pro','After Effects','Avid Media Composer','Pro Tools','Audition','Reaper','Blender','Cinema 4D','Unreal Engine','Nuke','Photoshop','Lightroom','Storyboard Pro','Otro','No requiere software'].map(x => <option key={x}>{x}</option>)}</select></label>
             </div>
-            {educationItems.filter(item => (educationTechniqueFilter === 'Todos' || (item.techniques || []).includes(educationTechniqueFilter)) && (educationTopicFilter === 'Todos' || (item.topics || []).includes(educationTopicFilter)) && (educationSoftwareFilter === 'Todos' || (item.software || []).includes(educationSoftwareFilter))).length ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{educationItems.filter(item => (educationTechniqueFilter === 'Todos' || (item.techniques || []).includes(educationTechniqueFilter)) && (educationTopicFilter === 'Todos' || (item.topics || []).includes(educationTopicFilter)) && (educationSoftwareFilter === 'Todos' || (item.software || []).includes(educationSoftwareFilter))).map(item => <article key={item.id} className="bg-[#1a1a1e] border border-[#2e2e34] rounded-2xl overflow-hidden flex flex-col">{item.image && <img src={item.image} alt={item.title} className="w-full h-44 object-cover"/>}<div className="p-5 flex-1 space-y-3"><div className="flex justify-between gap-2"><span className="text-[10px] rounded-full bg-red-500/10 text-red-300 px-2 py-1">{item.price || 'Consultar precio'}</span><span className="text-xs text-gray-400">{item.provider}</span></div><h3 className="text-lg font-bold text-white">{item.title}</h3><p className="text-sm text-gray-400">{item.description}</p>{[...(item.techniques || []), ...(item.topics || []), ...(item.software || [])].map(tag => <span key={tag} className="inline-block text-[10px] rounded-full bg-[#292930] px-2 py-1 mr-1 mb-1 text-gray-300">{tag}</span>)}</div><div className="p-5 pt-0 flex gap-2"><a href={item.url} target="_blank" rel="noopener noreferrer" className="flex-1 text-center bg-red-600 hover:bg-red-500 rounded-xl py-2.5 text-sm font-semibold text-white">Ver curso <ExternalLink className="inline w-3 h-3"/></a>{isAdmin && <><button onClick={() => openEditEducation(item)} className="px-3 rounded-lg bg-red-500/10 text-red-300 text-xs">Editar</button><button onClick={() => handleDeleteEducation(item)} className="px-3 rounded-lg bg-red-500/10 text-red-300 text-xs">Eliminar</button></>}</div></article>)}</div> : <p className="text-sm text-gray-500 rounded-2xl border border-dashed border-[#2e2e34] p-8 text-center">Aún no hay cursos con estos filtros. {isAdmin ? 'Agrega el primero desde el botón superior.' : 'Vuelve más tarde para descubrir nuevos recursos.'}</p>}
+            {educationItems.filter(item => (educationTechniqueFilter === 'Todos' || (item.techniques || []).includes(educationTechniqueFilter)) && (educationTopicFilter === 'Todos' || (item.topics || []).includes(educationTopicFilter)) && (educationSoftwareFilter === 'Todos' || (item.software || []).includes(educationSoftwareFilter))).length ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{educationItems.filter(item => (educationTechniqueFilter === 'Todos' || (item.techniques || []).includes(educationTechniqueFilter)) && (educationTopicFilter === 'Todos' || (item.topics || []).includes(educationTopicFilter)) && (educationSoftwareFilter === 'Todos' || (item.software || []).includes(educationSoftwareFilter))).map(item => <article key={item.id} className="bg-[#1B1D20] border border-[#343537] rounded-2xl overflow-hidden flex flex-col">{item.image && <img src={item.image} alt={item.title} className="w-full h-44 object-cover"/>}<div className="p-5 flex-1 space-y-3"><div className="flex justify-between gap-2"><span className="text-[10px] rounded-full bg-gold-500/10 text-gold-300 px-2 py-1">{item.price || 'Consultar precio'}</span><span className="text-xs text-gray-400">{item.provider}</span></div><h3 className="text-lg font-bold text-white">{item.title}</h3><p className="text-sm text-gray-400">{item.description}</p>{[...(item.techniques || []), ...(item.topics || []), ...(item.software || [])].map(tag => <span key={tag} className="inline-block text-[10px] rounded-full bg-[#292B2E] px-2 py-1 mr-1 mb-1 text-gray-300">{tag}</span>)}</div><div className="p-5 pt-0 flex gap-2"><a href={item.url} target="_blank" rel="noopener noreferrer" className="flex-1 text-center bg-gold-600 hover:bg-gold-500 rounded-xl py-2.5 text-sm font-semibold text-white">Ver curso <ExternalLink className="inline w-3 h-3"/></a>{isAdmin && <><button onClick={() => openEditEducation(item)} className="px-3 rounded-lg bg-gold-500/10 text-gold-300 text-xs">Editar</button><button onClick={() => handleDeleteEducation(item)} className="px-3 rounded-lg bg-gold-500/10 text-gold-300 text-xs">Eliminar</button></>}</div></article>)}</div> : <p className="text-sm text-gray-500 rounded-2xl border border-dashed border-[#343537] p-8 text-center">Aún no hay cursos con estos filtros. {isAdmin ? 'Agrega el primero desde el botón superior.' : 'Vuelve más tarde para descubrir nuevos recursos.'}</p>}
           </div>
         )}
 
@@ -2433,14 +2433,14 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 space-y-8">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">FORO Y DISCUSIÓN</span>
+                <span className="text-xs font-semibold text-gold-400 uppercase tracking-wider">FORO Y DISCUSIÓN</span>
                 <h1 className="text-3xl font-bold text-white">Comunidad de Creadores</h1>
                 <p className="text-gray-400 text-sm mt-1">Resuelve dudas, encuentra colaboradores y comparte tus procesos.</p>
               </div>
 
               <button
                 onClick={() => setShowNewTopicModal(true)}
-                className="bg-red-600 hover:bg-red-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/30"
+                className="bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-gold-600/30"
               >
                 <Plus className="w-4 h-4" />
                 Crear nuevo tema
@@ -2454,60 +2454,60 @@ export default function App() {
                   <div
                     key={topic.id}
                     onClick={() => setSelectedForumTopic(topic)}
-                    className="bg-[#1a1a1e] hover:bg-[#222226] border border-[#2e2e34] p-5 rounded-2xl cursor-pointer transition-all hover:border-gray-500 space-y-3"
+                    className="bg-[#1B1D20] hover:bg-[#222326] border border-[#343537] p-5 rounded-2xl cursor-pointer transition-all hover:border-gray-500 space-y-3"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
+                      <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/20">
                         {topic.category}
                       </span>
                       <span className="text-xs text-gray-500">{topic.createdAt}</span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-white hover:text-red-400 transition-colors">
+                    <h3 className="text-lg font-bold text-white hover:text-gold-400 transition-colors">
                       {topic.title}
                     </h3>
                     <p className="text-xs text-gray-400 line-clamp-2">{topic.content}</p>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-[#2e2e34] text-xs text-gray-400">
+                    <div className="flex items-center justify-between pt-2 border-t border-[#343537] text-xs text-gray-400">
                       <span className="inline-flex items-center gap-1">Por {forumAuthor(topic.authorId, topic.authorName)}</span>
                       <div className="flex items-center gap-4">
                         <span className="flex items-center gap-1"><ThumbsUp className="w-3.5 h-3.5" /> {topic.likes}</span>
                         <span className="flex items-center gap-1"><MessageSquare className="w-3.5 h-3.5" /> {(topic.comments || []).length} comentarios</span>
                       </div>
                     </div>
-                    {(isAdmin || (user && (topic.authorId === user.id || topic.authorEmail === user.email))) && <div className="flex justify-end"><button onClick={(event) => { event.stopPropagation(); handleDeleteTopic(topic); }} className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-300 hover:bg-red-500/20"><Trash2 className="w-3.5 h-3.5" />Eliminar tema</button></div>}
+                    {(isAdmin || (user && (topic.authorId === user.id || topic.authorEmail === user.email))) && <div className="flex justify-end"><button onClick={(event) => { event.stopPropagation(); handleDeleteTopic(topic); }} className="inline-flex items-center gap-1.5 rounded-lg border border-gold-500/30 bg-gold-500/10 px-3 py-1.5 text-xs font-semibold text-gold-300 hover:bg-gold-500/20"><Trash2 className="w-3.5 h-3.5" />Eliminar tema</button></div>}
                   </div>
                 ))}
               </div>
             ) : (
               /* Vista Detallada de un Tema */
-              <div className="bg-[#1a1a1e] border border-[#2e2e34] p-6 lg:p-8 rounded-2xl space-y-6">
+              <div className="bg-[#1B1D20] border border-[#343537] p-6 lg:p-8 rounded-2xl space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-3"><button
                   onClick={() => setSelectedForumTopic(null)}
                   className="text-xs text-gray-400 hover:text-white flex items-center gap-1"
                 >
                   <ChevronLeft className="w-4 h-4" /> Volver al listado de temas
-                </button>{(isAdmin || (user && (selectedForumTopic.authorId === user.id || selectedForumTopic.authorEmail === user.email))) && <button onClick={() => handleDeleteTopic(selectedForumTopic)} className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/20"><Trash2 className="w-3.5 h-3.5" />Eliminar tema</button>}</div>
+                </button>{(isAdmin || (user && (selectedForumTopic.authorId === user.id || selectedForumTopic.authorEmail === user.email))) && <button onClick={() => handleDeleteTopic(selectedForumTopic)} className="inline-flex items-center gap-1.5 rounded-lg border border-gold-500/30 bg-gold-500/10 px-3 py-2 text-xs font-semibold text-gold-300 hover:bg-gold-500/20"><Trash2 className="w-3.5 h-3.5" />Eliminar tema</button>}</div>
 
                 <div className="space-y-2">
-                  <span className="text-xs font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
+                  <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/20">
                     {selectedForumTopic.category}
                   </span>
                   <h2 className="text-2xl font-bold text-white">{selectedForumTopic.title}</h2>
                   <div className="flex items-center gap-2 text-xs text-gray-400">Publicado por {forumAuthor(selectedForumTopic.authorId, selectedForumTopic.authorName)} <span>• {selectedForumTopic.createdAt}</span></div>
                 </div>
 
-                <div className="p-4 bg-[#121212] rounded-xl border border-[#2e2e34] text-sm text-gray-200 leading-relaxed whitespace-pre-line">
+                <div className="p-4 bg-[#101113] rounded-xl border border-[#343537] text-sm text-gray-200 leading-relaxed whitespace-pre-line">
                   {selectedForumTopic.content}
                 </div>
 
                 {/* Sección Comentarios */}
-                <div className="space-y-4 pt-4 border-t border-[#2e2e34]">
+                <div className="space-y-4 pt-4 border-t border-[#343537]">
                   <h4 className="text-base font-bold text-white">Respuestas ({(selectedForumTopic.comments || []).length})</h4>
 
                   <div className="space-y-3">
                     {(selectedForumTopic.comments || []).map((comment) => (
-                      <div key={comment.id} className="bg-[#222226] p-3.5 rounded-xl border border-[#2e2e34] space-y-1">
+                      <div key={comment.id} className="bg-[#222326] p-3.5 rounded-xl border border-[#343537] space-y-1">
                         <div className="flex justify-between text-xs text-gray-400">
                           <strong className="text-gray-200">{forumAuthor(comment.authorId, comment.author)}</strong>
                           <span>{comment.createdAt}</span>
@@ -2524,11 +2524,11 @@ export default function App() {
                       placeholder="Escribe tu respuesta..."
                       value={newCommentText}
                       onChange={(e) => setNewCommentText(e.target.value)}
-                      className="flex-1 bg-[#121212] border border-[#2e2e34] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500"
+                      className="flex-1 bg-[#101113] border border-[#343537] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-gold-500"
                     />
                     <button
                       onClick={() => handleAddComment(selectedForumTopic.id)}
-                      className="bg-red-600 hover:bg-red-500 text-white text-xs font-semibold px-5 rounded-xl"
+                      className="bg-gold-600 hover:bg-gold-500 text-white text-xs font-semibold px-5 rounded-xl"
                     >
                       Responder
                     </button>
@@ -2578,10 +2578,10 @@ export default function App() {
 
               <div className="flex justify-center sm:justify-end mb-4">
                 <div className="flex flex-wrap justify-center gap-2">
-                  <button type="button" onClick={() => openPublicProfile(user.id)} className="rounded-xl border border-[#34343b] px-4 py-2 text-sm font-semibold text-gray-200 hover:bg-[#222226]">Ver perfil público</button>
+                  <button type="button" onClick={() => openPublicProfile(user.id)} className="rounded-xl border border-[#3A3B3E] px-4 py-2 text-sm font-semibold text-gray-200 hover:bg-[#222326]">Ver perfil público</button>
                   <button
                     onClick={handleOpenEditProfile}
-                    className="bg-red-600 hover:bg-red-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
+                    className="bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
                   >
                     Editar perfil
                   </button>
@@ -2607,7 +2607,7 @@ export default function App() {
                   <span className="text-xs text-gray-400 uppercase tracking-wider">Favoritos</span>
                 </div>
                 <div className="bg-gray-800/50 p-3 rounded-lg">
-                  <span className="block text-2xl font-bold text-red-400">
+                  <span className="block text-2xl font-bold text-gold-400">
                     {projects.filter(p => p.creatorId === user?.id || (p.authorEmail || p.creatorEmail)?.toLowerCase() === user?.email?.toLowerCase()).length}
                   </span>
                   <span className="text-xs text-gray-400 uppercase tracking-wider">Proyectos Subidos</span>
@@ -2658,7 +2658,7 @@ export default function App() {
                       <div
                         key={proj.id}
                         onClick={() => openProject(proj)}
-                        className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:border-red-500/50 transition-colors"
+                        className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:border-gold-500/50 transition-colors"
                       >
                         <span className={`relative block shrink-0 ${proj.hasHonorFrame ? 'honor-project-thumbnail' : ''}`}><img src={proj.thumbnail || proj.image} alt={proj.title} className="h-16 w-24 rounded-lg object-cover" />{proj.hasHonorFrame && <img src="/images/escudo-de-honor.webp" alt="Escudo de Honor" className="honor-badge-image honor-badge-image-small" />}</span>
                         <div className="min-w-0 flex-1">
@@ -2671,24 +2671,24 @@ export default function App() {
                               <span className="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full shrink-0">Pendiente</span>
                             )}
                             {proj.status === 'rejected' && (
-                              <span className="text-[10px] text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full shrink-0">Rechazado</span>
+                              <span className="text-[10px] text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded-full shrink-0">Rechazado</span>
                             )}
                           </div>
                           <p className="text-gray-400 text-xs">{proj.genre} • {proj.format}</p>
-                          {proj.status === 'rejected' && (proj.moderatorMessage || proj.rejectionReason) && <p className="mt-2 rounded-lg border border-red-500/20 bg-red-500/5 p-2 text-xs text-red-200"><strong>Mensaje del moderador:</strong> {proj.moderatorMessage || proj.rejectionReason}</p>}
+                          {proj.status === 'rejected' && (proj.moderatorMessage || proj.rejectionReason) && <p className="mt-2 rounded-lg border border-gold-500/20 bg-gold-500/5 p-2 text-xs text-gold-200"><strong>Mensaje del moderador:</strong> {proj.moderatorMessage || proj.rejectionReason}</p>}
                           {proj.status === 'approved' && proj.moderatorMessage && <p className="mt-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-2 text-xs text-emerald-200"><strong>Mensaje del moderador:</strong> {proj.moderatorMessage}</p>}
                           <div className="flex flex-wrap gap-2 mt-3" onClick={e => e.stopPropagation()}>
                             <button
                               type="button"
                               onClick={() => handleOpenEditProject(proj)}
-                              className="px-3 py-1.5 rounded-lg bg-red-600/20 border border-red-500/30 text-red-300 text-xs font-semibold hover:bg-red-600/30 transition-colors"
+                              className="px-3 py-1.5 rounded-lg bg-gold-600/20 border border-gold-500/30 text-gold-300 text-xs font-semibold hover:bg-gold-600/30 transition-colors"
                             >
                               ✏️ Editar
                             </button>
                             <button
                               type="button"
                               onClick={() => handleDeleteOwnProject(proj)}
-                              className="px-3 py-1.5 rounded-lg bg-red-600/20 border border-red-500/30 text-red-300 text-xs font-semibold hover:bg-red-600/30 transition-colors"
+                              className="px-3 py-1.5 rounded-lg bg-gold-600/20 border border-gold-500/30 text-gold-300 text-xs font-semibold hover:bg-gold-600/30 transition-colors"
                             >
                               🗑️ Eliminar
                             </button>
@@ -2720,9 +2720,9 @@ export default function App() {
             {/* Gestión del carrusel principal: máximo 8 elementos */}
             <section className="space-y-4">
               <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end"><div><h3 className="text-xl font-bold text-white">Gestionar carrusel principal</h3><p className="mt-1 text-xs text-gray-400">Hasta 8 imágenes. Puedes editar la imagen, el texto y el destino del botón.</p></div><span className="text-xs text-gray-400">{carouselItems.length}/8 imágenes</span></div>
-              {!carouselStored ? <div className="rounded-xl border border-dashed border-[#34343b] p-4"><p className="text-sm text-gray-300">El carrusel actual está cargado desde los archivos del proyecto.</p><button type="button" onClick={handleImportCurrentCarousel} className="mt-3 rounded-lg bg-red-600 px-3 py-2 text-xs font-bold text-white hover:bg-red-500">Importar carrusel actual para administrarlo</button></div> : <>
-                <div className="space-y-2">{carouselItems.map(item => <div key={item.id} className="flex items-center gap-3 rounded-xl border border-[#2e2e34] bg-[#1a1a1e] p-3"><img src={item.thumbnail} alt="" className="h-12 w-20 shrink-0 rounded-lg object-cover" /><div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold text-white">{item.title || 'Imagen sin título'}</p><p className="truncate text-xs text-gray-500">{item.linkText || 'Ver proyecto'} · {item.videoUrl}</p></div><button type="button" onClick={() => openEditCarouselItem(item)} className="rounded-lg border border-[#34343b] px-2.5 py-2 text-xs text-gray-300">Editar</button><button type="button" onClick={() => deleteCarouselItem(item)} className="rounded-lg border border-red-500/30 px-2.5 py-2 text-xs text-red-300">Eliminar</button></div>)}</div>
-                <button type="button" disabled={carouselItems.length >= 8} onClick={openNewCarouselItem} className="rounded-lg bg-red-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-40">+ Añadir imagen {carouselItems.length >= 8 ? '(límite alcanzado)' : ''}</button>
+              {!carouselStored ? <div className="rounded-xl border border-dashed border-[#3A3B3E] p-4"><p className="text-sm text-gray-300">El carrusel actual está cargado desde los archivos del proyecto.</p><button type="button" onClick={handleImportCurrentCarousel} className="mt-3 rounded-lg bg-gold-600 px-3 py-2 text-xs font-bold text-white hover:bg-gold-500">Importar carrusel actual para administrarlo</button></div> : <>
+                <div className="space-y-2">{carouselItems.map(item => <div key={item.id} className="flex items-center gap-3 rounded-xl border border-[#343537] bg-[#1B1D20] p-3"><img src={item.thumbnail} alt="" className="h-12 w-20 shrink-0 rounded-lg object-cover" /><div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold text-white">{item.title || 'Imagen sin título'}</p><p className="truncate text-xs text-gray-500">{item.linkText || 'Ver proyecto'} · {item.videoUrl}</p></div><button type="button" onClick={() => openEditCarouselItem(item)} className="rounded-lg border border-[#3A3B3E] px-2.5 py-2 text-xs text-gray-300">Editar</button><button type="button" onClick={() => deleteCarouselItem(item)} className="rounded-lg border border-gold-500/30 px-2.5 py-2 text-xs text-gold-300">Eliminar</button></div>)}</div>
+                <button type="button" disabled={carouselItems.length >= 8} onClick={openNewCarouselItem} className="rounded-lg bg-gold-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-gold-500 disabled:cursor-not-allowed disabled:opacity-40">+ Añadir imagen {carouselItems.length >= 8 ? '(límite alcanzado)' : ''}</button>
               </>}
             </section>
 
@@ -2732,13 +2732,13 @@ export default function App() {
                 <div><h3 className="text-xl font-bold text-white">Gestionar destacados</h3><p className="text-xs text-gray-400 mt-1">Selecciona tantos proyectos aprobados como quieras. La portada mostrará cuatro y los rotará cada cuatro segundos.</p></div>
                 <span className="text-xs text-amber-300">{featuredProjects.length} seleccionados</span>
               </div>
-              <input type="search" value={featuredSearchQuery} onChange={event => setFeaturedSearchQuery(event.target.value)} placeholder="Buscar proyectos por título o creador..." className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" />
+              <input type="search" value={featuredSearchQuery} onChange={event => setFeaturedSearchQuery(event.target.value)} placeholder="Buscar proyectos por título o creador..." className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" />
               <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                 {projects.filter(project => project.status === 'approved' && (!featuredSearchQuery.trim() || `${project.title || ''} ${projectDisplayName(project)}`.toLowerCase().includes(featuredSearchQuery.trim().toLowerCase()))).map(project => (
-                  <div key={`featured-admin-${project.id}`} className="flex items-center gap-3 bg-[#1a1a1e] border border-[#2e2e34] rounded-xl p-3">
+                  <div key={`featured-admin-${project.id}`} className="flex items-center gap-3 bg-[#1B1D20] border border-[#343537] rounded-xl p-3">
                     <img src={project.thumbnail} alt="" className="w-16 h-11 object-cover rounded-lg shrink-0" />
                     <div className="flex-1 min-w-0"><p className="text-sm text-white font-semibold truncate">{project.title}</p><p className="text-xs text-gray-400 truncate">{projectDisplayName(project)}</p></div>
-                    <button type="button" onClick={(event) => { event.preventDefault(); event.stopPropagation(); handleToggleFeatured(project.id); }} className={`shrink-0 px-3 py-2 rounded-lg text-xs font-bold border ${project.isFeatured ? 'bg-amber-500/15 border-amber-500/40 text-amber-300' : 'bg-[#222226] border-[#3a3a42] text-gray-300 hover:border-amber-500/40'}`}>{project.isFeatured ? 'Quitar' : 'Destacar'}</button>
+                    <button type="button" onClick={(event) => { event.preventDefault(); event.stopPropagation(); handleToggleFeatured(project.id); }} className={`shrink-0 px-3 py-2 rounded-lg text-xs font-bold border ${project.isFeatured ? 'bg-amber-500/15 border-amber-500/40 text-amber-300' : 'bg-[#222326] border-[#3a3a42] text-gray-300 hover:border-amber-500/40'}`}>{project.isFeatured ? 'Quitar' : 'Destacar'}</button>
                   </div>
                 ))}
               </div>
@@ -2753,20 +2753,20 @@ export default function App() {
               <div className="rounded-xl border border-orange-500/25 bg-orange-500/5 p-3 space-y-2">
                 <h4 className="text-sm font-semibold text-orange-200">Proyectos con marco activo</h4>
                 {honorProjects.length === 0 ? <p className="text-xs text-gray-400">No hay proyectos con Escudo de Honor activo.</p> : honorProjects.map(project => (
-                  <div key={`honor-active-${project.id}`} className="flex items-center gap-3 rounded-lg bg-[#1a1a1e] p-2">
+                  <div key={`honor-active-${project.id}`} className="flex items-center gap-3 rounded-lg bg-[#1B1D20] p-2">
                     <img src={project.thumbnail} alt="" className="h-10 w-16 rounded object-cover" />
                     <div className="min-w-0 flex-1"><p className="truncate text-sm text-white">{project.title}</p><p className="truncate text-xs text-gray-400">{projectDisplayName(project)}</p></div>
                     <button type="button" disabled={Boolean(honorSavingId)} onClick={event => { event.preventDefault(); event.stopPropagation(); handleToggleHonor(project); }} className="rounded-lg border border-orange-500/40 px-3 py-2 text-xs text-orange-200 disabled:opacity-50">Desactivar</button>
                   </div>
                 ))}
               </div>
-              <input type="search" value={honorSearchQuery} onChange={event => setHonorSearchQuery(event.target.value)} placeholder="Buscar proyecto o creador para activar Escudo de Honor..." className="w-full rounded-xl border border-[#2e2e34] bg-[#121212] px-3 py-2.5 text-sm text-white" />
+              <input type="search" value={honorSearchQuery} onChange={event => setHonorSearchQuery(event.target.value)} placeholder="Buscar proyecto o creador para activar Escudo de Honor..." className="w-full rounded-xl border border-[#343537] bg-[#101113] px-3 py-2.5 text-sm text-white" />
               <div className="max-h-[420px] space-y-2 overflow-y-auto pr-1">
                 {projects.filter(project => project.status === 'approved' && (!honorSearchQuery.trim() || `${project.title || ''} ${projectDisplayName(project)}`.toLowerCase().includes(honorSearchQuery.trim().toLowerCase()))).map(project => (
-                  <div key={`honor-search-${project.id}`} className="flex items-center gap-3 rounded-xl border border-[#2e2e34] bg-[#1a1a1e] p-3">
+                  <div key={`honor-search-${project.id}`} className="flex items-center gap-3 rounded-xl border border-[#343537] bg-[#1B1D20] p-3">
                     <img src={project.thumbnail} alt="" className="h-11 w-16 shrink-0 rounded-lg object-cover" />
                     <div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold text-white">{project.title}</p><p className="truncate text-xs text-gray-400">{projectDisplayName(project)}</p></div>
-                    <button type="button" disabled={Boolean(honorSavingId) || (!project.hasHonorFrame && !project.creatorId)} title={!project.creatorId ? 'El proyecto no tiene una cuenta de creador vinculada' : ''} onClick={event => { event.preventDefault(); event.stopPropagation(); handleToggleHonor(project); }} className={`shrink-0 rounded-lg border px-3 py-2 text-xs font-bold disabled:opacity-40 ${project.hasHonorFrame ? 'border-orange-500/40 bg-orange-500/15 text-orange-300' : 'border-[#3a3a42] bg-[#222226] text-gray-300 hover:border-orange-500/40'}`}>{honorSavingId === project.id ? 'Guardando...' : project.hasHonorFrame ? 'Quitar' : 'Activar'}</button>
+                    <button type="button" disabled={Boolean(honorSavingId) || (!project.hasHonorFrame && !project.creatorId)} title={!project.creatorId ? 'El proyecto no tiene una cuenta de creador vinculada' : ''} onClick={event => { event.preventDefault(); event.stopPropagation(); handleToggleHonor(project); }} className={`shrink-0 rounded-lg border px-3 py-2 text-xs font-bold disabled:opacity-40 ${project.hasHonorFrame ? 'border-orange-500/40 bg-orange-500/15 text-orange-300' : 'border-[#3a3a42] bg-[#222326] text-gray-300 hover:border-orange-500/40'}`}>{honorSavingId === project.id ? 'Guardando...' : project.hasHonorFrame ? 'Quitar' : 'Activar'}</button>
                   </div>
                 ))}
               </div>
@@ -2783,7 +2783,7 @@ export default function App() {
 
               <div className="space-y-4">
                 {projects.filter(p => p.status === 'pending').map((proj) => (
-                  <div key={proj.id} className="bg-[#1a1a1e] border border-[#2e2e34] p-5 rounded-2xl flex flex-col md:flex-row gap-6 justify-between">
+                  <div key={proj.id} className="bg-[#1B1D20] border border-[#343537] p-5 rounded-2xl flex flex-col md:flex-row gap-6 justify-between">
                     <div className="flex gap-4">
                       <img src={proj.thumbnail} alt={proj.title} className="w-32 h-20 object-cover rounded-xl" />
                       <div className="space-y-1">
@@ -2791,8 +2791,8 @@ export default function App() {
                         <p className="text-xs text-gray-400">Por {proj.creator} ({proj.creatorEmail})</p>
                         <p className="text-xs text-gray-300 line-clamp-2">{proj.description}</p>
                         <div className="flex gap-2 pt-1">
-                          <span className="text-[10px] bg-[#222226] text-gray-300 px-2 py-0.5 rounded">{proj.type}</span>
-                          <span className="text-[10px] bg-[#222226] text-gray-300 px-2 py-0.5 rounded">{proj.format}</span>
+                          <span className="text-[10px] bg-[#222326] text-gray-300 px-2 py-0.5 rounded">{proj.type}</span>
+                          <span className="text-[10px] bg-[#222326] text-gray-300 px-2 py-0.5 rounded">{proj.format}</span>
                         </div>
                       </div>
                     </div>
@@ -2812,11 +2812,11 @@ export default function App() {
                           placeholder="Mensaje para el usuario (se guardará al aprobar o rechazar)..."
                           value={rejectionNote[proj.id] || ''}
                           onChange={(e) => setRejectionNote({ ...rejectionNote, [proj.id]: e.target.value })}
-                          className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-lg px-2.5 py-1.5 text-gray-200 focus:outline-none"
+                          className="w-full bg-[#101113] border border-[#343537] text-xs rounded-lg px-2.5 py-1.5 text-gray-200 focus:outline-none"
                         />
                         <button
                           onClick={() => handleRejectProject(proj.id)}
-                          className="w-full bg-red-600/20 hover:bg-red-600/40 text-red-400 border border-red-500/30 text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-1.5"
+                          className="w-full bg-gold-600/20 hover:bg-gold-600/40 text-gold-400 border border-gold-500/30 text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-1.5"
                         >
                           <XCircle className="w-4 h-4" /> Rechazar
                         </button>
@@ -2836,7 +2836,7 @@ export default function App() {
       ========================================== */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 lg:p-8 overflow-y-auto">
-          <div className="bg-[#161618] border border-[#2e2e34] w-full max-w-5xl max-h-[92vh] rounded-3xl overflow-y-auto shadow-2xl my-auto">
+          <div className="bg-[#17191B] border border-[#343537] w-full max-w-5xl max-h-[92vh] rounded-3xl overflow-y-auto shadow-2xl my-auto">
             {/* 1. Reproductor principal */}
             <div className="relative aspect-video bg-black">
               <ToonKnightPlayer videoId={selectedProject.youtubeId} title={selectedProject.title} onEnded={() => { if (autoPlayNext) playNextToonKnightVideo(); }} />
@@ -2850,13 +2850,13 @@ export default function App() {
             </div>
 
             <div className="px-5 py-5 sm:px-7 lg:px-8 space-y-6">
-              <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-[#222226] border border-[#33333b] p-3">
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-[#222326] border border-[#33333b] p-3">
                 <label className="flex items-center gap-2 text-sm font-semibold text-white cursor-pointer">
-                  <input type="checkbox" checked={autoPlayNext} onChange={e => setAutoPlayNext(e.target.checked)} className="accent-red-500 w-4 h-4" />
+                  <input type="checkbox" checked={autoPlayNext} onChange={e => setAutoPlayNext(e.target.checked)} className="accent-gold-500 w-4 h-4" />
                   Reproducción continua
                 </label>
                 {nextToonKnightVideo ? (
-                  <button type="button" onClick={playNextToonKnightVideo} className="text-xs font-bold text-red-300 hover:text-white text-right">
+                  <button type="button" onClick={playNextToonKnightVideo} className="text-xs font-bold text-gold-300 hover:text-white text-right">
                     Siguiente: {nextToonKnightVideo.episode?.title || nextToonKnightVideo.project.title} ▶
                   </button>
                 ) : <span className="text-xs text-gray-400">No hay más vídeos disponibles</span>}
@@ -2870,7 +2870,7 @@ export default function App() {
                   </p>
                   <div className="flex flex-wrap gap-2 mt-3">
                     {(selectedProject.genres || [selectedProject.genre].filter(Boolean)).map(genre => (
-                      <span key={genre} className="px-3 py-1 rounded-full bg-red-950/60 border border-red-800/50 text-red-300 text-xs font-semibold">{genre}</span>
+                      <span key={genre} className="px-3 py-1 rounded-full bg-gold-950/60 border border-gold-800/50 text-gold-300 text-xs font-semibold">{genre}</span>
                     ))}
                   </div>
                 </div>
@@ -2880,30 +2880,30 @@ export default function App() {
                     onClick={() => handleLikeProject(selectedProject.id)}
                     disabled={likedProjectIds.has(selectedProject.id)}
                     aria-pressed={likedProjectIds.has(selectedProject.id)}
-                    className={`text-xs font-bold px-3 py-2.5 rounded-xl border flex items-center gap-1.5 ${likedProjectIds.has(selectedProject.id) ? 'bg-red-950/40 border-red-900/60 text-red-200 cursor-not-allowed' : 'bg-[#222226] hover:bg-[#2e2e34] text-gray-200 border-[#2e2e34]'}`}
+                    className={`text-xs font-bold px-3 py-2.5 rounded-xl border flex items-center gap-1.5 ${likedProjectIds.has(selectedProject.id) ? 'bg-gold-950/40 border-gold-900/60 text-gold-200 cursor-not-allowed' : 'bg-[#222326] hover:bg-[#343537] text-gray-200 border-[#343537]'}`}
                   >
-                    <Heart className="w-4 h-4 text-red-500 fill-current" /> {likedProjectIds.has(selectedProject.id) ? 'Te gusta' : 'Me gusta'} · {selectedProject.likesCount || 0}
+                    <Heart className="w-4 h-4 text-gold-500 fill-current" /> {likedProjectIds.has(selectedProject.id) ? 'Te gusta' : 'Me gusta'} · {selectedProject.likesCount || 0}
                   </button>
                   {(user?.id && (selectedProject.creatorId === user.id || selectedProject.creatorEmail === user.email || isAdmin)) && <>
-                    <button onClick={() => handleOpenEditProject(selectedProject)} className="bg-[#222226] hover:bg-red-700 text-gray-200 text-xs font-bold px-3 py-2.5 rounded-xl border border-[#2e2e34]">Editar</button>
-                    <button onClick={() => handleDeleteOwnProject(selectedProject)} className="bg-red-900/70 hover:bg-red-700 text-white text-xs font-bold px-3 py-2.5 rounded-xl border border-red-800">Eliminar</button>
+                    <button onClick={() => handleOpenEditProject(selectedProject)} className="bg-[#222326] hover:bg-gold-700 text-gray-200 text-xs font-bold px-3 py-2.5 rounded-xl border border-[#343537]">Editar</button>
+                    <button onClick={() => handleDeleteOwnProject(selectedProject)} className="bg-gold-900/70 hover:bg-gold-700 text-white text-xs font-bold px-3 py-2.5 rounded-xl border border-gold-800">Eliminar</button>
                   </>}
-                  <button onClick={() => handleShareProject(selectedProject)} title="Compartir proyecto" className="bg-[#222226] hover:bg-[#2e2e34] text-gray-200 text-xs font-bold px-3 py-2.5 rounded-xl border border-[#2e2e34] flex items-center gap-1.5">
+                  <button onClick={() => handleShareProject(selectedProject)} title="Compartir proyecto" className="bg-[#222326] hover:bg-[#343537] text-gray-200 text-xs font-bold px-3 py-2.5 rounded-xl border border-[#343537] flex items-center gap-1.5">
                     <Share2 className="w-4 h-4" /> Compartir
                   </button>
-                  <button onClick={() => { setReportReason('Derechos de autor'); setReportDetails(''); setShowReportModal(true); }} title="Denunciar este proyecto" className="bg-red-950/50 hover:bg-red-900/70 text-red-200 text-xs font-bold px-3 py-2.5 rounded-xl border border-red-900/70 flex items-center gap-1.5"><Flag className="w-4 h-4" /> Denunciar</button>
+                  <button onClick={() => { setReportReason('Derechos de autor'); setReportDetails(''); setShowReportModal(true); }} title="Denunciar este proyecto" className="bg-gold-950/50 hover:bg-gold-900/70 text-gold-200 text-xs font-bold px-3 py-2.5 rounded-xl border border-gold-900/70 flex items-center gap-1.5"><Flag className="w-4 h-4" /> Denunciar</button>
                   <button
                     onClick={() => handleToggleFavorite(selectedProject.id)}
                     title="Guardar en favoritos"
                     aria-label="Guardar en favoritos"
-                    className={`p-2.5 rounded-xl border border-[#2e2e34] transition-colors ${user?.favorites?.includes(selectedProject.id) ? 'bg-red-600 text-white' : 'bg-[#222226] text-gray-300'}`}
+                    className={`p-2.5 rounded-xl border border-[#343537] transition-colors ${user?.favorites?.includes(selectedProject.id) ? 'bg-gold-600 text-white' : 'bg-[#222326] text-gray-300'}`}
                   >
                     <Bookmark className="w-4 h-4" />
                   </button>
                 </div>
               </section>
 
-              <p className="text-sm text-gray-300 leading-relaxed bg-[#121212] p-4 rounded-xl border border-[#2e2e34]">
+              <p className="text-sm text-gray-300 leading-relaxed bg-[#101113] p-4 rounded-xl border border-[#343537]">
                 {selectedProject.description}
               </p>
 
@@ -2914,15 +2914,15 @@ export default function App() {
                 {(selectedProject.creatorId || selectedProject.creatorProfileId) ? <button type="button" onClick={() => openPublicProfile((selectedProject.creatorId || selectedProject.creatorProfileId))} aria-label={`Ver perfil de ${projectDisplayName(selectedProject)}`} className="shrink-0">{projectDisplayPhoto(selectedProject) ? <img
                   src={projectDisplayPhoto(selectedProject)}
                   alt={`Avatar de ${projectDisplayName(selectedProject)}`}
-                  className="h-16 w-16 rounded-full border-2 border-red-500/70 bg-[#292930] object-cover transition hover:border-red-300 sm:h-20 sm:w-20"
-                /> : <span className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-red-500/70 bg-[#292930] text-gray-300 sm:h-20 sm:w-20"><User className="h-8 w-8" /></span>}</button> : <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#45454d] bg-[#24242a] text-gray-400 sm:h-20 sm:w-20"><Building2 className="h-8 w-8" /></div>}
+                  className="h-16 w-16 rounded-full border-2 border-gold-500/70 bg-[#292B2E] object-cover transition hover:border-gold-300 sm:h-20 sm:w-20"
+                /> : <span className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gold-500/70 bg-[#292B2E] text-gray-300 sm:h-20 sm:w-20"><User className="h-8 w-8" /></span>}</button> : <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#45454d] bg-[#24242a] text-gray-400 sm:h-20 sm:w-20"><Building2 className="h-8 w-8" /></div>}
                 <div className="min-w-0 flex-1 text-center sm:text-left">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-red-300 font-bold mb-1">{(selectedProject.creatorId || selectedProject.creatorProfileId) ? 'Conoce al creador' : 'Autor / estudio'}</p>
-                  <h3 className="text-lg font-bold text-white">{(selectedProject.creatorId || selectedProject.creatorProfileId) ? <button type="button" onClick={() => openPublicProfile((selectedProject.creatorId || selectedProject.creatorProfileId))} className="hover:text-red-300">{projectDisplayName(selectedProject)}</button> : (selectedProject.creatorName || selectedProject.creator || 'Creador de TuRodaje')}</h3>
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-gold-300 font-bold mb-1">{(selectedProject.creatorId || selectedProject.creatorProfileId) ? 'Conoce al creador' : 'Autor / estudio'}</p>
+                  <h3 className="text-lg font-bold text-white">{(selectedProject.creatorId || selectedProject.creatorProfileId) ? <button type="button" onClick={() => openPublicProfile((selectedProject.creatorId || selectedProject.creatorProfileId))} className="hover:text-gold-300">{projectDisplayName(selectedProject)}</button> : (selectedProject.creatorName || selectedProject.creator || 'Creador de TuRodaje')}</h3>
                   <p className="text-sm text-gray-400 mt-1 whitespace-pre-wrap">{selectedProject.creatorBio || ((selectedProject.creatorId || selectedProject.creatorProfileId) ? 'Creador de contenido en TuRodaje.' : 'Proyecto atribuido a un creador, estudio o equipo. La cuenta que lo publica puede ser diferente.')}</p>
                   <div className="flex flex-wrap gap-2 mt-3 justify-center sm:justify-start">
                     {(selectedProject.creatorPatreon || selectedProject.patreonUrl) && (
-                      <a href={selectedProject.creatorPatreon || selectedProject.patreonUrl} target="_blank" rel="noopener noreferrer" className="bg-[#ff424d] hover:bg-[#e63946] text-white text-xs font-bold px-3 py-2 rounded-lg transition-colors">
+                      <a href={selectedProject.creatorPatreon || selectedProject.patreonUrl} target="_blank" rel="noopener noreferrer" className="bg-[#D6AD60] hover:bg-[#C59A50] text-white text-xs font-bold px-3 py-2 rounded-lg transition-colors">
                         Apoyar en Patreon ↗
                       </a>
                     )}
@@ -2940,21 +2940,21 @@ export default function App() {
               {selectedProject.format === 'Serie' && selectedProject.seasons?.length > 0 && (
                 <section className="space-y-4 pt-1">
                   <h3 className="text-sm font-bold text-white uppercase tracking-wider">Temporadas y episodios</h3>
-                  <div className="flex flex-wrap gap-2 border-b border-[#2e2e34] pb-3">
+                  <div className="flex flex-wrap gap-2 border-b border-[#343537] pb-3">
                     {selectedProject.seasons.map((season, idx) => (
-                      <button key={season.seasonNumber || idx} type="button" onClick={() => setActiveSeasonIndex(idx)} className={`px-4 py-2 rounded-xl text-xs font-bold border transition-colors ${activeSeasonIndex === idx ? 'bg-red-600 border-red-500 text-white' : 'bg-[#222226] border-[#2e2e34] text-gray-300 hover:bg-[#2e2e34]'}`}>
+                      <button key={season.seasonNumber || idx} type="button" onClick={() => setActiveSeasonIndex(idx)} className={`px-4 py-2 rounded-xl text-xs font-bold border transition-colors ${activeSeasonIndex === idx ? 'bg-gold-600 border-gold-500 text-white' : 'bg-[#222326] border-[#343537] text-gray-300 hover:bg-[#343537]'}`}>
                         Temporada {season.seasonNumber || idx + 1}
                       </button>
                     ))}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {(selectedProject.seasons[Math.min(activeSeasonIndex, selectedProject.seasons.length - 1)]?.episodes || []).map((ep, idx) => (
-                      <div key={ep.id || `${selectedProject.id}-s${activeSeasonIndex}-e${idx}`} className={`p-3 rounded-xl flex items-center gap-3 transition-colors border ${selectedProject.youtubeId === ep.youtubeId ? 'bg-red-950/40 border-red-600' : 'bg-[#222226] hover:bg-[#2e2e34] border-[#2e2e34]'}`}>
+                      <div key={ep.id || `${selectedProject.id}-s${activeSeasonIndex}-e${idx}`} className={`p-3 rounded-xl flex items-center gap-3 transition-colors border ${selectedProject.youtubeId === ep.youtubeId ? 'bg-gold-950/40 border-gold-600' : 'bg-[#222326] hover:bg-[#343537] border-[#343537]'}`}>
                         <button type="button" onClick={() => { setActiveSeasonIndex(activeSeasonIndex); setSelectedProject(current => current ? { ...current, youtubeId: ep.youtubeId } : current); }} className="flex-1 min-w-0 text-left flex items-center gap-3">
                           <img src={ep.thumbnail || (ep.youtubeId ? `https://img.youtube.com/vi/${ep.youtubeId}/mqdefault.jpg` : selectedProject.thumbnail)} alt="" className="w-24 aspect-video object-cover rounded-lg bg-black" />
-                          <span className="min-w-0"><span className="block text-[10px] text-red-400 font-bold uppercase">Episodio {ep.episodeNumber || idx + 1}</span><span className="block text-xs font-bold text-gray-200 mt-1">{ep.title || `Episodio ${idx + 1}`}</span><span className="block text-[10px] text-gray-400 mt-1">Reproducir episodio</span></span>
+                          <span className="min-w-0"><span className="block text-[10px] text-gold-400 font-bold uppercase">Episodio {ep.episodeNumber || idx + 1}</span><span className="block text-xs font-bold text-gray-200 mt-1">{ep.title || `Episodio ${idx + 1}`}</span><span className="block text-[10px] text-gray-400 mt-1">Reproducir episodio</span></span>
                         </button>
-                        {isAdmin && <button type="button" onClick={() => handleDeleteEpisode(selectedProject.id, Math.min(activeSeasonIndex, selectedProject.seasons.length - 1), idx)} title="Eliminar episodio" aria-label={`Eliminar episodio ${ep.title || idx + 1}`} className="shrink-0 p-2 bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>}
+                        {isAdmin && <button type="button" onClick={() => handleDeleteEpisode(selectedProject.id, Math.min(activeSeasonIndex, selectedProject.seasons.length - 1), idx)} title="Eliminar episodio" aria-label={`Eliminar episodio ${ep.title || idx + 1}`} className="shrink-0 p-2 bg-gold-600/20 hover:bg-gold-600 text-gold-300 hover:text-white rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>}
                       </div>
                     ))}
                   </div>
@@ -2967,7 +2967,7 @@ export default function App() {
                 ((project.creatorEmail || '').toLowerCase() && (project.creatorEmail || '').toLowerCase() === (selectedProject.creatorEmail || '').toLowerCase()) ||
                 (!selectedProject.creatorId && !selectedProject.creatorEmail && (project.creatorName || project.creator) === (selectedProject.creatorName || selectedProject.creator))
               )).length > 0 && (
-                <section className="border-t border-[#2e2e34] pt-5 space-y-3">
+                <section className="border-t border-[#343537] pt-5 space-y-3">
                   <h3 className="text-sm font-bold text-white">Más proyectos de este creador</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {projects.filter(project => project.id !== selectedProject.id && (
@@ -2975,7 +2975,7 @@ export default function App() {
                       ((project.creatorEmail || '').toLowerCase() && (project.creatorEmail || '').toLowerCase() === (selectedProject.creatorEmail || '').toLowerCase()) ||
                       (!selectedProject.creatorId && !selectedProject.creatorEmail && (project.creatorName || project.creator) === (selectedProject.creatorName || selectedProject.creator))
                     )).map(project => (
-                      <button key={project.id} type="button" onClick={() => openProject(project)} className="bg-[#222226] hover:bg-[#2e2e34] border border-[#2e2e34] rounded-xl p-3 text-left flex gap-3 items-center transition-colors">
+                      <button key={project.id} type="button" onClick={() => openProject(project)} className="bg-[#222326] hover:bg-[#343537] border border-[#343537] rounded-xl p-3 text-left flex gap-3 items-center transition-colors">
                         <span className={`relative block w-24 shrink-0 ${project.hasHonorFrame ? 'honor-project-thumbnail' : ''}`}><img src={project.thumbnail || (project.youtubeId ? `https://img.youtube.com/vi/${project.youtubeId}/mqdefault.jpg` : '')} alt="" className="aspect-video w-full rounded-lg bg-black object-cover" />{project.hasHonorFrame && <img src="/images/escudo-de-honor.webp" alt="Escudo de Honor" className="honor-badge-image honor-badge-image-small" />}</span>
                         <span className="min-w-0"><span className="block text-sm font-semibold text-white truncate">{project.title}</span><span className="block text-xs text-gray-400 mt-1">{project.format || project.type || 'Proyecto'}</span></span>
                       </button>
@@ -2990,13 +2990,13 @@ export default function App() {
 
       {showReportModal && selectedProject && (
         <div className="fixed inset-0 z-[70] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div role="dialog" aria-modal="true" aria-labelledby="report-title" className="bg-[#161618] border border-red-900/70 w-full max-w-lg rounded-2xl p-6 space-y-5 shadow-2xl">
+          <div role="dialog" aria-modal="true" aria-labelledby="report-title" className="bg-[#17191B] border border-gold-900/70 w-full max-w-lg rounded-2xl p-6 space-y-5 shadow-2xl">
             <div className="flex items-start justify-between gap-4"><div><h2 id="report-title" className="text-xl font-bold text-white">Denunciar proyecto</h2><p className="text-sm text-gray-400 mt-1">La denuncia se refiere a «{selectedProject.title}».</p></div><button type="button" onClick={() => setShowReportModal(false)} aria-label="Cerrar denuncia" className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button></div>
             <form onSubmit={handleSubmitReport} className="space-y-4">
-              <label className="block text-xs font-bold text-gray-300">Motivo de la denuncia<select value={reportReason} onChange={e => setReportReason(e.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white"><option>Derechos de autor</option><option>Contenido ilegal</option><option>Contenido sexual o violento inapropiado</option><option>Spam o enlace engañoso</option><option>El vídeo no corresponde al proyecto</option><option>Otro motivo</option></select></label>
-              <label className="block text-xs font-bold text-gray-300">Detalles (opcional)<textarea rows={4} maxLength={1500} value={reportDetails} onChange={e => setReportDetails(e.target.value)} placeholder="Explica brevemente el problema y, si procede, aporta contexto." className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" /></label>
+              <label className="block text-xs font-bold text-gray-300">Motivo de la denuncia<select value={reportReason} onChange={e => setReportReason(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white"><option>Derechos de autor</option><option>Contenido ilegal</option><option>Contenido sexual o violento inapropiado</option><option>Spam o enlace engañoso</option><option>El vídeo no corresponde al proyecto</option><option>Otro motivo</option></select></label>
+              <label className="block text-xs font-bold text-gray-300">Detalles (opcional)<textarea rows={4} maxLength={1500} value={reportDetails} onChange={e => setReportDetails(e.target.value)} placeholder="Explica brevemente el problema y, si procede, aporta contexto." className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>
               <p className="text-[11px] text-gray-500">Usa esta función de buena fe. Se enviarán el identificador del proyecto, el motivo y los detalles; si has iniciado sesión, también se asociará tu cuenta a la denuncia.</p>
-              <div className="flex gap-3"><button type="button" onClick={() => setShowReportModal(false)} className="flex-1 bg-[#222226] hover:bg-[#2e2e34] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-red-700 hover:bg-red-600 text-white font-bold py-3 rounded-xl">Enviar denuncia</button></div>
+              <div className="flex gap-3"><button type="button" onClick={() => setShowReportModal(false)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-gold-700 hover:bg-gold-600 text-white font-bold py-3 rounded-xl">Enviar denuncia</button></div>
             </form>
           </div>
         </div>
@@ -3004,54 +3004,54 @@ export default function App() {
 
       {showPublishWarning && (
         <div className="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div role="alertdialog" aria-modal="true" className="bg-[#161618] border border-amber-500/40 w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl">
+          <div role="alertdialog" aria-modal="true" className="bg-[#17191B] border border-amber-500/40 w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl">
             <div className="flex items-center gap-3"><ShieldCheck className="w-7 h-7 text-amber-400" /><h2 className="text-xl font-bold text-white">Antes de publicar tu proyecto</h2></div>
             <p className="text-sm text-gray-300 leading-relaxed">Asegúrate de que tienes los derechos necesarios sobre el contenido y que los enlaces funcionan. La publicación quedará pendiente de revisión antes de aparecer públicamente. No publiques material ilegal, ofensivo o que infrinja derechos de terceros.</p>
             <div className="flex gap-3">
-              <button onClick={() => setShowPublishWarning(false)} className="flex-1 bg-[#222226] hover:bg-[#2e2e34] text-gray-200 font-semibold py-3 rounded-xl">Cancelar</button>
-              <button onClick={() => { setShowPublishWarning(false); openSubmitProjectModal(); }} className="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl">Entendido, continuar</button>
+              <button onClick={() => setShowPublishWarning(false)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 font-semibold py-3 rounded-xl">Cancelar</button>
+              <button onClick={() => { setShowPublishWarning(false); openSubmitProjectModal(); }} className="flex-1 bg-gold-600 hover:bg-gold-500 text-white font-bold py-3 rounded-xl">Entendido, continuar</button>
             </div>
           </div>
         </div>
       )}
       {showCarouselEditor && isAdmin && (
         <div className="fixed inset-0 z-[75] flex items-center justify-center overflow-y-auto bg-black/80 p-4">
-          <form onSubmit={saveCarouselItem} className="my-auto max-h-[90vh] w-full max-w-xl space-y-4 overflow-y-auto rounded-2xl border border-[#34343b] bg-[#17171b] p-6">
-            <div className="flex items-center justify-between"><h2 className="text-lg font-bold text-white">{editingCarouselId ? 'Editar imagen del carrusel' : 'Añadir imagen al carrusel'}</h2><button type="button" onClick={() => { setShowCarouselEditor(false); setCarouselImageFile(null); }} className="rounded-lg p-2 text-gray-400 hover:bg-[#292930]"><X className="h-4 w-4" /></button></div>
-            <label className="block text-xs text-gray-400">Título<input value={carouselForm.title} onChange={event => setCarouselForm(current => ({ ...current, title: event.target.value }))} maxLength={140} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label>
-            <label className="block text-xs text-gray-400">Descripción breve<textarea rows={3} value={carouselForm.tagline} onChange={event => setCarouselForm(current => ({ ...current, tagline: event.target.value }))} maxLength={500} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label>
-            <label className="block text-xs text-gray-400">Categoría<input value={carouselForm.category} onChange={event => setCarouselForm(current => ({ ...current, category: event.target.value }))} maxLength={60} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label>
-            <label className="block text-xs text-gray-400">URL de imagen (opcional si subes un archivo)<input value={carouselForm.thumbnail} onChange={event => setCarouselForm(current => ({ ...current, thumbnail: event.target.value, thumbnailPath: event.target.value === current.thumbnail ? current.thumbnailPath : '' }))} placeholder="/images/carousel/imagen.jpg o https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">O subir imagen desde tu dispositivo<input type="file" accept="image/*" onChange={event => setCarouselImageFile(event.target.files?.[0] || null)} className="mt-1 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292930] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" /><span className="mt-1 block text-[10px] text-gray-500">Imagen de hasta 5 MB. {carouselImageFile ? `Seleccionada: ${carouselImageFile.name}` : ''}</span></label>
-            <label className="block text-xs text-gray-400">Enlace del botón<input required type="url" value={carouselForm.videoUrl} onChange={event => setCarouselForm(current => ({ ...current, videoUrl: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label>
-            <label className="block text-xs text-gray-400">Texto del botón<input value={carouselForm.linkText} onChange={event => setCarouselForm(current => ({ ...current, linkText: event.target.value }))} maxLength={40} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label>
-            <div className="flex gap-2"><button type="button" onClick={() => { setShowCarouselEditor(false); setCarouselImageFile(null); }} className="flex-1 rounded-xl bg-[#292930] py-3 text-sm text-gray-200">Cancelar</button><button type="submit" disabled={savingCarousel} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-bold text-white disabled:opacity-50">{savingCarousel ? 'Guardando...' : 'Guardar'}</button></div>
+          <form onSubmit={saveCarouselItem} className="my-auto max-h-[90vh] w-full max-w-xl space-y-4 overflow-y-auto rounded-2xl border border-[#3A3B3E] bg-[#17171b] p-6">
+            <div className="flex items-center justify-between"><h2 className="text-lg font-bold text-white">{editingCarouselId ? 'Editar imagen del carrusel' : 'Añadir imagen al carrusel'}</h2><button type="button" onClick={() => { setShowCarouselEditor(false); setCarouselImageFile(null); }} className="rounded-lg p-2 text-gray-400 hover:bg-[#292B2E]"><X className="h-4 w-4" /></button></div>
+            <label className="block text-xs text-gray-400">Título<input value={carouselForm.title} onChange={event => setCarouselForm(current => ({ ...current, title: event.target.value }))} maxLength={140} className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
+            <label className="block text-xs text-gray-400">Descripción breve<textarea rows={3} value={carouselForm.tagline} onChange={event => setCarouselForm(current => ({ ...current, tagline: event.target.value }))} maxLength={500} className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
+            <label className="block text-xs text-gray-400">Categoría<input value={carouselForm.category} onChange={event => setCarouselForm(current => ({ ...current, category: event.target.value }))} maxLength={60} className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
+            <label className="block text-xs text-gray-400">URL de imagen (opcional si subes un archivo)<input value={carouselForm.thumbnail} onChange={event => setCarouselForm(current => ({ ...current, thumbnail: event.target.value, thumbnailPath: event.target.value === current.thumbnail ? current.thumbnailPath : '' }))} placeholder="/images/carousel/imagen.jpg o https://..." className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">O subir imagen desde tu dispositivo<input type="file" accept="image/*" onChange={event => setCarouselImageFile(event.target.files?.[0] || null)} className="mt-1 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292B2E] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" /><span className="mt-1 block text-[10px] text-gray-500">Imagen de hasta 5 MB. {carouselImageFile ? `Seleccionada: ${carouselImageFile.name}` : ''}</span></label>
+            <label className="block text-xs text-gray-400">Enlace del botón<input required type="url" value={carouselForm.videoUrl} onChange={event => setCarouselForm(current => ({ ...current, videoUrl: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
+            <label className="block text-xs text-gray-400">Texto del botón<input value={carouselForm.linkText} onChange={event => setCarouselForm(current => ({ ...current, linkText: event.target.value }))} maxLength={40} className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
+            <div className="flex gap-2"><button type="button" onClick={() => { setShowCarouselEditor(false); setCarouselImageFile(null); }} className="flex-1 rounded-xl bg-[#292B2E] py-3 text-sm text-gray-200">Cancelar</button><button type="submit" disabled={savingCarousel} className="flex-1 rounded-xl bg-gold-600 py-3 text-sm font-bold text-white disabled:opacity-50">{savingCarousel ? 'Guardando...' : 'Guardar'}</button></div>
           </form>
         </div>
       )}
 
       {editingProject && (
         <div className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center p-4 overflow-y-auto">
-          <form onSubmit={handleSaveEditedProject} className="bg-[#161618] border border-[#2e2e34] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 lg:p-8 space-y-4 my-auto">
+          <form onSubmit={handleSaveEditedProject} className="bg-[#17191B] border border-[#343537] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 lg:p-8 space-y-4 my-auto">
             <h2 className="text-xl font-bold text-white">Editar proyecto</h2>
-            <label className="block text-xs text-gray-400">Título<input required value={editProjectForm.title} onChange={e => setEditProjectForm({ ...editProjectForm, title: e.target.value })} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" /></label>
-            {editProjectForm.format !== 'Serie' && <label className="block text-xs text-gray-400">Enlace de YouTube<input type="url" value={editProjectForm.youtubeUrl} onChange={e => setEditProjectForm({ ...editProjectForm, youtubeUrl: e.target.value })} placeholder="https://www.youtube.com/watch?v=..." className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" /></label>}
+            <label className="block text-xs text-gray-400">Título<input required value={editProjectForm.title} onChange={e => setEditProjectForm({ ...editProjectForm, title: e.target.value })} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>
+            {editProjectForm.format !== 'Serie' && <label className="block text-xs text-gray-400">Enlace de YouTube<input type="url" value={editProjectForm.youtubeUrl} onChange={e => setEditProjectForm({ ...editProjectForm, youtubeUrl: e.target.value })} placeholder="https://www.youtube.com/watch?v=..." className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <label className="block text-xs text-gray-400">Técnica
-                <select value={editProjectForm.type} onChange={e => setEditProjectForm({ ...editProjectForm, type: e.target.value })} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white">
+                <select value={editProjectForm.type} onChange={e => setEditProjectForm({ ...editProjectForm, type: e.target.value })} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white">
                   <option value="Acción real">Acción real</option><option value="Documental">Documental</option><option value="Experimental">Experimental</option><option value="Híbrido">Híbrido</option>
                     <option value="Animación">Animación</option>
                 </select>
               </label>
               <label className="block text-xs text-gray-400">Categoría de proyecto
-                <select value={editProjectForm.format} onChange={e => setEditProjectForm({ ...editProjectForm, format: e.target.value })} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white">
+                <select value={editProjectForm.format} onChange={e => setEditProjectForm({ ...editProjectForm, format: e.target.value })} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white">
                   <option value="Cortometraje">Cortometraje</option><option value="Largometraje">Largometraje</option><option value="Serie">Serie</option><option value="Tráiler">Tráiler</option><option value="Musical">Musical</option><option value="Crowdfunding">Crowdfunding / Kickstarter</option><option value="Tutoriales">Tutoriales</option><option value="Making of">Making of</option>
                 </select>
               </label>
               <label className="block text-xs text-gray-400">Año de realización
-                <input type="number" min="1900" max="2100" required value={editProjectForm.year} onChange={e => setEditProjectForm({ ...editProjectForm, year: e.target.value })} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" />
+                <input type="number" min="1900" max="2100" required value={editProjectForm.year} onChange={e => setEditProjectForm({ ...editProjectForm, year: e.target.value })} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" />
               </label>
               <label className="block text-xs text-gray-400">Duración
-                <input value={editProjectForm.duration} onChange={e => setEditProjectForm({ ...editProjectForm, duration: e.target.value })} placeholder="05:00" className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" />
+                <input value={editProjectForm.duration} onChange={e => setEditProjectForm({ ...editProjectForm, duration: e.target.value })} placeholder="05:00" className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" />
               </label>
             </div>
             <div>
@@ -3059,33 +3059,33 @@ export default function App() {
               <div className="flex flex-wrap gap-2">
                 {GENRES_LIST.map(genre => {
                   const isSelected = editProjectGenres.includes(genre);
-                  return <button key={genre} type="button" onClick={() => setEditProjectGenres(current => isSelected ? current.filter(item => item !== genre) : (current.length < 3 ? [...current, genre] : current))} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${isSelected ? 'bg-red-600 border-red-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'}`}>{genre}{isSelected ? ' ✓' : ''}</button>;
+                  return <button key={genre} type="button" onClick={() => setEditProjectGenres(current => isSelected ? current.filter(item => item !== genre) : (current.length < 3 ? [...current, genre] : current))} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${isSelected ? 'bg-gold-600 border-gold-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'}`}>{genre}{isSelected ? ' ✓' : ''}</button>;
                 })}
               </div>
               <p className="text-[10px] text-gray-500 mt-2">{editProjectGenres.length}/3 géneros seleccionados</p>
             </div>
-            <label className="block text-xs text-gray-400">Enlace de Patreon (opcional)<input type="url" value={editProjectForm.patreonUrl} onChange={e => setEditProjectForm({ ...editProjectForm, patreonUrl: e.target.value })} placeholder="https://www.patreon.com/..." className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" /></label>
-            <label className="block text-xs text-gray-400">Enlace de campaña (Kickstarter u otra plataforma, opcional)<input type="url" value={editProjectForm.campaignUrl} onChange={e => setEditProjectForm({ ...editProjectForm, campaignUrl: e.target.value })} placeholder="https://www.kickstarter.com/..." className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" /></label>
-            <label className="block text-xs text-gray-400">Nombre del creador, estudio o equipo<input value={editProjectForm.creator || ''} onChange={event => setEditProjectForm(current => ({ ...current, creator: event.target.value, linkCreatorToProfile: normalizeFilterText(event.target.value) === normalizeFilterText(editingProject.creatorName || editingProject.creator || '') ? current.linkCreatorToProfile : false }))} maxLength={120} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" /></label>
+            <label className="block text-xs text-gray-400">Enlace de Patreon (opcional)<input type="url" value={editProjectForm.patreonUrl} onChange={e => setEditProjectForm({ ...editProjectForm, patreonUrl: e.target.value })} placeholder="https://www.patreon.com/..." className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>
+            <label className="block text-xs text-gray-400">Enlace de campaña (Kickstarter u otra plataforma, opcional)<input type="url" value={editProjectForm.campaignUrl} onChange={e => setEditProjectForm({ ...editProjectForm, campaignUrl: e.target.value })} placeholder="https://www.kickstarter.com/..." className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>
+            <label className="block text-xs text-gray-400">Nombre del creador, estudio o equipo<input value={editProjectForm.creator || ''} onChange={event => setEditProjectForm(current => ({ ...current, creator: event.target.value, linkCreatorToProfile: normalizeFilterText(event.target.value) === normalizeFilterText(editingProject.creatorName || editingProject.creator || '') ? current.linkCreatorToProfile : false }))} maxLength={120} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>
             <label className="flex items-start gap-2 text-[11px] text-gray-400"><input type="checkbox" checked={Boolean(editProjectForm.linkCreatorToProfile)} onChange={event => setEditProjectForm(current => ({ ...current, linkCreatorToProfile: event.target.checked }))} className="mt-0.5" />Vincular el creador al perfil público de la cuenta que subió el proyecto. Desmárcalo si pertenece a un estudio, equipo u otra persona.</label>
-            <label className="block text-xs text-gray-400">Descripción<textarea rows={4} value={editProjectForm.description} onChange={e => setEditProjectForm({ ...editProjectForm, description: e.target.value })} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-white" /></label>
+            <label className="block text-xs text-gray-400">Descripción<textarea rows={4} value={editProjectForm.description} onChange={e => setEditProjectForm({ ...editProjectForm, description: e.target.value })} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>
             {editProjectForm.format === 'Serie' && (
-              <div className="space-y-4 border border-[#2e2e34] bg-[#121212] p-4 rounded-2xl">
+              <div className="space-y-4 border border-[#343537] bg-[#101113] p-4 rounded-2xl">
                 <div><h3 className="text-sm font-bold text-white">Temporadas y episodios</h3><p className="text-[10px] text-gray-500 mt-1">Puedes editar los episodios existentes, añadir nuevos o eliminar temporadas.</p></div>
-                {editSeasons.map((season, seasonIndex) => <div key={`edit-season-${seasonIndex}`} className="space-y-3 border-b border-[#2e2e34] pb-4 last:border-0 last:pb-0">
-                  <div className="flex items-center justify-between gap-3"><h4 className="text-xs font-bold text-red-300">Temporada {seasonIndex + 1}</h4>{editSeasons.length > 1 && <button type="button" onClick={() => setEditSeasons(current => current.filter((_, index) => index !== seasonIndex).map((item, index) => ({ ...item, seasonNumber: index + 1 })))} className="text-[10px] text-red-300 border border-red-500/30 rounded-lg px-2.5 py-1.5">Eliminar temporada</button>}</div>
-                  {season.episodes.map((episode, episodeIndex) => <div key={`edit-episode-${seasonIndex}-${episodeIndex}`} className="grid grid-cols-1 sm:grid-cols-6 gap-2 p-3 rounded-xl bg-[#1a1a1e]">
-                    <label className="sm:col-span-1 text-[10px] text-gray-400">N.º<input type="number" min="1" required value={episode.episodeNumber} onChange={event => handleEditSeasonChange(seasonIndex, episodeIndex, 'episodeNumber', event.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg px-2 py-2 text-xs text-white" /></label>
-                    <label className="sm:col-span-2 text-[10px] text-gray-400">Título del episodio<input required value={episode.title || ''} onChange={event => handleEditSeasonChange(seasonIndex, episodeIndex, 'title', event.target.value)} className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg px-2 py-2 text-xs text-white" /></label>
-                    <label className="sm:col-span-3 text-[10px] text-gray-400">Enlace de YouTube<input type="url" required value={episode.youtubeUrl || ''} onChange={event => handleEditSeasonChange(seasonIndex, episodeIndex, 'youtubeUrl', event.target.value)} placeholder="https://youtube.com/watch?v=..." className="mt-1 w-full bg-[#121212] border border-[#2e2e34] rounded-lg px-2 py-2 text-xs text-white" /></label>
-                    <div className="sm:col-span-6 flex justify-end">{season.episodes.length > 1 && <button type="button" onClick={() => setEditSeasons(current => current.map((item, index) => index !== seasonIndex ? item : ({ ...item, episodes: item.episodes.filter((_, index) => index !== episodeIndex) })))} className="text-[10px] text-red-300 hover:text-red-200">Eliminar episodio</button>}</div>
+                {editSeasons.map((season, seasonIndex) => <div key={`edit-season-${seasonIndex}`} className="space-y-3 border-b border-[#343537] pb-4 last:border-0 last:pb-0">
+                  <div className="flex items-center justify-between gap-3"><h4 className="text-xs font-bold text-gold-300">Temporada {seasonIndex + 1}</h4>{editSeasons.length > 1 && <button type="button" onClick={() => setEditSeasons(current => current.filter((_, index) => index !== seasonIndex).map((item, index) => ({ ...item, seasonNumber: index + 1 })))} className="text-[10px] text-gold-300 border border-gold-500/30 rounded-lg px-2.5 py-1.5">Eliminar temporada</button>}</div>
+                  {season.episodes.map((episode, episodeIndex) => <div key={`edit-episode-${seasonIndex}-${episodeIndex}`} className="grid grid-cols-1 sm:grid-cols-6 gap-2 p-3 rounded-xl bg-[#1B1D20]">
+                    <label className="sm:col-span-1 text-[10px] text-gray-400">N.º<input type="number" min="1" required value={episode.episodeNumber} onChange={event => handleEditSeasonChange(seasonIndex, episodeIndex, 'episodeNumber', event.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg px-2 py-2 text-xs text-white" /></label>
+                    <label className="sm:col-span-2 text-[10px] text-gray-400">Título del episodio<input required value={episode.title || ''} onChange={event => handleEditSeasonChange(seasonIndex, episodeIndex, 'title', event.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg px-2 py-2 text-xs text-white" /></label>
+                    <label className="sm:col-span-3 text-[10px] text-gray-400">Enlace de YouTube<input type="url" required value={episode.youtubeUrl || ''} onChange={event => handleEditSeasonChange(seasonIndex, episodeIndex, 'youtubeUrl', event.target.value)} placeholder="https://youtube.com/watch?v=..." className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg px-2 py-2 text-xs text-white" /></label>
+                    <div className="sm:col-span-6 flex justify-end">{season.episodes.length > 1 && <button type="button" onClick={() => setEditSeasons(current => current.map((item, index) => index !== seasonIndex ? item : ({ ...item, episodes: item.episodes.filter((_, index) => index !== episodeIndex) })))} className="text-[10px] text-gold-300 hover:text-gold-200">Eliminar episodio</button>}</div>
                   </div>)}
-                  <button type="button" onClick={() => handleAddEditEpisode(seasonIndex)} className="text-xs font-bold text-red-300 hover:text-red-200">+ Añadir episodio</button>
+                  <button type="button" onClick={() => handleAddEditEpisode(seasonIndex)} className="text-xs font-bold text-gold-300 hover:text-gold-200">+ Añadir episodio</button>
                 </div>)}
-                <button type="button" onClick={handleAddEditSeason} className="w-full border border-dashed border-red-500/50 text-red-300 hover:bg-red-600/10 rounded-xl py-2.5 text-xs font-bold">+ Añadir temporada</button>
+                <button type="button" onClick={handleAddEditSeason} className="w-full border border-dashed border-gold-500/50 text-gold-300 hover:bg-gold-600/10 rounded-xl py-2.5 text-xs font-bold">+ Añadir temporada</button>
               </div>
             )}
-            <div className="flex gap-3"><button type="button" onClick={() => setEditingProject(null)} className="flex-1 bg-[#222226] hover:bg-[#2e2e34] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-red-600 hover:bg-red-500 text-white py-3 rounded-xl font-bold">Guardar cambios</button></div>
+            <div className="flex gap-3"><button type="button" onClick={() => setEditingProject(null)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-gold-600 hover:bg-gold-500 text-white py-3 rounded-xl font-bold">Guardar cambios</button></div>
           </form>
         </div>
       )}
@@ -3095,7 +3095,7 @@ export default function App() {
       ========================================== */}
       {showSubmitModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#161618] border border-[#2e2e34] w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl my-auto">
+          <div className="bg-[#17191B] border border-[#343537] w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl my-auto">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-white">Publica tu trabajo</h2>
               <button onClick={() => setShowSubmitModal(false)} className="text-gray-400 hover:text-white">
@@ -3111,7 +3111,7 @@ export default function App() {
                   required
                   value={newProjectForm.title}
                   onChange={(e) => setNewProjectForm({ ...newProjectForm, title: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500"
+                  className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500"
                 />
               </div>
 
@@ -3120,7 +3120,7 @@ export default function App() {
                 <input type="text" maxLength={120} value={newProjectForm.creator} onChange={event => {
                   const creator = event.target.value;
                   setNewProjectForm(current => ({ ...current, creator, linkCreatorToProfile: !creator.trim() || normalizeFilterText(creator) === normalizeFilterText(user?.name || '') }));
-                }} placeholder={user?.name || 'Nombre del creador o estudio'} className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                }} placeholder={user?.name || 'Nombre del creador o estudio'} className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
                 <label className="mt-2 flex items-start gap-2 text-[11px] text-gray-400"><input type="checkbox" checked={newProjectForm.linkCreatorToProfile} onChange={event => setNewProjectForm(current => ({ ...current, linkCreatorToProfile: event.target.checked }))} className="mt-0.5" />Vincular este creador a mi perfil público. Desmárcalo si el proyecto pertenece a un estudio, equipo u otra persona.</label>
                 <p className="mt-1 text-[10px] text-gray-500">La cuenta que publica el proyecto se guarda por separado para permisos y gestión; no tiene por qué ser el autor indicado.</p>
               </div>
@@ -3133,7 +3133,7 @@ export default function App() {
                   placeholder="https://www.youtube.com/watch?v=..."
                   value={newProjectForm.youtubeUrl}
                   onChange={(e) => setNewProjectForm({ ...newProjectForm, youtubeUrl: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500"
+                  className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500"
                 />
               </div>}
 
@@ -3143,7 +3143,7 @@ export default function App() {
                   <select
                     value={newProjectForm.type}
                     onChange={(e) => setNewProjectForm({ ...newProjectForm, type: e.target.value })}
-                    className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3 py-2.5 text-white"
+                    className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3 py-2.5 text-white"
                   >
                     <option value="Acción real">Acción real</option>
                     <option value="Documental">Documental</option>
@@ -3158,7 +3158,7 @@ export default function App() {
                   <select
                     value={newProjectForm.format}
                     onChange={(e) => setNewProjectForm({ ...newProjectForm, format: e.target.value })}
-                    className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3 py-2.5 text-white"
+                    className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3 py-2.5 text-white"
                   >
                     <option value="Cortometraje">Cortometraje</option>
                     <option value="Largometraje">Largometraje</option>
@@ -3173,40 +3173,40 @@ export default function App() {
               </div>
 
               <label className="block text-xs font-bold text-gray-400">Enlace de campaña de crowdfunding (opcional)
-                <input type="url" value={newProjectForm.campaignUrl} onChange={e => setNewProjectForm({ ...newProjectForm, campaignUrl: e.target.value })} placeholder="https://www.kickstarter.com/... o enlace de otra campaña" className="mt-1 w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3.5 py-2.5 text-white" />
+                <input type="url" value={newProjectForm.campaignUrl} onChange={e => setNewProjectForm({ ...newProjectForm, campaignUrl: e.target.value })} placeholder="https://www.kickstarter.com/... o enlace de otra campaña" className="mt-1 w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3.5 py-2.5 text-white" />
                 <span className="block mt-1 text-[10px] text-gray-500">Si añades un enlace, el proyecto también aparecerá en el filtro Crowdfunding / Kickstarter.</span>
               </label>
 
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-2">Selecciona hasta 3 géneros</label>
                 <div className="flex flex-wrap gap-2">
-                  {GENRES_LIST.map(genre => { const isSelected = selectedGenres.includes(genre); return <button key={genre} type="button" onClick={() => toggleGenre(genre)} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${isSelected ? 'bg-red-600 border-red-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'}`}>{genre}{isSelected ? ' ✓' : ''}</button>; })}
+                  {GENRES_LIST.map(genre => { const isSelected = selectedGenres.includes(genre); return <button key={genre} type="button" onClick={() => toggleGenre(genre)} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${isSelected ? 'bg-gold-600 border-gold-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'}`}>{genre}{isSelected ? ' ✓' : ''}</button>; })}
                 </div>
                 <p className="text-[10px] text-gray-500 mt-2">{selectedGenres.length}/3 géneros seleccionados</p>
               </div>
 
               {newProjectForm.format === 'Serie' && (
-                <div className="space-y-4 border border-[#2e2e34] bg-[#121212] p-4 rounded-2xl">
+                <div className="space-y-4 border border-[#343537] bg-[#101113] p-4 rounded-2xl">
                   <h3 className="text-sm font-bold text-white">Temporadas y episodios</h3>
-                  {seasons.map((season, seasonIndex) => <div key={season.seasonNumber} className="space-y-3 border-b border-[#2e2e34] pb-4 last:border-0 last:pb-0">
+                  {seasons.map((season, seasonIndex) => <div key={season.seasonNumber} className="space-y-3 border-b border-[#343537] pb-4 last:border-0 last:pb-0">
                     <div className="flex items-center justify-between gap-3">
-                      <h4 className="text-xs font-bold text-red-300">Temporada {season.seasonNumber}</h4>
+                      <h4 className="text-xs font-bold text-gold-300">Temporada {season.seasonNumber}</h4>
                       {seasons.length > 1 && <button
                         type="button"
                         onClick={() => setSeasons(current => current.filter((_, idx) => idx !== seasonIndex).map((item, idx) => ({ ...item, seasonNumber: idx + 1 })))}
-                        className="text-[10px] font-semibold text-red-300 hover:text-red-200 border border-red-500/30 rounded-lg px-2.5 py-1.5"
+                        className="text-[10px] font-semibold text-gold-300 hover:text-gold-200 border border-gold-500/30 rounded-lg px-2.5 py-1.5"
                         aria-label={`Eliminar temporada ${season.seasonNumber}`}
                       >Eliminar temporada</button>}
                     </div>
-                    {season.episodes.map((episode, episodeIndex) => <div key={`${season.seasonNumber}-${episodeIndex}`} className="grid grid-cols-1 sm:grid-cols-6 gap-2 p-3 rounded-xl bg-[#1a1a1e]">
-                      <div className="sm:col-span-1"><label className="text-[10px] text-gray-400 block mb-1">N.º</label><input type="number" min="1" required value={episode.episodeNumber} onChange={e => handleEpisodeChange(seasonIndex, episodeIndex, 'episodeNumber', e.target.value)} className="w-full bg-[#121212] border border-[#2e2e34] rounded-lg px-2 py-2 text-xs text-white" /></div>
-                      <div className="sm:col-span-2"><label className="text-[10px] text-gray-400 block mb-1">Título del episodio</label><input type="text" required value={episode.title} onChange={e => handleEpisodeChange(seasonIndex, episodeIndex, 'title', e.target.value)} className="w-full bg-[#121212] border border-[#2e2e34] rounded-lg px-2 py-2 text-xs text-white" /></div>
-                      <div className="sm:col-span-3"><label className="text-[10px] text-gray-400 block mb-1">Enlace de YouTube</label><input type="url" required placeholder="https://youtube.com/watch?v=..." value={episode.youtubeUrl} onChange={e => handleEpisodeChange(seasonIndex, episodeIndex, 'youtubeUrl', e.target.value)} className="w-full bg-[#121212] border border-[#2e2e34] rounded-lg px-2 py-2 text-xs text-white" /></div>
-                      <div className="sm:col-span-6 flex justify-end">{season.episodes.length > 1 && <button type="button" onClick={() => setSeasons(current => current.map((item, idx) => idx !== seasonIndex ? item : ({ ...item, episodes: item.episodes.filter((_, epIdx) => epIdx !== episodeIndex) })))} className="text-[10px] text-red-300 hover:text-red-200">Eliminar episodio</button>}</div>
+                    {season.episodes.map((episode, episodeIndex) => <div key={`${season.seasonNumber}-${episodeIndex}`} className="grid grid-cols-1 sm:grid-cols-6 gap-2 p-3 rounded-xl bg-[#1B1D20]">
+                      <div className="sm:col-span-1"><label className="text-[10px] text-gray-400 block mb-1">N.º</label><input type="number" min="1" required value={episode.episodeNumber} onChange={e => handleEpisodeChange(seasonIndex, episodeIndex, 'episodeNumber', e.target.value)} className="w-full bg-[#101113] border border-[#343537] rounded-lg px-2 py-2 text-xs text-white" /></div>
+                      <div className="sm:col-span-2"><label className="text-[10px] text-gray-400 block mb-1">Título del episodio</label><input type="text" required value={episode.title} onChange={e => handleEpisodeChange(seasonIndex, episodeIndex, 'title', e.target.value)} className="w-full bg-[#101113] border border-[#343537] rounded-lg px-2 py-2 text-xs text-white" /></div>
+                      <div className="sm:col-span-3"><label className="text-[10px] text-gray-400 block mb-1">Enlace de YouTube</label><input type="url" required placeholder="https://youtube.com/watch?v=..." value={episode.youtubeUrl} onChange={e => handleEpisodeChange(seasonIndex, episodeIndex, 'youtubeUrl', e.target.value)} className="w-full bg-[#101113] border border-[#343537] rounded-lg px-2 py-2 text-xs text-white" /></div>
+                      <div className="sm:col-span-6 flex justify-end">{season.episodes.length > 1 && <button type="button" onClick={() => setSeasons(current => current.map((item, idx) => idx !== seasonIndex ? item : ({ ...item, episodes: item.episodes.filter((_, epIdx) => epIdx !== episodeIndex) })))} className="text-[10px] text-gold-300 hover:text-gold-200">Eliminar episodio</button>}</div>
                     </div>)}
-                    <button type="button" onClick={() => handleAddEpisode(seasonIndex)} className="text-xs font-bold text-red-300 hover:text-red-200">+ Añadir episodio</button>
+                    <button type="button" onClick={() => handleAddEpisode(seasonIndex)} className="text-xs font-bold text-gold-300 hover:text-gold-200">+ Añadir episodio</button>
                   </div>)}
-                  <button type="button" onClick={handleAddSeason} className="w-full border border-dashed border-red-500/50 text-red-300 hover:bg-red-600/10 rounded-xl py-2.5 text-xs font-bold">+ Añadir temporada</button>
+                  <button type="button" onClick={handleAddSeason} className="w-full border border-dashed border-gold-500/50 text-gold-300 hover:bg-gold-600/10 rounded-xl py-2.5 text-xs font-bold">+ Añadir temporada</button>
                 </div>
               )}
 
@@ -3214,7 +3214,7 @@ export default function App() {
                 <label className="text-xs font-bold text-gray-400 block mb-1">Año de realización</label>
                 <input type="number" min="1900" max="2100" required value={newProjectForm.year}
                   onChange={(e) => setNewProjectForm({ ...newProjectForm, year: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">Descripción</label>
@@ -3222,13 +3222,13 @@ export default function App() {
                   rows={3}
                   value={newProjectForm.description}
                   onChange={(e) => setNewProjectForm({ ...newProjectForm, description: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl p-3 text-white focus:outline-none"
+                  className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl p-3 text-white focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-red-600/30 transition-all"
+                className="w-full bg-gold-600 hover:bg-gold-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-gold-600/30 transition-all"
               >
                 Enviar a revisión
               </button>
@@ -3242,7 +3242,7 @@ export default function App() {
       ========================================== */}
       {showNewTopicModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#161618] border border-[#2e2e34] w-full max-w-lg rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
+          <div className="bg-[#17191B] border border-[#343537] w-full max-w-lg rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-white">Crear nuevo tema en el foro</h2>
               <button onClick={() => setShowNewTopicModal(false)} className="text-gray-400 hover:text-white">
@@ -3258,7 +3258,7 @@ export default function App() {
                   required
                   value={newTopicForm.title}
                   onChange={(e) => setNewTopicForm({ ...newTopicForm, title: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500"
+                  className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500"
                 />
               </div>
 
@@ -3267,7 +3267,7 @@ export default function App() {
                 <select
                   value={newTopicForm.category}
                   onChange={(e) => setNewTopicForm({ ...newTopicForm, category: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl px-3 py-2.5 text-white"
+                  className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl px-3 py-2.5 text-white"
                 >
                   <option value="Herramientas">Herramientas</option>
                   <option value="Consultas">Consultas</option>
@@ -3291,13 +3291,13 @@ export default function App() {
                   required
                   value={newTopicForm.content}
                   onChange={(e) => setNewTopicForm({ ...newTopicForm, content: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-xs rounded-xl p-3 text-white focus:outline-none"
+                  className="w-full bg-[#101113] border border-[#343537] text-xs rounded-xl p-3 text-white focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-red-600/30 transition-all"
+                className="w-full bg-gold-600 hover:bg-gold-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-gold-600/30 transition-all"
               >
                 Publicar discusión
               </button>
@@ -3311,7 +3311,7 @@ export default function App() {
       ========================================== */}
       {showEditProfileModal && user && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#161618] border border-[#2e2e34] w-full max-w-2xl rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl my-auto">
+          <div className="bg-[#17191B] border border-[#343537] w-full max-w-2xl rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl my-auto">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold text-white">Editar perfil</h2>
@@ -3327,75 +3327,75 @@ export default function App() {
                 <label className="text-xs font-bold text-gray-400 block mb-1">Nombre público</label>
                 <input type="text" required maxLength={80} value={profileForm.name}
                   onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">Biografía</label>
                 <textarea rows={4} maxLength={500} value={profileForm.bio}
                   onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })}
                   placeholder="Cuéntale a la comunidad quién eres..."
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl p-3 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl p-3 text-white focus:outline-none focus:border-gold-500" />
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">URL de la foto de perfil</label>
                 <input type="url" value={profileForm.photo}
                   onChange={(e) => setProfileForm({ ...profileForm, photo: e.target.value, photoPath: e.target.value === profileForm.photo ? profileForm.photoPath : '' })}
                   placeholder="https://..."
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
                 <p className="mt-1 text-[11px] text-gray-500">Máximo 2 MB y 2048 × 2048 píxeles (JPG, PNG, WebP o GIF).</p>
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={e => setProfileImageFiles(current => ({ ...current, photo: e.target.files?.[0] || null }))} className="mt-2 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292930] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" />
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={e => setProfileImageFiles(current => ({ ...current, photo: e.target.files?.[0] || null }))} className="mt-2 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292B2E] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" />
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">URL del banner</label>
                 <input type="url" value={profileForm.banner}
                   onChange={(e) => setProfileForm({ ...profileForm, banner: e.target.value, bannerPath: e.target.value === profileForm.banner ? profileForm.bannerPath : '' })}
                   placeholder="https://..."
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
                 <p className="mt-1 text-[11px] text-gray-500">Máximo 4 MB y 4096 × 2048 píxeles (JPG, PNG, WebP o GIF).</p>
-                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={e => setProfileImageFiles(current => ({ ...current, banner: e.target.files?.[0] || null }))} className="mt-2 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292930] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" />
+                <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={e => setProfileImageFiles(current => ({ ...current, banner: e.target.files?.[0] || null }))} className="mt-2 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292B2E] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" />
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">Enlace de Patreon</label>
                 <input type="url" value={profileForm.patreonUrl}
                   onChange={(e) => setProfileForm({ ...profileForm, patreonUrl: e.target.value })}
                   placeholder="https://www.patreon.com/tuusuario"
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">Enlace de Ko-fi</label>
                 <input type="url" value={profileForm.kofiUrl}
                   onChange={(e) => setProfileForm({ ...profileForm, kofiUrl: e.target.value })}
                   placeholder="https://ko-fi.com/tuusuario"
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">Sitio web / portafolio</label>
                 <input type="url" value={profileForm.websiteUrl}
                   onChange={(e) => setProfileForm({ ...profileForm, websiteUrl: e.target.value })}
                   placeholder="https://tusitio.com"
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
               </div>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {[
                   ['youtubeUrl', 'YouTube'], ['instagramUrl', 'Instagram'], ['tiktokUrl', 'TikTok'],
                   ['artstationUrl', 'ArtStation'], ['xUrl', 'X / Twitter']
-                ].map(([field, label]) => <label key={field} className="block text-xs font-bold text-gray-400">{label}<input type="url" value={profileForm[field]} onChange={event => setProfileForm(current => ({ ...current, [field]: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#2e2e34] bg-[#121212] px-3.5 py-2.5 text-sm text-white focus:border-red-500 focus:outline-none" /></label>)}
+                ].map(([field, label]) => <label key={field} className="block text-xs font-bold text-gray-400">{label}<input type="url" value={profileForm[field]} onChange={event => setProfileForm(current => ({ ...current, [field]: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#343537] bg-[#101113] px-3.5 py-2.5 text-sm text-white focus:border-gold-500 focus:outline-none" /></label>)}
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-400 block mb-1">Correo de contacto público</label>
                 <input type="email" value={profileForm.contactEmail}
                   onChange={(e) => setProfileForm({ ...profileForm, contactEmail: e.target.value })}
                   placeholder="contacto@ejemplo.com"
-                  className="w-full bg-[#121212] border border-[#2e2e34] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-red-500" />
+                  className="w-full bg-[#101113] border border-[#343537] text-sm rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-gold-500" />
                 <p className="text-[11px] text-gray-500 mt-1">Este correo es independiente del correo usado para iniciar sesión.</p>
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => { setShowEditProfileModal(false); setProfileImageFiles({ photo: null, banner: null }); }}
-                  className="flex-1 bg-[#222226] hover:bg-[#2e2e34] text-gray-200 font-semibold py-3 rounded-xl">
+                  className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 font-semibold py-3 rounded-xl">
                   Cancelar
                 </button>
                 <button type="submit" disabled={isSavingProfile}
-                  className="flex-1 bg-red-600 hover:bg-red-500 disabled:opacity-60 text-white font-bold py-3 rounded-xl">
+                  className="flex-1 bg-gold-600 hover:bg-gold-500 disabled:opacity-60 text-white font-bold py-3 rounded-xl">
                   {isSavingProfile ? 'Guardando...' : 'Guardar cambios'}
                 </button>
               </div>
@@ -3407,38 +3407,38 @@ export default function App() {
       {/* MODAL ADMINISTRACIÓN DE PRODUCTOS */}
       {showProductModal && isAdmin && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#161618] border border-[#2e2e34] w-full max-w-xl rounded-3xl p-6 space-y-5 shadow-2xl my-8">
+          <div className="bg-[#17191B] border border-[#343537] w-full max-w-xl rounded-3xl p-6 space-y-5 shadow-2xl my-8">
             <div className="flex items-center justify-between"><h2 className="text-xl font-bold text-white">{editingProductId ? 'Editar producto' : 'Agregar producto'}</h2><button onClick={() => setShowProductModal(false)} className="text-gray-400 hover:text-white" aria-label="Cerrar"><X className="w-5 h-5" /></button></div>
             <form onSubmit={handleSaveProduct} className="space-y-3">
-              <div><label className="block text-xs text-gray-400 mb-1">Nombre del producto *</label><input required value={productForm.title} onChange={e => setProductForm({...productForm,title:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-xs text-gray-400 mb-1">Categoría *</label><select value={productForm.category} onChange={e => setProductForm({...productForm,category:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white"><option>Software</option><option>Hardware</option><option>Accesorio</option></select></div><div><label className="block text-xs text-gray-400 mb-1">Precio</label><input value={productForm.price} onChange={e => setProductForm({...productForm,price:e.target.value})} placeholder="Ej. Gratis o 29 €" className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" /></div></div>
-              <div><label className="block text-xs text-gray-400 mb-1">Tipo de equipo (opcional)</label><select value={productForm.subtype} onChange={e => setProductForm({...productForm,subtype:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white"><option value="">Sin subtipo</option>{['Cámara','Objetivo','Trípode','Estabilizador / gimbal','Slider / dolly','Drone','Monitor de cámara','Grabador externo','Micrófono','Grabadora de audio','Auriculares','Kit de iluminación','Panel LED','Foco','Modificador de luz','Reflector','Soporte / grip','Teleprompter','Capturadora','Ordenador','Monitor de edición','Almacenamiento','Accesorio','Otro'].map(x => <option key={x}>{x}</option>)}</select></div>
+              <div><label className="block text-xs text-gray-400 mb-1">Nombre del producto *</label><input required value={productForm.title} onChange={e => setProductForm({...productForm,title:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-xs text-gray-400 mb-1">Categoría *</label><select value={productForm.category} onChange={e => setProductForm({...productForm,category:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white"><option>Software</option><option>Hardware</option><option>Accesorio</option></select></div><div><label className="block text-xs text-gray-400 mb-1">Precio</label><input value={productForm.price} onChange={e => setProductForm({...productForm,price:e.target.value})} placeholder="Ej. Gratis o 29 €" className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div></div>
+              <div><label className="block text-xs text-gray-400 mb-1">Tipo de equipo (opcional)</label><select value={productForm.subtype} onChange={e => setProductForm({...productForm,subtype:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white"><option value="">Sin subtipo</option>{['Cámara','Objetivo','Trípode','Estabilizador / gimbal','Slider / dolly','Drone','Monitor de cámara','Grabador externo','Micrófono','Grabadora de audio','Auriculares','Kit de iluminación','Panel LED','Foco','Modificador de luz','Reflector','Soporte / grip','Teleprompter','Capturadora','Ordenador','Monitor de edición','Almacenamiento','Accesorio','Otro'].map(x => <option key={x}>{x}</option>)}</select></div>
               <div><label className="block text-xs text-gray-400 mb-1">Áreas audiovisuales (puedes elegir varias)</label><div className="flex flex-wrap gap-2">{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <label key={x} className="text-xs text-gray-300 flex gap-1 items-center"><input type="checkbox" checked={productForm.techniques.includes(x)} onChange={() => toggleArrayValue(productForm,setProductForm,'techniques',x)}/>{x}</label>)}</div></div>
               <div><label className="block text-xs text-gray-400 mb-1">Usos / especialidades</label><div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto">{['Grabación y cámara','Fotografía cinematográfica','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Postproducción','Efectos visuales','Producción','Preproducción','Guion y storyboard','Dirección','Streaming','Animación','Almacenamiento y copias','Otro'].map(x => <label key={x} className="text-xs text-gray-300 flex gap-1 items-center"><input type="checkbox" checked={productForm.uses.includes(x)} onChange={() => toggleArrayValue(productForm,setProductForm,'uses',x)}/>{x}</label>)}</div></div>
-              <div><label className="block text-xs text-gray-400 mb-1">URL de imagen</label><input type="url" value={productForm.image} onChange={e => setProductForm({...productForm,image:e.target.value})} placeholder="https://..." className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
-              <div><label className="block text-xs text-gray-400 mb-1">Enlace del producto *</label><input required type="url" value={productForm.link} onChange={e => setProductForm({...productForm,link:e.target.value})} placeholder="https://..." className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
+              <div><label className="block text-xs text-gray-400 mb-1">URL de imagen</label><input type="url" value={productForm.image} onChange={e => setProductForm({...productForm,image:e.target.value})} placeholder="https://..." className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
+              <div><label className="block text-xs text-gray-400 mb-1">Enlace del producto *</label><input required type="url" value={productForm.link} onChange={e => setProductForm({...productForm,link:e.target.value})} placeholder="https://..." className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
               <label className="flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-3 cursor-pointer"><input type="checkbox" checked={Boolean(productForm.isAffiliate)} onChange={e => setProductForm({...productForm, isAffiliate: e.target.checked})} className="mt-1 accent-amber-400"/><span><span className="block text-sm font-semibold text-white">Este es un enlace de afiliado</span><span className="block text-xs text-gray-400 mt-1">Márcalo solo si TuRodaje puede recibir una comisión u otra compensación por compras o registros a través de este enlace. La web mostrará una indicación junto al producto.</span></span></label>
-              <div><label className="block text-xs text-gray-400 mb-1">Descripción</label><textarea rows={3} value={productForm.description} onChange={e => setProductForm({...productForm,description:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
-              <button type="submit" className="w-full bg-red-600 hover:bg-red-500 rounded-xl py-3 text-sm font-bold text-white">Guardar producto</button>
+              <div><label className="block text-xs text-gray-400 mb-1">Descripción</label><textarea rows={3} value={productForm.description} onChange={e => setProductForm({...productForm,description:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
+              <button type="submit" className="w-full bg-gold-600 hover:bg-gold-500 rounded-xl py-3 text-sm font-bold text-white">Guardar producto</button>
             </form>
           </div>
         </div>
       )}
 
-      {showEducationModal && isAdmin && <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"><div className="bg-[#161618] border border-[#2e2e34] w-full max-w-2xl rounded-3xl p-6 space-y-5 my-8"><div className="flex items-center justify-between"><h2 className="text-xl font-bold text-white">{editingEducationId ? 'Editar curso' : 'Agregar curso'}</h2><button onClick={() => setShowEducationModal(false)}><X className="w-5 h-5"/></button></div><form onSubmit={handleSaveEducation} className="space-y-3"><input required placeholder="Título del curso *" value={educationForm.title} onChange={e => setEducationForm({...educationForm,title:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-sm text-white"/><div className="grid sm:grid-cols-2 gap-3"><input placeholder="Academia / profesor" value={educationForm.provider} onChange={e => setEducationForm({...educationForm,provider:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-sm text-white"/><input placeholder="Gratis, 25 €, suscripción…" value={educationForm.price} onChange={e => setEducationForm({...educationForm,price:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-sm text-white"/></div><input required type="url" placeholder="Enlace del curso *" value={educationForm.url} onChange={e => setEducationForm({...educationForm,url:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-sm text-white"/><input type="url" placeholder="URL de imagen (opcional)" value={educationForm.image} onChange={e => setEducationForm({...educationForm,image:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-sm text-white"/><textarea rows={3} placeholder="Descripción del curso" value={educationForm.description} onChange={e => setEducationForm({...educationForm,description:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl p-3 text-sm text-white"/>{[['Áreas audiovisuales','techniques',['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro']],['Especialidades','topics',['Dirección','Guion','Producción','Dirección de fotografía','Cámara y ópticas','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Interpretación','Dirección de arte','Vestuario y maquillaje','Casting','Distribución y festivales','Efectos visuales','Animación','Storyboard','Postproducción','Otro']],['Software utilizado','software',['DaVinci Resolve','Premiere Pro','Final Cut Pro','After Effects','Avid Media Composer','Pro Tools','Audition','Reaper','Blender','Cinema 4D','Unreal Engine','Nuke','Photoshop','Lightroom','Storyboard Pro','Otro','No requiere software']]].map(([label,field,options]) => <div key={field}><p className="text-xs text-gray-400 mb-2">{label} (selección múltiple)</p><div className="flex flex-wrap gap-x-3 gap-y-2 max-h-28 overflow-y-auto">{options.map(x => <label key={x} className="text-xs text-gray-300 flex items-center gap-1"><input type="checkbox" checked={educationForm[field].includes(x)} onChange={() => toggleArrayValue(educationForm,setEducationForm,field,x)}/>{x}</label>)}</div></div>)}<button type="submit" className="w-full bg-red-600 hover:bg-red-500 rounded-xl py-3 text-sm font-bold text-white">Guardar curso</button></form></div></div>}
+      {showEducationModal && isAdmin && <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"><div className="bg-[#17191B] border border-[#343537] w-full max-w-2xl rounded-3xl p-6 space-y-5 my-8"><div className="flex items-center justify-between"><h2 className="text-xl font-bold text-white">{editingEducationId ? 'Editar curso' : 'Agregar curso'}</h2><button onClick={() => setShowEducationModal(false)}><X className="w-5 h-5"/></button></div><form onSubmit={handleSaveEducation} className="space-y-3"><input required placeholder="Título del curso *" value={educationForm.title} onChange={e => setEducationForm({...educationForm,title:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-sm text-white"/><div className="grid sm:grid-cols-2 gap-3"><input placeholder="Academia / profesor" value={educationForm.provider} onChange={e => setEducationForm({...educationForm,provider:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-sm text-white"/><input placeholder="Gratis, 25 €, suscripción…" value={educationForm.price} onChange={e => setEducationForm({...educationForm,price:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-sm text-white"/></div><input required type="url" placeholder="Enlace del curso *" value={educationForm.url} onChange={e => setEducationForm({...educationForm,url:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-sm text-white"/><input type="url" placeholder="URL de imagen (opcional)" value={educationForm.image} onChange={e => setEducationForm({...educationForm,image:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-sm text-white"/><textarea rows={3} placeholder="Descripción del curso" value={educationForm.description} onChange={e => setEducationForm({...educationForm,description:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-sm text-white"/>{[['Áreas audiovisuales','techniques',['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro']],['Especialidades','topics',['Dirección','Guion','Producción','Dirección de fotografía','Cámara y ópticas','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Interpretación','Dirección de arte','Vestuario y maquillaje','Casting','Distribución y festivales','Efectos visuales','Animación','Storyboard','Postproducción','Otro']],['Software utilizado','software',['DaVinci Resolve','Premiere Pro','Final Cut Pro','After Effects','Avid Media Composer','Pro Tools','Audition','Reaper','Blender','Cinema 4D','Unreal Engine','Nuke','Photoshop','Lightroom','Storyboard Pro','Otro','No requiere software']]].map(([label,field,options]) => <div key={field}><p className="text-xs text-gray-400 mb-2">{label} (selección múltiple)</p><div className="flex flex-wrap gap-x-3 gap-y-2 max-h-28 overflow-y-auto">{options.map(x => <label key={x} className="text-xs text-gray-300 flex items-center gap-1"><input type="checkbox" checked={educationForm[field].includes(x)} onChange={() => toggleArrayValue(educationForm,setEducationForm,field,x)}/>{x}</label>)}</div></div>)}<button type="submit" className="w-full bg-gold-600 hover:bg-gold-500 rounded-xl py-3 text-sm font-bold text-white">Guardar curso</button></form></div></div>}
 
       {/* MODAL DE CONTACTO: envía el mensaje desde la web sin mostrar el destinatario */}
       {showContactModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#161618] border border-[#2e2e34] w-full max-w-lg rounded-3xl p-6 space-y-5 shadow-2xl my-8">
-            <div className="flex items-center justify-between"><div><h2 className="text-xl font-bold text-white">Contacta con TuRodaje</h2><p className="text-xs text-gray-400 mt-1">Envíanos tu consulta mediante este formulario.</p><p className="text-xs text-gray-300 mt-2">Correo de contacto: <a className="text-red-300 underline" href="mailto:contacto@toonknight.com">contacto@toonknight.com</a></p></div><button onClick={() => setShowContactModal(false)} className="text-gray-400 hover:text-white" aria-label="Cerrar"><X className="w-5 h-5" /></button></div>
+          <div className="bg-[#17191B] border border-[#343537] w-full max-w-lg rounded-3xl p-6 space-y-5 shadow-2xl my-8">
+            <div className="flex items-center justify-between"><div><h2 className="text-xl font-bold text-white">Contacta con TuRodaje</h2><p className="text-xs text-gray-400 mt-1">Envíanos tu consulta mediante este formulario.</p><p className="text-xs text-gray-300 mt-2">Correo de contacto: <a className="text-gold-300 underline" href="mailto:contacto@toonknight.com">contacto@toonknight.com</a></p></div><button onClick={() => setShowContactModal(false)} className="text-gray-400 hover:text-white" aria-label="Cerrar"><X className="w-5 h-5" /></button></div>
             <form onSubmit={handleSendContact} className="space-y-3">
-              <input required placeholder="Tu nombre" value={contactForm.name} onChange={e => setContactForm({...contactForm,name:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" />
-              <input required type="email" placeholder="Tu correo para responderte" value={contactForm.email} onChange={e => setContactForm({...contactForm,email:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" />
-              <input placeholder="Asunto (opcional)" value={contactForm.subject} onChange={e => setContactForm({...contactForm,subject:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" />
-              <textarea required rows={5} placeholder="Escribe tu mensaje..." value={contactForm.message} onChange={e => setContactForm({...contactForm,message:e.target.value})} className="w-full bg-[#121212] border border-[#2e2e34] rounded-xl px-3 py-2.5 text-sm text-white" />
-              <p className="text-[11px] leading-relaxed text-gray-500">Usaremos los datos que facilites para responder a tu consulta. El envío se procesa mediante FormSubmit. Consulta la <button type="button" onClick={() => { setShowContactModal(false); setLegalPage('privacidad'); }} className="text-red-300 underline">política de privacidad</button>.</p>
-              <button disabled={sendingContact} type="submit" className="w-full bg-red-600 hover:bg-red-500 disabled:opacity-60 rounded-xl py-3 text-sm font-bold text-white">{sendingContact ? 'Enviando...' : 'Enviar mensaje'}</button>
+              <input required placeholder="Tu nombre" value={contactForm.name} onChange={e => setContactForm({...contactForm,name:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" />
+              <input required type="email" placeholder="Tu correo para responderte" value={contactForm.email} onChange={e => setContactForm({...contactForm,email:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" />
+              <input placeholder="Asunto (opcional)" value={contactForm.subject} onChange={e => setContactForm({...contactForm,subject:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" />
+              <textarea required rows={5} placeholder="Escribe tu mensaje..." value={contactForm.message} onChange={e => setContactForm({...contactForm,message:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" />
+              <p className="text-[11px] leading-relaxed text-gray-500">Usaremos los datos que facilites para responder a tu consulta. El envío se procesa mediante FormSubmit. Consulta la <button type="button" onClick={() => { setShowContactModal(false); setLegalPage('privacidad'); }} className="text-gold-300 underline">política de privacidad</button>.</p>
+              <button disabled={sendingContact} type="submit" className="w-full bg-gold-600 hover:bg-gold-500 disabled:opacity-60 rounded-xl py-3 text-sm font-bold text-white">{sendingContact ? 'Enviando...' : 'Enviar mensaje'}</button>
             </form>
           </div>
         </div>
@@ -3449,7 +3449,7 @@ export default function App() {
       ========================================== */}
       {showAuthModal && !user && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#161618] border border-[#2e2e34] w-full max-w-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
+          <div className="bg-[#17191B] border border-[#343537] w-full max-w-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold text-white">Iniciar sesión en TuRodaje</h2>
@@ -3477,8 +3477,8 @@ export default function App() {
 
       {legalPage && (
         <div className="fixed inset-0 z-[80] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <section role="dialog" aria-modal="true" aria-labelledby="legal-page-title" className="bg-[#161618] border border-[#34343d] w-full max-w-3xl max-h-[88vh] overflow-y-auto rounded-2xl p-6 sm:p-8 shadow-2xl">
-            <div className="flex items-start justify-between gap-4 mb-5"><div><p className="text-xs uppercase tracking-widest text-red-300 font-bold">TuRodaje · turodaje.com (dominio previsto)</p><h2 id="legal-page-title" className="text-2xl font-black text-white mt-1">{({ aviso: 'Aviso legal', privacidad: 'Política de privacidad', cookies: 'Política de cookies', condiciones: 'Condiciones de uso', transparencia: 'Transparencia comercial' })[legalPage]}</h2></div><button onClick={() => setLegalPage('')} aria-label="Cerrar página legal" className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button></div>
+          <section role="dialog" aria-modal="true" aria-labelledby="legal-page-title" className="bg-[#17191B] border border-[#34343d] w-full max-w-3xl max-h-[88vh] overflow-y-auto rounded-2xl p-6 sm:p-8 shadow-2xl">
+            <div className="flex items-start justify-between gap-4 mb-5"><div><p className="text-xs uppercase tracking-widest text-gold-300 font-bold">TuRodaje · turodaje.com (dominio previsto)</p><h2 id="legal-page-title" className="text-2xl font-black text-white mt-1">{({ aviso: 'Aviso legal', privacidad: 'Política de privacidad', cookies: 'Política de cookies', condiciones: 'Condiciones de uso', transparencia: 'Transparencia comercial' })[legalPage]}</h2></div><button onClick={() => setLegalPage('')} aria-label="Cerrar página legal" className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button></div>
             <div className="rounded-xl border border-amber-700/50 bg-amber-950/25 p-3 mb-5 text-sm text-amber-200"><strong>Borrador pendiente de completar.</strong> Antes de publicar la web, sustituye los campos entre corchetes y verifica que el texto coincide con la configuración y los servicios realmente activos.</div>
             <div className="space-y-4 text-sm leading-relaxed text-gray-300">
               {legalPage === 'aviso' && <>
@@ -3540,19 +3540,19 @@ export default function App() {
                 <p>Los vídeos se reproducen mediante YouTube y esa plataforma puede mostrar anuncios conforme a sus propias condiciones. TuRodaje no afirma insertar ni controlar los anuncios que aparecen dentro del reproductor de YouTube.</p>
               </>}
             </div>
-            <div className="flex justify-end mt-7"><button onClick={() => setLegalPage('')} className="bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2.5 rounded-xl">Cerrar</button></div>
+            <div className="flex justify-end mt-7"><button onClick={() => setLegalPage('')} className="bg-gold-600 hover:bg-gold-500 text-white font-bold px-5 py-2.5 rounded-xl">Cerrar</button></div>
           </section>
         </div>
       )}
 
       {/* FOOTER GLOBAL */}
-      <footer className="bg-[#161618] border-t border-[#2e2e34] py-8 px-6 lg:px-12 mt-auto">
+      <footer className="bg-[#17191B] border-t border-[#343537] py-8 px-6 lg:px-12 mt-auto">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
           <div className="flex items-center gap-2">
             <span className="font-bold text-white">TURODAJE</span>
             <span>— El espacio del cine independiente.</span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2"><button onClick={() => setShowContactModal(true)} className="text-red-300 hover:text-white font-semibold">Contacto</button><button onClick={() => setLegalPage('aviso')} className="hover:text-white">Aviso legal</button><button onClick={() => setLegalPage('privacidad')} className="hover:text-white">Privacidad</button><button onClick={() => setLegalPage('cookies')} className="hover:text-white">Cookies</button><button onClick={() => setLegalPage('condiciones')} className="hover:text-white">Condiciones</button><button onClick={() => setLegalPage('transparencia')} className="hover:text-white">Transparencia</button><p>© 2026 TuRodaje. Todos los derechos reservados.</p></div>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2"><button onClick={() => setShowContactModal(true)} className="text-gold-300 hover:text-white font-semibold">Contacto</button><button onClick={() => setLegalPage('aviso')} className="hover:text-white">Aviso legal</button><button onClick={() => setLegalPage('privacidad')} className="hover:text-white">Privacidad</button><button onClick={() => setLegalPage('cookies')} className="hover:text-white">Cookies</button><button onClick={() => setLegalPage('condiciones')} className="hover:text-white">Condiciones</button><button onClick={() => setLegalPage('transparencia')} className="hover:text-white">Transparencia</button><p>© 2026 TuRodaje. Todos los derechos reservados.</p></div>
         </div>
       </footer>
 
