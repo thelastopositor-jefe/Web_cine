@@ -1,0 +1,62 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Variables de entorno y credenciales
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
+
+# Copias de seguridad
+*.bak
+*.bak*
+*.rules.bak*
+*.zip
+
+# Archivos de auditoría y pruebas locales
+audit-completo.json
+revision_de_seguridad/
+test-*.mjs
+
+# Caché y archivos temporales de Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+firestore - bak.rules
+
+# Versiones antiguas de App.jsx
+src/App (9).jsx
+src/App(10).jsx
+src/App(11).jsx
+
+# Scripts administrativos locales
+src/scripts/replaceProjectsAdmin.mjs
+src/scripts/seedProjectsAdmin.js

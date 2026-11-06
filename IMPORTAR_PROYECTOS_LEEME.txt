@@ -1,0 +1,37 @@
+TOONKNIGHT — IMPORTACIÓN SEGURA DEL projects.json MÁS RECIENTE
+
+Este paquete usa exactamente src/data/projects.json extraído del ZIP más reciente disponible: toonknight_denuncias_fix.zip.
+El archivo contiene 88 registros. Algunas series tienen sus enlaces dentro de seasons[].episodes[]; el script toma el primer episodio como vídeo principal cuando no existe un enlace a nivel del proyecto.
+
+IMPORTANTE
+- Haz una copia de seguridad/exportación de Firestore antes de ejecutar una importación real.
+- El script se dirige al proyecto Firebase onlytoon-82f3f. Comprueba que es el proyecto correcto.
+- No borra documentos.
+- Solo actualiza documentos seed existentes marcados con source="seed".
+- Si encuentra un documento con el mismo ID que no esté marcado source="seed", lo protege y no lo modifica.
+- Conserva status, isFeatured, contadores y campos de moderación de los documentos seed existentes.
+- No compartas ni subas el archivo JSON de la cuenta de servicio. No lo incluyas en el ZIP ni en GitHub.
+
+PASOS
+1. Copia src/data/projects.json y src/scripts/seedProjectsAdmin.js a tu proyecto ToonKnight manteniendo esas rutas.
+2. En la carpeta raíz de tu proyecto, instala el SDK administrativo:
+   npm install firebase-admin
+3. En Firebase Console, confirma el proyecto correcto. Ve a Configuración del proyecto > Cuentas de servicio y genera una clave privada para una cuenta de servicio autorizada. Guárdala solo en tu ordenador, fuera de GitHub y fuera de la carpeta pública de la web.
+4. Define GOOGLE_APPLICATION_CREDENTIALS con la ruta absoluta a ese archivo JSON.
+
+Windows PowerShell (solo para la ventana actual):
+   $env:GOOGLE_APPLICATION_CREDENTIALS="C:\ruta\privada\serviceAccountKey.json"
+
+macOS/Linux:
+   export GOOGLE_APPLICATION_CREDENTIALS="/ruta/privada/serviceAccountKey.json"
+
+5. Desde la raíz del proyecto, primero ejecuta la simulación (no escribe nada):
+   node src/scripts/seedProjectsAdmin.js
+
+6. Revisa cuidadosamente el resumen. Si el proyecto de destino, los títulos y los documentos protegidos son correctos, ejecuta la importación real:
+   node src/scripts/seedProjectsAdmin.js --apply
+
+Si aparece un error de credenciales/permisos administrativos, detente y no cambies las reglas de Firestore para hacer funcionar este script. La cuenta de servicio debe estar autorizada en el proyecto correcto.
+
+NOTA
+El script no puede recuperar nombres que ya se hayan perdido en Firestore si esos nombres tampoco están en este projects.json. Este paquete sí conserva los títulos que figuran en el JSON incluido.

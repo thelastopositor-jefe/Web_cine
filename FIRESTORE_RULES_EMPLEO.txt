@@ -1,0 +1,88 @@
+REGLAS DE FIRESTORE PARA «EMPLEO Y COLABORACIONES»
+==================================================
+
+IMPORTANTE: no sustituyas todas las reglas actuales por este bloque. En Firebase Console > Firestore Database > Rules, integra las funciones y los dos bloques `match` dentro de las reglas que ya tiene el proyecto, conservando las reglas existentes de `users`, `projects`, `discussions`, `products`, `education`, etc. Si ya existe un bloque para una de estas colecciones nuevas, combina las reglas en vez de duplicarlo.
+
+Añade estas funciones dentro de `service cloud.firestore { match /databases/{database}/documents { ... } }`:
+
+function signedInForJobs() {
+  return request.auth != null;
+}
+
+function jobsModerator() {
+  return signedInForJobs()
+    && request.auth.token.email in ['roman82ap@gmail.com', 'thelastopositor@gmail.com'];
+}
+
+function validJobListing(data) {
+  return data.keys().hasAll([
+      'title', 'description', 'type', 'category', 'country', 'modality',
+      'compensation', 'contactEmail', 'contactPhone', 'portfolioUrl',
+      'authorId', 'authorEmail', 'authorName', 'status', 'createdAt', 'updatedAt'
+    ])
+    && data.title is string && data.title.size() > 0 && data.title.size() <= 120
+    && data.description is string && data.description.size() >= 10 && data.description.size() <= 5000
+    && data.type in ['empleo', 'colaboracion', 'servicio']
+    && data.category is string && data.category.size() <= 100
+    && data.country is string && data.country.size() > 0 && data.country.size() <= 100
+    && data.modality in ['remoto', 'presencial', 'hibrido']
+    && data.compensation in ['remunerado', 'no-remunerado', 'negociable', 'no-especificado']
+    && data.contactEmail is string && data.contactEmail.size() <= 254
+    && data.contactPhone is string && data.contactPhone.size() <= 40
+    && data.portfolioUrl is string && data.portfolioUrl.size() <= 500
+    && data.authorId is string && data.authorId.size() > 0
+    && data.authorEmail is string && data.authorEmail.size() <= 254
+    && data.authorName is string && data.authorName.size() <= 120
+    && data.status in ['active', 'closed']
+    && data.createdAt is string && data.updatedAt is string;
+}
+
+Añade estos bloques `match` dentro del mismo `match /databases/{database}/documents`:
+
+match /jobListings/{jobId} {
+  // Los anuncios y los contactos que el autor decida publicar son visibles públicamente.
+  allow read: if true;
+
+  // Solo usuarios autenticados pueden publicar en su propio nombre.
+  allow create: if signedInForJobs()
+    && request.resource.data.authorId == request.auth.uid
+    && request.resource.data.status == 'active'
+    && validJobListing(request.resource.data);
+
+  // El autor puede modificar sus anuncios; los moderadores pueden gestionar cualquiera.
+  allow update: if validJobListing(request.resource.data)
+    && (jobsModerator()
+      || (signedInForJobs()
+        && resource.data.authorId == request.auth.uid
+        && request.resource.data.authorId == resource.data.authorId
+        && request.resource.data.createdAt == resource.data.createdAt));
+
+  // El autor puede borrar los suyos y el moderador puede borrar cualquiera.
+  allow delete: if jobsModerator()
+    || (signedInForJobs() && resource.data.authorId == request.auth.uid);
+}
+
+match /jobReports/{reportId} {
+  // Las denuncias solo las puede leer el equipo de moderación.
+  allow read, update, delete: if jobsModerator();
+  allow create: if signedInForJobs()
+    && request.resource.data.keys().hasOnly([
+      'jobId', 'jobTitle', 'reason', 'reporterId', 'reporterEmail', 'createdAt', 'status'
+    ])
+    && request.resource.data.reporterId == request.auth.uid
+    && request.resource.data.jobId is string
+    && request.resource.data.jobTitle is string
+    && request.resource.data.reason is string
+    && request.resource.data.reason.size() > 0
+    && request.resource.data.reason.size() <= 1000
+    && request.resource.data.reporterEmail is string
+    && request.resource.data.createdAt is string
+    && request.resource.data.status == 'pending';
+}
+
+NOTAS
+-----
+- Las direcciones de correo de los moderadores deben coincidir con las que están configuradas en `src/App.jsx`.
+- Las reglas se aplican en Firebase, no basta con ocultar botones en React.
+- Si las reglas actuales del proyecto usan otra estructura o helpers, adapta este bloque antes de publicarlo.
+- El formulario advierte que los datos de contacto se mostrarán públicamente si se incluyen en el anuncio.

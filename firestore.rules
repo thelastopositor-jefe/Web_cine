@@ -1,0 +1,552 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ==========================================
+    // FUNCIONES GENERALES DE SEGURIDAD
+    // ==========================================
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          'roman82ap@gmail.com',
+          'thelastopositor@gmail.com'
+        ];
+    }
+
+    function ownsUser(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function ownsProject() {
+      return signedIn()
+        && (
+          resource.data.creatorId == request.auth.uid
+          || resource.data.creatorEmail == request.auth.token.email
+        );
+    }
+
+    function ownsDiscussion() {
+      return signedIn()
+        && (
+          resource.data.authorId == request.auth.uid
+          || resource.data.authorEmail == request.auth.token.email
+        );
+    }
+
+    // ==========================================
+    // USUARIOS Y PERFILES
+    // ==========================================
+
+    match /users/{userId} {
+
+      // Cada usuario consulta su perfil; los administradores
+      // pueden consultar todos los perfiles.
+      allow read: if ownsUser(userId) || isAdmin();
+
+      // Al crear el perfil, su ID debe ser el UID autenticado.
+      allow create: if ownsUser(userId)
+        && request.resource.data.id == userId
+        && request.resource.data.email == request.auth.token.email
+        && (
+          request.resource.data.role == 'user'
+          || (
+            request.resource.data.role == 'admin'
+            && isAdmin()
+          )
+        );
+
+      // El usuario puede modificar su perfil y favoritos,
+      // pero no puede elevar sus propios permisos.
+      allow update: if isAdmin()
+        || (
+          ownsUser(userId)
+          && request.resource.data.id == resource.data.id
+          && request.resource.data.email == resource.data.email
+          && request.resource.data.role == resource.data.role
+        );
+
+      allow delete: if isAdmin();
+
+      // Cada usuario puede consultar sus propias notificaciones.
+      // Las Cloud Functions las crean y actualizan con Admin SDK.
+      match /notifications/{notificationId} {
+        allow read: if ownsUser(userId) || isAdmin();
+        allow create, update, delete: if false;
+      }
+    }
+
+    // ==========================================
+    // MENSAJERIA PRIVADA
+    // ==========================================
+
+    match /conversations/{conversationId} {
+      // Firestore comprueba que la consulta solo pueda devolver
+      // conversaciones en las que participa el usuario autenticado.
+      allow get, list: if signedIn()
+        && request.auth.uid in resource.data.participants;
+
+      // Las conversaciones se crean y actualizan exclusivamente
+      // desde las Cloud Functions (Admin SDK).
+      allow create, update, delete: if false;
+
+      match /messages/{messageId} {
+        // El acceso a mensajes depende de ser participante
+        // de la conversacion padre, no de los datos del mensaje.
+        allow get, list: if signedIn()
+          && request.auth.uid in get(
+            /databases/$(database)/documents/conversations/$(conversationId)
+          ).data.participants;
+
+        allow create, update, delete: if false;
+      }
+    }
+
+    // ==========================================
+    // PERFILES PUBLICOS DE CREADORES
+    // ==========================================
+
+    match /publicProfiles/{userId} {
+      allow read: if true;
+
+      function validPublicProfile() {
+        return request.resource.data.keys().hasOnly([
+          'name',
+          'nameLower',
+          'photo',
+          'photoPath',
+          'banner',
+          'bannerPath',
+          'bio',
+          'patreonUrl',
+          'kofiUrl',
+          'websiteUrl',
+          'youtubeUrl',
+          'instagramUrl',
+          'tiktokUrl',
+          'artstationUrl',
+          'xUrl',
+          'createdAt'
+        ]);
+      }
+
+      allow create: if isAdmin()
+        || (
+          signedIn()
+          && request.auth.uid == userId
+          && validPublicProfile()
+        );
+
+      allow update: if isAdmin()
+        || (
+          signedIn()
+          && request.auth.uid == userId
+          && validPublicProfile()
+          && (
+            !('createdAt' in resource.data)
+            || request.resource.data.createdAt == resource.data.createdAt
+          )
+        );
+
+      allow delete: if isAdmin();
+    }
+
+    // ==========================================
+    // PROYECTOS DE CINE
+    // ==========================================
+
+    match /projects/{projectId} {
+
+      // Los proyectos son visibles pÃºblicamente.
+      allow read: if true;
+
+      // Un usuario autenticado solo puede publicar
+      // proyectos asociados a su propia cuenta.
+      allow create: if signedIn()
+        && request.resource.data.creatorId == request.auth.uid
+        && request.resource.data.creatorEmail
+          == request.auth.token.email
+        && request.resource.data.status == 'pending'
+        && request.resource.data.isFeatured == false;
+
+      // Solo los administradores pueden moderar proyectos y modificar
+      // contadores. Los autores pueden editar sus datos habituales,
+      // sin alterar identidad, moderaciÃ³n ni estadÃ­sticas.
+      allow update: if isAdmin()
+        || (
+          ownsProject()
+          && request.resource.data.creatorId == resource.data.creatorId
+          && request.resource.data.creatorEmail == resource.data.creatorEmail
+          && request.resource.data.status == resource.data.status
+          && request.resource.data.isFeatured == resource.data.isFeatured
+          && !request.resource.data.diff(resource.data)
+            .affectedKeys()
+            .hasAny([
+              'creatorId',
+              'creatorEmail',
+              'status',
+              'isFeatured',
+              'likesCount',
+              'viewsCount'
+            ])
+        );
+
+      // Los administradores pueden borrar cualquier proyecto.
+      // El autor tambiÃ©n puede borrar su propio proyecto.
+      allow delete: if isAdmin() || ownsProject();
+    }
+
+    // ==========================================
+    // DENUNCIAS DE PROYECTOS / VÃDEOS
+    // ==========================================
+
+    match /reports/{reportId} {
+
+      // Las denuncias son privadas: solo los administradores
+      // pueden leerlas, cambiar su estado o eliminarlas.
+      allow read, update, delete: if isAdmin();
+
+      // Se permite denunciar sin iniciar sesiÃ³n, como indica la interfaz.
+      // Si el denunciante ha iniciado sesiÃ³n, su UID y correo deben
+      // corresponder a la cuenta autenticada.
+      allow create: if
+        request.resource.data.keys().hasAll([
+          'projectId',
+          'projectTitle',
+          'youtubeId',
+          'reason',
+          'details',
+          'reporterUid',
+          'reporterEmail',
+          'createdAt',
+          'status'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'projectId',
+          'projectTitle',
+          'youtubeId',
+          'reason',
+          'details',
+          'reporterUid',
+          'reporterEmail',
+          'createdAt',
+          'status'
+        ])
+        && request.resource.data.projectId is string
+        && request.resource.data.projectId.size() > 0
+        && request.resource.data.projectId.size() <= 200
+        && request.resource.data.projectTitle is string
+        && request.resource.data.projectTitle.size() > 0
+        && request.resource.data.projectTitle.size() <= 300
+        && request.resource.data.youtubeId is string
+        && request.resource.data.youtubeId.size() <= 50
+        && request.resource.data.reason in [
+          'Derechos de autor',
+          'Contenido ilegal',
+          'Contenido sexual o violento inapropiado',
+          'Spam o enlace engañoso',
+          'El vídeo no corresponde al proyecto',
+          'Otro motivo'
+        ]
+        && request.resource.data.details is string
+        && request.resource.data.details.size() <= 1500
+        && request.resource.data.reporterUid
+          == (signedIn() ? request.auth.uid : null)
+        && (
+          request.resource.data.reporterEmail == null
+          || (
+            request.resource.data.reporterEmail is string
+            && request.resource.data.reporterEmail.size() <= 254
+          )
+        )
+        && request.resource.data.createdAt is string
+        && request.resource.data.status == 'pending';
+    }
+
+    // ==========================================
+    // PRODUCTOS Y RECURSOS
+    // ==========================================
+
+    // ==========================================
+    // NOTICIAS Y ACTUALIDAD
+    // ==========================================
+
+    match /news/{newsId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ==========================================
+    // RECURSOS PARA CREADORES
+    // ==========================================
+
+    match /resources/{resourceId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /products/{productId} {
+
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ==========================================
+    // FORMACIÃ“N Y CURSOS
+    // ==========================================
+
+    match /education/{courseId} {
+
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ==========================================
+    // FORO Y DISCUSIONES
+    // ==========================================
+
+    match /discussions/{topicId} {
+
+      allow read: if true;
+
+      // Solo usuarios autenticados pueden crear temas
+      // en nombre de su propia cuenta.
+      allow create: if signedIn()
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.authorEmail
+          == request.auth.token.email;
+
+      // Los administradores y autores pueden gestionar
+      // sus temas. Otros usuarios pueden aÃ±adir un comentario
+      // al final de la lista sin cambiar otros campos del tema.
+      allow update: if isAdmin()
+        || (
+          ownsDiscussion()
+          && request.resource.data.authorId == resource.data.authorId
+          && request.resource.data.authorEmail
+            == resource.data.authorEmail
+        )
+        || (
+          signedIn()
+          && request.resource.data.diff(resource.data)
+            .affectedKeys()
+            .hasOnly(['comments'])
+          && resource.data.comments is list
+          && request.resource.data.comments is list
+          && request.resource.data.comments.size()
+            == resource.data.comments.size() + 1
+          && request.resource.data.comments
+            .slice(0, resource.data.comments.size())
+            == resource.data.comments
+          && request.resource.data.comments[
+            resource.data.comments.size()
+          ].authorId == request.auth.uid
+          && request.resource.data.comments[
+            resource.data.comments.size()
+          ].text is string
+        );
+
+      allow delete: if isAdmin() || ownsDiscussion();
+
+      // Comentarios almacenados en la subcolecciÃ³n.
+      match /comments/{commentId} {
+
+        allow read: if true;
+
+        allow create: if signedIn()
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 5000;
+
+        allow update: if isAdmin()
+          || (
+            signedIn()
+            && resource.data.authorId == request.auth.uid
+            && request.resource.data.authorId == resource.data.authorId
+            && request.resource.data.diff(resource.data)
+              .affectedKeys()
+              .hasOnly(['text', 'updatedAt'])
+          );
+
+        allow delete: if isAdmin()
+          || (
+            signedIn()
+            && resource.data.authorId == request.auth.uid
+          );
+      }
+    }
+
+    // ==========================================
+    // EMPLEO Y COLABORACIONES
+    // ==========================================
+
+    function jobsModerator() {
+      return isAdmin();
+    }
+
+    function validJobListing(data) {
+      return data.keys().hasAll([
+          'title',
+          'description',
+          'type',
+          'category',
+          'country',
+          'modality',
+          'compensation',
+          'contactEmail',
+          'contactPhone',
+          'portfolioUrl',
+          'authorId',
+          'authorEmail',
+          'authorName',
+          'status',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.title is string
+        && data.title.size() > 0
+        && data.title.size() <= 120
+        && data.description is string
+        && data.description.size() >= 10
+        && data.description.size() <= 5000
+        && data.type in [
+          'empleo',
+          'colaboracion',
+          'servicio'
+        ]
+        && data.category is string
+        && data.category.size() <= 100
+        && data.country is string
+        && data.country.size() > 0
+        && data.country.size() <= 100
+        && data.modality in [
+          'remoto',
+          'presencial',
+          'hibrido'
+        ]
+        && data.compensation in [
+          'remunerado',
+          'no-remunerado',
+          'negociable',
+          'no-especificado'
+        ]
+        && data.contactEmail is string
+        && data.contactEmail.size() <= 254
+        && data.contactPhone is string
+        && data.contactPhone.size() <= 40
+        && data.portfolioUrl is string
+        && data.portfolioUrl.size() <= 500
+        && data.authorId is string
+        && data.authorId.size() > 0
+        && data.authorEmail is string
+        && data.authorEmail.size() <= 254
+        && data.authorName is string
+        && data.authorName.size() <= 120
+        && data.status in ['active', 'closed']
+        && data.createdAt is string
+        && data.updatedAt is string;
+    }
+
+    match /jobListings/{jobId} {
+
+      // Las ofertas publicadas son pÃºblicas.
+      allow read: if true;
+
+      // Solo usuarios autenticados pueden publicar
+      // ofertas a su propio nombre.
+      allow create: if signedIn()
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.authorEmail
+          == request.auth.token.email
+        && request.resource.data.status == 'active'
+        && validJobListing(request.resource.data);
+
+      // El autor puede editar o cerrar sus publicaciones,
+      // sin cambiar la identidad del autor ni la fecha inicial.
+      // Los administradores pueden moderar todas las ofertas.
+      allow update: if validJobListing(request.resource.data)
+        && (
+          jobsModerator()
+          || (
+            signedIn()
+            && resource.data.authorId == request.auth.uid
+            && request.resource.data.authorId
+              == resource.data.authorId
+            && request.resource.data.authorEmail
+              == resource.data.authorEmail
+            && request.resource.data.createdAt
+              == resource.data.createdAt
+          )
+        );
+
+      allow delete: if jobsModerator()
+        || (
+          signedIn()
+          && resource.data.authorId == request.auth.uid
+        );
+    }
+
+    // ==========================================
+    // DENUNCIAS DE OFERTAS
+    // ==========================================
+
+    match /jobReports/{reportId} {
+
+      // Solo los administradores pueden leer y gestionar
+      // las denuncias.
+      allow read, update, delete: if jobsModerator();
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly([
+          'jobId',
+          'jobTitle',
+          'reason',
+          'reporterId',
+          'reporterEmail',
+          'createdAt',
+          'status'
+        ])
+        && request.resource.data.reporterId == request.auth.uid
+        && request.resource.data.jobId is string
+        && request.resource.data.jobTitle is string
+        && request.resource.data.reason is string
+        && request.resource.data.reason.size() > 0
+        && request.resource.data.reason.size() <= 1000
+        && request.resource.data.reporterEmail is string
+        && request.resource.data.reporterEmail == request.auth.token.email
+        && request.resource.data.createdAt is string
+        && request.resource.data.status == 'pending';
+    }
+
+    // ==========================================
+    // REGISTRO DE MODERACION
+    // ==========================================
+
+    match /moderationAudit/{auditId} {
+      // Solo los administradores pueden consultar el historial.
+      // Las Cloud Functions escriben mediante Admin SDK.
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    // ==========================================
+    // CARRUSEL PRINCIPAL
+    // ==========================================
+
+    match /carouselItems/{itemId} {
+
+      // Las diapositivas son pÃºblicas.
+      allow read: if true;
+
+      // Solo los administradores pueden gestionar el carrusel.
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

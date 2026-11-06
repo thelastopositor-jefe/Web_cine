@@ -1,0 +1,30 @@
+TOONKNIGHT — REEMPLAZAR COMPLETAMENTE LA COLECCIÓN projects
+
+Este paquete contiene el projects.json del ZIP toonknight_denuncias_fix.zip (88 registros) y un script administrativo que reemplaza la colección Firestore `projects` por esa lista.
+
+ADVERTENCIA: es una operación destructiva. Elimina TODOS los documentos actuales de `projects` que no estén en la lista nueva y sobrescribe por completo los documentos cuyos IDs coincidan. No toca `users`, `jobListings`, `reports`, `discussions` ni otras colecciones. Si hay proyectos manuales o publicados por alguien, se borrarán si no forman parte del JSON. Confirma que quieres reemplazar la colección completa.
+
+Antes de empezar:
+1. Haz una exportación/copia de seguridad de Firestore.
+2. Confirma en Firebase Console que el ID del proyecto es `onlytoon-82f3f`.
+3. La lista tiene 88 registros. El script valida todos los títulos y enlaces de YouTube antes de escribir. Corrige/aborta si encuentra un registro incompleto o ID duplicado; no borra nada si falla la validación.
+4. Corrige también el problema anterior de las series: valida cada campo de episodio por separado, así que los IDs internos como `ref-146` no impiden extraer el ID de YouTube desde la URL del episodio.
+
+Instalación:
+1. Copia `src/data/projects.json` y `src/scripts/replaceProjectsAdmin.mjs` a tu proyecto manteniendo esas rutas.
+2. En la raíz del proyecto ejecuta:
+   npm install firebase-admin
+3. Configura GOOGLE_APPLICATION_CREDENTIALS con la ruta absoluta al JSON de una cuenta de servicio autorizada. Mantén ese archivo fuera de GitHub y nunca lo incluyas en Vercel o en el ZIP público.
+
+Windows PowerShell (solo para la ventana actual):
+   $env:GOOGLE_APPLICATION_CREDENTIALS="C:\ruta\privada\serviceAccountKey.json"
+macOS/Linux:
+   export GOOGLE_APPLICATION_CREDENTIALS="/ruta/privada/serviceAccountKey.json"
+
+SIMULACIÓN (no escribe nada):
+   node src/scripts/replaceProjectsAdmin.mjs
+
+Solo después de revisar el proyecto destino y los 88 títulos, ejecutar reemplazo completo:
+   node src/scripts/replaceProjectsAdmin.mjs --apply --replace-all --confirm-delete-all
+
+El script realiza la eliminación y la escritura en un único lote atómico de Firestore y aborta si la operación supera el límite de 500 operaciones. No cambies las reglas de Firestore para usar Firebase Admin; este SDK actúa con credenciales administrativas.
