@@ -375,6 +375,8 @@ const INITIAL_FORUM_TOPICS = [
 // COMPONENTE PRINCIPAL
 // ==========================================
 export default function App() {
+  // Evita que varios toques abran solicitudes de Google simultáneas.
+  const googleLoginInProgressRef = useRef(false);
   // --- Estados de Aplicación ---
   const [activeTab, setActiveTab] = useState('explorar'); // Secciones principales de ToonKnight.
   const [notificationConversationId, setNotificationConversationId] = useState('');
@@ -1745,6 +1747,9 @@ export default function App() {
   };
 
   const handleGoogleLogin = async () => {
+    // El bloqueo se activa antes del primer await, incluso con toques rápidos.
+    if (googleLoginInProgressRef.current) return;
+    googleLoginInProgressRef.current = true;
     try {
       const result = await signInWithPopup(auth, googleProvider);
       await processGoogleUser(result.user);
@@ -1768,6 +1773,8 @@ export default function App() {
       }
 
       alert(`No se pudo iniciar sesión con Google.\n\n${error?.code || error?.message || 'Error desconocido'}`);
+    } finally {
+      googleLoginInProgressRef.current = false;
     }
   };
 
