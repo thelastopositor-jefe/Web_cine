@@ -60,3 +60,5 @@ src/App(11).jsx
 # Scripts administrativos locales
 src/scripts/replaceProjectsAdmin.mjs
 src/scripts/seedProjectsAdmin.js
+
+src/scripts/seedProjects.js
