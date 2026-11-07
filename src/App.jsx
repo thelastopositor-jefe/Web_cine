@@ -2045,11 +2045,11 @@ export default function App() {
             {carouselItems.length > 0 && (
               <section className="relative w-full bg-black sm:h-[440px] lg:h-[560px] sm:bg-[#1B1D20] overflow-hidden border-b border-[#343537]">
                 {/* Imagen de fondo nítida con gradiente solo en la izquierda */}
-<div className="relative aspect-video w-full sm:absolute sm:inset-0 sm:aspect-auto sm:h-full">
+<div className="relative h-[240px] w-full overflow-hidden sm:absolute sm:inset-0 sm:h-full">
   <img
     src={carouselItems[heroIndex]?.thumbnail}
     alt={carouselItems[heroIndex]?.title}
-    className="w-full h-full object-contain sm:object-cover opacity-100 scale-100"
+    className="w-full h-full object-cover object-center opacity-100 scale-100"
   />
   {/* Gradiente más suave: deja ver mejor la imagen sin perder legibilidad del texto */}
   {carouselItems[heroIndex]?.darkOverlay !== false && (
