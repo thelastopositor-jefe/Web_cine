@@ -378,7 +378,13 @@ export default function App() {
   // Evita que varios toques abran solicitudes de Google simultáneas.
   const googleLoginInProgressRef = useRef(false);
   // --- Estados de Aplicación ---
-  const [activeTab, setActiveTab] = useState('explorar'); // Secciones principales de ToonKnight.
+  const [activeTab, setActiveTab] = useState(() => {
+    const allowed = ['explorar','productos','educacion','comunidad','noticias','recursos','empleo','mensajes','admin','perfil'];
+    const initial = new URLSearchParams(window.location.search).get('section');
+    return allowed.includes(initial) ? initial : 'explorar';
+  });
+  // Guarda la sección en la URL para conservarla al recargar.
+  const lastSectionRef = useRef(activeTab);
   const [notificationConversationId, setNotificationConversationId] = useState('');
   const [selectedPublicProfileId, setSelectedPublicProfileId] = useState('');
   const [forumPublicAuthors, setForumPublicAuthors] = useState({});
@@ -937,6 +943,17 @@ export default function App() {
     } catch (error) { if (error?.name !== 'AbortError') console.error('No se pudo compartir el proyecto:', error); }
   };
 
+  // Sincroniza la sección con la URL sin interferir con enlaces a proyectos o perfiles.
+  useEffect(() => {
+    if (activeTab === 'publicProfile' || activeTab === lastSectionRef.current) return;
+    lastSectionRef.current = activeTab;
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('project') || url.searchParams.has('creator')) return;
+    if (activeTab === 'explorar') url.searchParams.delete('section');
+    else url.searchParams.set('section', activeTab);
+    window.history.pushState({ ...window.history.state, toonknightTab: activeTab }, '', `${url.pathname}${url.search}${url.hash}`);
+  }, [activeTab]);
+
   // Abre automáticamente el proyecto cuando alguien entra mediante un enlace compartido.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -972,8 +989,12 @@ export default function App() {
         return;
       }
       setSelectedProject(null);
-      const restoredTab = window.history.state?.toonknightTab;
-      setActiveTab(restoredTab && restoredTab !== 'publicProfile' ? restoredTab : 'explorar');
+      const allowedTabs = ['explorar','productos','educacion','comunidad','noticias','recursos','empleo','mensajes','admin','perfil'];
+      const urlTab = params.get('section');
+      const restoredTab = urlTab || window.history.state?.toonknightTab;
+      const nextTab = allowedTabs.includes(restoredTab) ? restoredTab : 'explorar';
+      lastSectionRef.current = nextTab;
+      setActiveTab(nextTab);
     };
     window.addEventListener('popstate', syncProjectFromHistory);
     return () => window.removeEventListener('popstate', syncProjectFromHistory);
