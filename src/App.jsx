@@ -1962,7 +1962,7 @@ export default function App() {
 
         {/* Acciones y menú móvil */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          <button onClick={() => { setShowPublishWarning(true); setMobileMenuOpen(false); }} className="bg-gold-600 hover:bg-gold-500 text-white text-xs sm:text-sm font-semibold px-2.5 sm:px-4 py-2 rounded-full flex items-center gap-1.5 whitespace-nowrap">
+          <button onClick={() => { setShowPublishWarning(true); setMobileMenuOpen(false); }} className="bg-gold-600 hover:bg-gold-500 text-[#101113] text-xs sm:text-sm font-semibold px-2.5 sm:px-4 py-2 rounded-full flex items-center gap-1.5 whitespace-nowrap">
             <Plus className="w-4 h-4" /><span className="hidden sm:inline">Publicar</span>
           </button>
           {user && <NotificationsBell user={user} onOpenNotification={notification => {
@@ -2076,7 +2076,7 @@ export default function App() {
                         onClick={() => trackAnalyticsEvent('toonknight_carousel_click', { carousel_item_id: carouselItems[heroIndex]?.id || heroIndex })}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gold-600 hover:bg-gold-500 text-white font-semibold px-6 py-3 rounded-xl flex items-center gap-2 shadow-lg shadow-gold-600/30 transition-all hover:scale-105"
+                        className="bg-gold-600 hover:bg-gold-500 text-[#101113] font-semibold px-6 py-3 rounded-xl flex items-center gap-2 shadow-lg shadow-gold-600/30 transition-all hover:scale-105"
                       >
                         <Play className="w-5 h-5 fill-current" />
                         {carouselItems[heroIndex]?.linkText || 'Ver proyecto'}
@@ -2112,14 +2112,14 @@ export default function App() {
             {visibleFeaturedProjects.length > 0 && (
               <section className="max-w-7xl mx-auto px-6 lg:px-12 space-y-6">
                 <div>
-                  <span className="text-xs font-semibold tracking-wider text-amber-400 uppercase">SELECCIÓN DE TURODAJE</span>
+                  <span className="text-xs font-semibold tracking-wider text-gold-400 uppercase">SELECCIÓN DE TURODAJE</span>
                   <h2 className="text-2xl font-bold text-white">Destacados</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {visibleFeaturedProjects.map((item, index) => (
-                    <button key={item.id} type="button" onClick={() => { trackAnalyticsEvent('toonknight_featured_click', { project_id: item.id }); openProject(item); }} className="min-w-0 text-left bg-[#1B1D20] hover:bg-[#222326] border border-[#343537] p-3.5 rounded-xl flex flex-col gap-3 transition-all hover:border-amber-500/50 group">
+                    <button key={item.id} type="button" onClick={() => { trackAnalyticsEvent('toonknight_featured_click', { project_id: item.id }); openProject(item); }} className="min-w-0 text-left bg-[#1B1D20] hover:bg-[#222326] border border-[#343537] p-3.5 rounded-xl flex flex-col gap-3 transition-all hover:border-gold-500/50 group">
                       <span className={`relative block w-full ${item.hasHonorFrame ? 'honor-project-thumbnail' : ''}`}><img src={item.thumbnail} alt={item.title} className="w-full aspect-video rounded-lg object-cover" /></span>
-                      <span className={`relative block flex-1 min-w-0 ${item.hasHonorFrame ? 'honor-featured-details' : ''}`}><span className="block text-[10px] font-bold tracking-wider text-amber-400 uppercase">Destacado {index + 1}</span><span className="block text-sm font-semibold text-white truncate group-hover:text-amber-300 transition-colors">{item.title}</span><span className="block text-xs text-gray-400 truncate">{projectDisplayName(item)}</span>{item.hasHonorFrame && <img src="/images/escudo-de-honor.webp" alt="Escudo de Honor" className="honor-badge-image honor-badge-image-small" />}</span>
+                      <span className={`relative block flex-1 min-w-0 ${item.hasHonorFrame ? 'honor-featured-details' : ''}`}><span className="block text-[10px] font-bold tracking-wider text-gold-400 uppercase">Destacado {index + 1}</span><span className="block text-sm font-semibold text-white truncate group-hover:text-gold-300 transition-colors">{item.title}</span><span className="block text-xs text-gray-400 truncate">{projectDisplayName(item)}</span>{item.hasHonorFrame && <img src="/images/escudo-de-honor.webp" alt="Escudo de Honor" className="honor-badge-image honor-badge-image-small" />}</span>
                     </button>
                   ))}
                 </div>
@@ -2287,7 +2287,7 @@ export default function App() {
                             e.stopPropagation();
                             handleDeleteProject(project.id);
                           }}
-                          className="absolute top-2 right-2 p-1.5 bg-gold-600/80 hover:bg-gold-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="absolute top-2 right-2 p-1.5 bg-gold-600/80 hover:bg-gold-600 text-[#101113] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                           title="Eliminar proyecto inmediatamente"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -2336,7 +2336,7 @@ export default function App() {
               <span className="text-xs font-semibold text-gold-400 uppercase tracking-wider">RECURSOS RECOMENDADOS</span>
               <h1 className="text-3xl font-bold text-white">Equipamiento y software para cineastas</h1>
               <p className="text-gray-400 text-sm mt-1">Cámaras, objetivos, iluminación, sonido, edición y herramientas para cineastas.</p>
-              {isAdmin && <button onClick={openNewProduct} className="mt-4 bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4" />Agregar producto</button>}
+              {isAdmin && <button onClick={openNewProduct} className="mt-4 bg-gold-600 hover:bg-gold-500 text-[#101113] text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4" />Agregar producto</button>}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[#343537] bg-[#1B1D20] p-4">
@@ -2404,7 +2404,7 @@ export default function App() {
         ------------------------------------------ */}
         {activeTab === 'educacion' && (
           <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 space-y-8">
-            <div><span className="text-xs font-semibold text-gold-400 uppercase tracking-wider">FORMACIÓN PARA CREADORES</span><h1 className="text-3xl font-bold text-white">Cursos</h1><p className="text-sm text-gray-400 mt-1">Cursos y tutoriales de cine y producción audiovisual: dirección, guion, fotografía, iluminación, sonido, montaje, VFX y animación.</p>{isAdmin && <button onClick={openNewEducation} className="mt-4 bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4"/>Agregar curso</button>}</div>
+            <div><span className="text-xs font-semibold text-gold-400 uppercase tracking-wider">FORMACIÓN PARA CREADORES</span><h1 className="text-3xl font-bold text-white">Cursos</h1><p className="text-sm text-gray-400 mt-1">Cursos y tutoriales de cine y producción audiovisual: dirección, guion, fotografía, iluminación, sonido, montaje, VFX y animación.</p>{isAdmin && <button onClick={openNewEducation} className="mt-4 bg-gold-600 hover:bg-gold-500 text-[#101113] text-sm font-semibold px-4 py-2.5 rounded-xl inline-flex items-center gap-2"><Plus className="w-4 h-4"/>Agregar curso</button>}</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[#343537] bg-[#1B1D20] p-4">
               <label className="text-xs text-gray-400">Área audiovisual<select value={educationTechniqueFilter} onChange={e => setEducationTechniqueFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
               <label className="text-xs text-gray-400">Especialidad<select value={educationTopicFilter} onChange={e => setEducationTopicFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Dirección','Guion','Producción','Dirección de fotografía','Cámara y ópticas','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Interpretación','Dirección de arte','Vestuario y maquillaje','Casting','Distribución y festivales','Efectos visuales','Animación','Storyboard','Postproducción','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
@@ -2437,7 +2437,7 @@ export default function App() {
 
               <button
                 onClick={() => setShowNewTopicModal(true)}
-                className="bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-gold-600/30"
+                className="bg-gold-600 hover:bg-gold-500 text-[#101113] text-sm font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-gold-600/30"
               >
                 <Plus className="w-4 h-4" />
                 Crear nuevo tema
@@ -2525,7 +2525,7 @@ export default function App() {
                     />
                     <button
                       onClick={() => handleAddComment(selectedForumTopic.id)}
-                      className="bg-gold-600 hover:bg-gold-500 text-white text-xs font-semibold px-5 rounded-xl"
+                      className="bg-gold-600 hover:bg-gold-500 text-[#101113] text-xs font-semibold px-5 rounded-xl"
                     >
                       Responder
                     </button>
@@ -2578,7 +2578,7 @@ export default function App() {
                   <button type="button" onClick={() => openPublicProfile(user.id)} className="rounded-xl border border-[#3A3B3E] px-4 py-2 text-sm font-semibold text-gray-200 hover:bg-[#222326]">Ver perfil público</button>
                   <button
                     onClick={handleOpenEditProfile}
-                    className="bg-gold-600 hover:bg-gold-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
+                    className="bg-gold-600 hover:bg-gold-500 text-[#101113] text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
                   >
                     Editar perfil
                   </button>
@@ -2893,7 +2893,7 @@ export default function App() {
                     onClick={() => handleToggleFavorite(selectedProject.id)}
                     title="Guardar en favoritos"
                     aria-label="Guardar en favoritos"
-                    className={`p-2.5 rounded-xl border border-[#343537] transition-colors ${user?.favorites?.includes(selectedProject.id) ? 'bg-gold-600 text-white' : 'bg-[#222326] text-gray-300'}`}
+                    className={`p-2.5 rounded-xl border border-[#343537] transition-colors ${user?.favorites?.includes(selectedProject.id) ? 'bg-gold-600 text-[#101113]' : 'bg-[#222326] text-gray-300'}`}
                   >
                     <Bookmark className="w-4 h-4" />
                   </button>
@@ -2993,7 +2993,7 @@ export default function App() {
               <label className="block text-xs font-bold text-gray-300">Motivo de la denuncia<select value={reportReason} onChange={e => setReportReason(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white"><option>Derechos de autor</option><option>Contenido ilegal</option><option>Contenido sexual o violento inapropiado</option><option>Spam o enlace engañoso</option><option>El vídeo no corresponde al proyecto</option><option>Otro motivo</option></select></label>
               <label className="block text-xs font-bold text-gray-300">Detalles (opcional)<textarea rows={4} maxLength={1500} value={reportDetails} onChange={e => setReportDetails(e.target.value)} placeholder="Explica brevemente el problema y, si procede, aporta contexto." className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-xl p-3 text-white" /></label>
               <p className="text-[11px] text-gray-500">Usa esta función de buena fe. Se enviarán el identificador del proyecto, el motivo y los detalles; si has iniciado sesión, también se asociará tu cuenta a la denuncia.</p>
-              <div className="flex gap-3"><button type="button" onClick={() => setShowReportModal(false)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-gold-700 hover:bg-gold-600 text-white font-bold py-3 rounded-xl">Enviar denuncia</button></div>
+              <div className="flex gap-3"><button type="button" onClick={() => setShowReportModal(false)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-gold-700 hover:bg-gold-600 text-[#101113] font-bold py-3 rounded-xl">Enviar denuncia</button></div>
             </form>
           </div>
         </div>
@@ -3006,7 +3006,7 @@ export default function App() {
             <p className="text-sm text-gray-300 leading-relaxed">Asegúrate de que tienes los derechos necesarios sobre el contenido y que los enlaces funcionan. La publicación quedará pendiente de revisión antes de aparecer públicamente. No publiques material ilegal, ofensivo o que infrinja derechos de terceros.</p>
             <div className="flex gap-3">
               <button onClick={() => setShowPublishWarning(false)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 font-semibold py-3 rounded-xl">Cancelar</button>
-              <button onClick={() => { setShowPublishWarning(false); openSubmitProjectModal(); }} className="flex-1 bg-gold-600 hover:bg-gold-500 text-white font-bold py-3 rounded-xl">Entendido, continuar</button>
+              <button onClick={() => { setShowPublishWarning(false); openSubmitProjectModal(); }} className="flex-1 bg-gold-600 hover:bg-gold-500 text-[#101113] font-bold py-3 rounded-xl">Entendido, continuar</button>
             </div>
           </div>
         </div>
@@ -3086,7 +3086,7 @@ export default function App() {
                 <button type="button" onClick={handleAddEditSeason} className="w-full border border-dashed border-gold-500/50 text-gold-300 hover:bg-gold-600/10 rounded-xl py-2.5 text-xs font-bold">+ Añadir temporada</button>
               </div>
             )}
-            <div className="flex gap-3"><button type="button" onClick={() => setEditingProject(null)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-gold-600 hover:bg-gold-500 text-white py-3 rounded-xl font-bold">Guardar cambios</button></div>
+            <div className="flex gap-3"><button type="button" onClick={() => setEditingProject(null)} className="flex-1 bg-[#222326] hover:bg-[#343537] text-gray-200 py-3 rounded-xl">Cancelar</button><button type="submit" className="flex-1 bg-gold-600 hover:bg-gold-500 text-[#101113] py-3 rounded-xl font-bold">Guardar cambios</button></div>
           </form>
         </div>
       )}
@@ -3229,7 +3229,7 @@ export default function App() {
 
               <button
                 type="submit"
-                className="w-full bg-gold-600 hover:bg-gold-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-gold-600/30 transition-all"
+                className="w-full bg-gold-600 hover:bg-gold-500 text-[#101113] font-bold py-3 rounded-xl shadow-lg shadow-gold-600/30 transition-all"
               >
                 Enviar a revisión
               </button>
@@ -3298,7 +3298,7 @@ export default function App() {
 
               <button
                 type="submit"
-                className="w-full bg-gold-600 hover:bg-gold-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-gold-600/30 transition-all"
+                className="w-full bg-gold-600 hover:bg-gold-500 text-[#101113] font-bold py-3 rounded-xl shadow-lg shadow-gold-600/30 transition-all"
               >
                 Publicar discusión
               </button>
@@ -3541,7 +3541,7 @@ export default function App() {
                 <p>Los vídeos se reproducen mediante YouTube y esa plataforma puede mostrar anuncios conforme a sus propias condiciones. TuRodaje no afirma insertar ni controlar los anuncios que aparecen dentro del reproductor de YouTube.</p>
               </>}
             </div>
-            <div className="flex justify-end mt-7"><button onClick={() => setLegalPage('')} className="bg-gold-600 hover:bg-gold-500 text-white font-bold px-5 py-2.5 rounded-xl">Cerrar</button></div>
+            <div className="flex justify-end mt-7"><button onClick={() => setLegalPage('')} className="bg-gold-600 hover:bg-gold-500 text-[#101113] font-bold px-5 py-2.5 rounded-xl">Cerrar</button></div>
           </section>
         </div>
       )}
