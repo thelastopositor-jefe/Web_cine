@@ -1,32 +1,32 @@
 @import "tailwindcss";
-/* TuRodaje · Cinema Gold — tonos de acento personalizados para Tailwind v4. */
+/* TuRodaje · Cinema Yellow — tonos de acento personalizados para Tailwind v4. */
 @theme {
-  --color-gold-50: #FCF9F1;
-  --color-gold-100: #F8F0DC;
-  --color-gold-200: #EEDDB5;
-  --color-gold-300: #E5C98D;
-  --color-gold-400: #D6AD60;
-  --color-gold-500: #C59A50;
-  --color-gold-600: #A77C37;
-  --color-gold-700: #85612D;
-  --color-gold-800: #614823;
-  --color-gold-900: #3B2C1B;
-  --color-gold-950: #241D16;
+  --color-gold-50: #FFFBE8;
+  --color-gold-100: #FFF4B8;
+  --color-gold-200: #FFE77A;
+  --color-gold-300: #FFDA40;
+  --color-gold-400: #FFCB16;
+  --color-gold-500: #FFC400;
+  --color-gold-600: #E3A900;
+  --color-gold-700: #B98700;
+  --color-gold-800: #856200;
+  --color-gold-900: #4A3800;
+  --color-gold-950: #261F0A;
 }
 
 :root { color-scheme: dark; }
-::selection { background: #A77C37; color: #fff; }
+::selection { background: #FFC400; color: #101113; }
 
 
 /* Escudo de Honor: solo proyectos seleccionados por moderación. */
 .honor-project-card {
-  border-color: #D6AD60;
-  box-shadow: 0 0 10px rgba(214, 173, 96, .35), 0 0 26px rgba(214, 173, 96, .18), inset 0 0 5px rgba(214, 173, 96, .20);
+  border-color: #FFC400;
+  box-shadow: 0 0 10px rgba(255, 196, 0, .35), 0 0 26px rgba(255, 196, 0, .18), inset 0 0 5px rgba(255, 196, 0, .20);
 }
 .honor-project-thumbnail {
-  outline: 2px solid #D6AD60;
+  outline: 2px solid #FFC400;
   outline-offset: -2px;
-  box-shadow: inset 0 0 10px rgba(214, 173, 96, .30);
+  box-shadow: inset 0 0 10px rgba(255, 196, 0, .30);
 }
 .honor-badge-image {
   position: absolute;
