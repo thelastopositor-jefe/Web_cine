@@ -4,7 +4,7 @@ import { getDownloadURL, ref as storageRef, uploadBytes, deleteObject } from 'fi
 import { ExternalLink, Newspaper, Pencil, Plus, Trash2, Wrench, X } from 'lucide-react';
 import { db, storage } from '../firebase';
 
-const EMPTY_FORM = { title: '', description: '', category: '', imagesText: '', url: '', country: '', recommended: false, featured: false };
+const EMPTY_FORM = { title: '', description: '', category: '', imagesText: '', url: '', country: '', tags: [], recommended: false, featured: false };
 const timestampValue = value => {
   if (!value) return 0;
   if (typeof value.toMillis === 'function') return value.toMillis();
@@ -32,6 +32,7 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
   const [error, setError] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('Todas');
   const [countryFilter, setCountryFilter] = useState('Todos');
+  const [tagFilter, setTagFilter] = useState('Todas');
   const [expanded, setExpanded] = useState({});
   const toggleExpanded = id => setExpanded(current => ({ ...current, [id]: !current[id] }));
 
@@ -53,7 +54,7 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
 
   const openNew = () => {
     setEditing(null);
-    setForm({ ...EMPTY_FORM, category: isNews ? 'Noticias' : 'Software de edición' });
+    setForm({ ...EMPTY_FORM, category: isNews ? 'Noticias' : 'Software' });
     setImageFiles([]);
     setShowEditor(true);
     setError('');
@@ -66,10 +67,11 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
     setForm({
       title: item.title || '',
       description: item.description || '',
-      category: item.category || '',
+      category: normalizeCategory(item.category) || (isNews ? 'Noticias' : 'Software'),
       imagesText: (isNews ? (item.images || []) : [item.image].filter(Boolean)).join('\n'),
       url: isNews ? (item.externalUrl || '') : (item.url || ''),
       country: item.country || '',
+      tags: Array.isArray(item.tags) ? item.tags : [],
       recommended: item.recommended === true,
       featured: item.featured === true
     });
@@ -125,6 +127,7 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
       const common = {
         title, description,
         category: form.category.trim() || (isNews ? 'Noticias' : 'Otros'),
+        ...(!isNews ? { tags: form.tags } : {}),
         createdBy: editing?.createdBy || user.id,
         updatedBy: user.id,
         updatedAt: now,
@@ -156,10 +159,26 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
     catch (err) { console.error(err); setError('No se pudo eliminar el elemento.'); }
   };
 
-  const categories = isNews
-    ? ['Noticias','Novedades','Estrenos','Festivales','Eventos','Convocatorias y concursos','Cineastas y productoras','Rodajes','Industria audiovisual','TuRodaje']
-    : ['Software de edición','Guiones y plantillas','LUTs y color','Audio y efectos sonoros','Música y licencias','Equipamiento','Preproducción','Rodaje','Postproducción','VFX y animación','Formación','Portales de empleo','Agencias de actores','Centros educativos','Otros'];
-
+  const resourceTaxonomy = {
+    'Software': ['Edición de vídeo','Edición de sonido','Colorización','3D','Guion','Preproducción','Producción','Postproducción','VFX','Animación','Gestión de proyectos','Streaming','Plugins','Herramientas IA'],
+    'Equipo': ['Cámaras','Ópticas','Iluminación','Sonido directo','Micrófonos','Trípodes y soportes','Grip','Monitores','Drones','Accesorios','Alquiler','Venta'],
+    'Agencias': ['Actores','Casting','Locaciones','Atrezo','Decoración','Escenografía','Figuración','Representación artística','Producción','Técnicos','Servicios de rodaje','Vestuario','Maquillaje'],
+    'Portales de empleo': ['Ofertas de trabajo','Prácticas','Freelance','Casting','Convocatorias','Bolsas de empleo','Colaboraciones'],
+    'Formación': ['Centros educativos','Universidades','Escuelas de cine','Cursos','Talleres','Tutoriales','Másteres','Becas','Formación online','Presencial'],
+    'Audio y sonido': ['Música','Efectos sonoros','Bibliotecas de sonido','Licencias','Grabación','Mezcla','Masterización','Foley','Doblaje','Composición'],
+    'VFX y animación': ['Animación 2D','Animación 3D','Composición','Motion graphics','Efectos visuales','Modelado','Rigging','Render','Simulación','Tracking']
+  };
+  const newsCategories = ['Noticias','Novedades','Estrenos','Festivales','Eventos','Convocatorias y concursos','Cineastas y productoras','Rodajes','Industria audiovisual','TuRodaje'];
+  const legacyCategoryMap = {
+    'Software de edición':'Software','Guiones y plantillas':'Software','LUTs y color':'Software',
+    'Audio y efectos sonoros':'Audio y sonido','Música y licencias':'Audio y sonido',
+    'Equipamiento':'Equipo','Preproducción':'Software','Rodaje':'Equipo',
+    'Postproducción':'Software','VFX y animación':'VFX y animación',
+    'Centros educativos':'Formación','Agencias de actores':'Agencias'
+  };
+  const normalizeCategory = category => isNews ? category : (legacyCategoryMap[category] || category);
+  const categories = isNews ? newsCategories : Object.keys(resourceTaxonomy);
+  const availableTags = isNews ? [] : resourceTaxonomy[form.category] || [];
   const latamCountries = ['Argentina','Bolivia','Brasil','Chile','Colombia','Costa Rica','Cuba','Ecuador','El Salvador','Guatemala','Haití','Honduras','México','Nicaragua','Panamá','Paraguay','Perú','República Dominicana','Uruguay','Venezuela'];
   const europeCountries = ['Alemania','Andorra','Austria','Bélgica','Bielorrusia','Bosnia y Herzegovina','Bulgaria','Chipre','Croacia','Dinamarca','Eslovaquia','Eslovenia','España','Estonia','Finlandia','Francia','Grecia','Hungría','Irlanda','Islandia','Italia','Letonia','Liechtenstein','Lituania','Luxemburgo','Malta','Moldavia','Mónaco','Montenegro','Noruega','Países Bajos','Polonia','Portugal','Reino Unido','República Checa','Rumanía','San Marino','Serbia','Suecia','Suiza','Ucrania','Vaticano'];
   const countries = [
@@ -167,9 +186,11 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
     'Alemania','Andorra','Austria','Bélgica','Bielorrusia','Bosnia y Herzegovina','Bulgaria','Chipre','Croacia','Dinamarca','Eslovaquia','Eslovenia','España','Estonia','Finlandia','Francia','Grecia','Hungría','Irlanda','Islandia','Italia','Letonia','Liechtenstein','Lituania','Luxemburgo','Malta','Moldavia','Mónaco','Montenegro','Noruega','Países Bajos','Polonia','Portugal','Reino Unido','República Checa','Rumanía','San Marino','Serbia','Suecia','Suiza','Ucrania','Vaticano',
     'Estados Unidos'
   ].sort((a,b) => a.localeCompare(b,'es'));
-  const availableCategories = [...new Set([...categories, ...items.map(item => item.category).filter(Boolean)])];
+  const availableCategories = [...new Set([...categories, ...items.map(item => normalizeCategory(item.category)).filter(Boolean)])];
+  const filterTags = isNews ? [] : [...new Set(items.filter(item => categoryFilter === 'Todas' || normalizeCategory(item.category) === categoryFilter).flatMap(item => Array.isArray(item.tags) ? item.tags : []))].sort((a,b) => a.localeCompare(b,'es'));
   const filteredItems = items.filter(item =>
-    (categoryFilter === 'Todas' || item.category === categoryFilter) &&
+    (categoryFilter === 'Todas' || normalizeCategory(item.category) === categoryFilter) &&
+    (isNews || tagFilter === 'Todas' || (Array.isArray(item.tags) && item.tags.includes(tagFilter))) &&
     (isNews || countryFilter === 'Todos' || (countryFilter === 'Sin especificar' ? !item.country : countryFilter === 'LATAM' ? (item.country === 'LATAM' || latamCountries.includes(item.country)) : countryFilter === 'EUROPA' ? (item.country === 'EUROPA' || europeCountries.includes(item.country)) : item.country === countryFilter))
   );
 
@@ -178,10 +199,13 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
     {error && <p role="alert" className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-200">{error}</p>}
     <div className="flex flex-wrap gap-3 rounded-xl border border-[#34343b] bg-[#1a1a1e] p-3">
       <label className="min-w-44 flex-1 text-xs text-gray-400">Filtrar por categoría
-        <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)} className="mt-1 w-full rounded-lg border border-[#34343b] bg-[#111113] p-2 text-sm text-white">
+        <select value={categoryFilter} onChange={e => { setCategoryFilter(e.target.value); setTagFilter('Todas'); }} className="mt-1 w-full rounded-lg border border-[#34343b] bg-[#111113] p-2 text-sm text-white">
           <option value="Todas">Todas las categorías</option>{availableCategories.map(category => <option key={category} value={category}>{category}</option>)}
         </select>
       </label>
+      {!isNews && <label className="min-w-44 flex-1 text-xs text-gray-400">Filtrar por etiqueta
+        <select value={tagFilter} onChange={e => setTagFilter(e.target.value)} className="mt-1 w-full rounded-lg border border-[#34343b] bg-[#111113] p-2 text-sm text-white"><option value="Todas">Todas las etiquetas</option>{filterTags.map(tag => <option key={tag} value={tag}>{tag}</option>)}</select>
+      </label>}
       {!isNews && <label className="min-w-44 flex-1 text-xs text-gray-400">Filtrar por país
         <select value={countryFilter} onChange={e => setCountryFilter(e.target.value)} className="mt-1 w-full rounded-lg border border-[#34343b] bg-[#111113] p-2 text-sm text-white">
           <option value="Todos">Todos los países</option><option value="Sin especificar">Sin especificar</option><option value="LATAM">LATAM (todos los países)</option><option value="EUROPA">EUROPA (todos los países)</option>{countries.map(country => <option key={country} value={country}>{country}</option>)}
@@ -202,8 +226,8 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
                 {images.length ? <img src={images[0]} alt={item.title} loading="lazy" className={`h-full w-full ${isNews ? 'object-cover' : 'object-contain p-1'}`} /> : <div className="flex h-full items-center justify-center">{isNews ? <Newspaper className="h-7 w-7 text-gray-600" /> : <Wrench className="h-7 w-7 text-gray-600" />}</div>}
               </div>
               <div className="min-w-0 flex-1 space-y-1">
-                <div className="flex flex-wrap gap-1.5 text-[10px]"><span className="rounded-full bg-red-500/10 px-2 py-0.5 text-red-300">{item.category || 'Otros'}</span>
-                  {!isNews && item.country && <span className="text-gray-400">{item.country}</span>}
+                <div className="flex flex-wrap gap-1.5 text-[10px]"><span className="rounded-full bg-red-500/10 px-2 py-0.5 text-red-300">{normalizeCategory(item.category) || 'Otros'}</span>
+                  {!isNews && item.country && <span className="text-gray-400">{item.country}</span>}{!isNews && Array.isArray(item.tags) && item.tags.map(tag => <span key={tag} className="rounded-full bg-[#292930] px-2 py-0.5 text-gray-300">{tag}</span>)}
                   {isNews && item.createdAt && <span className="text-gray-500">{new Date(timestampValue(item.createdAt)).toLocaleDateString('es-ES')}</span>}
                   {item.recommended && !isNews && <span className="text-emerald-300">Recomendado</span>}
                   {item.featured && isNews && <span className="text-amber-300">Destacada</span>}
@@ -221,6 +245,6 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
           </article>;
         })}
       </div>}
-    {isAdmin && showEditor && <div className="fixed inset-0 z-[90] flex items-center justify-center overflow-y-auto bg-black/80 p-4"><form onSubmit={save} className="my-auto max-h-[90vh] w-full max-w-2xl space-y-4 overflow-y-auto rounded-2xl border border-[#34343b] bg-[#17171b] p-5 shadow-2xl"><div className="flex items-center justify-between"><h2 className="text-lg font-bold text-white">{editing ? 'Editar' : 'Crear'} {isNews ? 'noticia' : 'recurso'}</h2><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="rounded-lg p-2 text-gray-400 hover:bg-[#292930]"><X className="h-4 w-4" /></button></div><label className="block text-xs text-gray-400">Título<input required maxLength={160} value={form.title} onChange={event => setForm(current => ({ ...current, title: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Categoría<select value={form.category} onChange={event => setForm(current => ({ ...current, category: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white">{categories.map(category => <option key={category}>{category}</option>)}</select></label><label className="block text-xs text-gray-400">Descripción<textarea required rows={5} maxLength={8000} value={form.description} onChange={event => setForm(current => ({ ...current, description: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">{isNews ? 'Imágenes por URL (una por línea)' : 'Imagen por URL (opcional)'}<textarea rows={3} value={form.imagesText} onChange={event => setForm(current => ({ ...current, imagesText: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Subir imagen{isNews ? 'es' : ''} desde tu dispositivo<input type="file" accept="image/*" multiple={isNews} onChange={event => setImageFiles(Array.from(event.target.files || []))} className="mt-1 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292930] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" /><span className="mt-1 block text-[10px] text-gray-500">Hasta 5 MB por imagen. {isNews ? 'Máximo 8 imágenes combinando archivos y URLs.' : 'Un solo logotipo o imagen.'} {imageFiles.length ? `Seleccionadas: ${imageFiles.map(file => file.name).join(', ')}` : ''}</span></label><label className="block text-xs text-gray-400">{isNews ? 'Enlace externo (opcional)' : 'Enlace del recurso'}<input type="url" value={form.url} onChange={event => setForm(current => ({ ...current, url: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label> {!isNews && <><label className="block text-xs text-gray-400">País<select value={form.country} onChange={event => setForm(current => ({ ...current, country: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white"><option value="">Sin especificar</option><option value="LATAM">LATAM</option><option value="EUROPA">EUROPA</option>{countries.map(country => <option key={country} value={country}>{country}</option>)}</select></label><label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.recommended} onChange={event => setForm(current => ({ ...current, recommended: event.target.checked }))} />Marcar como recomendado</label></>}{isNews && <label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.featured} onChange={event => setForm(current => ({ ...current, featured: event.target.checked }))} />Marcar como noticia destacada</label>}{error && <p role="alert" className="text-xs text-red-300">{error}</p>}<div className="flex gap-2"><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="flex-1 rounded-xl bg-[#292930] py-3 text-sm text-gray-200">Cancelar</button><button type="submit" disabled={saving} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-bold text-white disabled:opacity-50">{saving ? 'Guardando...' : 'Guardar'}</button></div></form></div>}
+    {isAdmin && showEditor && <div className="fixed inset-0 z-[90] flex items-center justify-center overflow-y-auto bg-black/80 p-4"><form onSubmit={save} className="my-auto max-h-[90vh] w-full max-w-2xl space-y-4 overflow-y-auto rounded-2xl border border-[#34343b] bg-[#17171b] p-5 shadow-2xl"><div className="flex items-center justify-between"><h2 className="text-lg font-bold text-white">{editing ? 'Editar' : 'Crear'} {isNews ? 'noticia' : 'recurso'}</h2><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="rounded-lg p-2 text-gray-400 hover:bg-[#292930]"><X className="h-4 w-4" /></button></div><label className="block text-xs text-gray-400">Título<input required maxLength={160} value={form.title} onChange={event => setForm(current => ({ ...current, title: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Categoría<select value={form.category} onChange={event => setForm(current => ({ ...current, category: event.target.value, ...(!isNews ? { tags: [] } : {}) }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white">{categories.map(category => <option key={category}>{category}</option>)}</select></label>{!isNews && <div className="space-y-2"><p className="text-xs text-gray-400">Etiquetas (selecciona todas las que correspondan)</p><div className="flex max-h-48 flex-wrap gap-2 overflow-y-auto rounded-xl border border-[#34343b] bg-[#111113] p-3">{availableTags.map(tag => <label key={tag} className={`flex cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs ${form.tags.includes(tag) ? 'border-red-500/60 bg-red-500/10 text-red-200' : 'border-[#34343b] text-gray-300'}`}><input type="checkbox" checked={form.tags.includes(tag)} onChange={event => setForm(current => ({ ...current, tags: event.target.checked ? [...current.tags, tag] : current.tags.filter(value => value !== tag) }))} className="accent-red-500" />{tag}</label>)}</div></div>}<label className="block text-xs text-gray-400">Descripción<textarea required rows={5} maxLength={8000} value={form.description} onChange={event => setForm(current => ({ ...current, description: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">{isNews ? 'Imágenes por URL (una por línea)' : 'Imagen por URL (opcional)'}<textarea rows={3} value={form.imagesText} onChange={event => setForm(current => ({ ...current, imagesText: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Subir imagen{isNews ? 'es' : ''} desde tu dispositivo<input type="file" accept="image/*" multiple={isNews} onChange={event => setImageFiles(Array.from(event.target.files || []))} className="mt-1 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292930] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" /><span className="mt-1 block text-[10px] text-gray-500">Hasta 5 MB por imagen. {isNews ? 'Máximo 8 imágenes combinando archivos y URLs.' : 'Un solo logotipo o imagen.'} {imageFiles.length ? `Seleccionadas: ${imageFiles.map(file => file.name).join(', ')}` : ''}</span></label><label className="block text-xs text-gray-400">{isNews ? 'Enlace externo (opcional)' : 'Enlace del recurso'}<input type="url" value={form.url} onChange={event => setForm(current => ({ ...current, url: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label> {!isNews && <><label className="block text-xs text-gray-400">País<select value={form.country} onChange={event => setForm(current => ({ ...current, country: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white"><option value="">Sin especificar</option><option value="LATAM">LATAM</option><option value="EUROPA">EUROPA</option>{countries.map(country => <option key={country} value={country}>{country}</option>)}</select></label><label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.recommended} onChange={event => setForm(current => ({ ...current, recommended: event.target.checked }))} />Marcar como recomendado</label></>}{isNews && <label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.featured} onChange={event => setForm(current => ({ ...current, featured: event.target.checked }))} />Marcar como noticia destacada</label>}{error && <p role="alert" className="text-xs text-red-300">{error}</p>}<div className="flex gap-2"><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="flex-1 rounded-xl bg-[#292930] py-3 text-sm text-gray-200">Cancelar</button><button type="submit" disabled={saving} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-bold text-white disabled:opacity-50">{saving ? 'Guardando...' : 'Guardar'}</button></div></form></div>}
   </section>;
 }
