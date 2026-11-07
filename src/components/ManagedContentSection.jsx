@@ -162,7 +162,9 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
   const resourceTaxonomy = {
     'Software': ['Edición de vídeo','Edición de sonido','Colorización','3D','Guion','Preproducción','Producción','Postproducción','VFX','Animación','Gestión de proyectos','Streaming','Plugins','Herramientas IA'],
     'Equipo': ['Cámaras','Ópticas','Iluminación','Sonido directo','Micrófonos','Trípodes y soportes','Grip','Monitores','Drones','Accesorios','Alquiler','Venta'],
-    'Agencias': ['Actores','Casting','Locaciones','Atrezo','Decoración','Escenografía','Figuración','Representación artística','Producción','Técnicos','Servicios de rodaje','Vestuario','Maquillaje'],
+    'Agencias': ['Actores','Casting','Locaciones','Atrezo','Decoración','Escenografía','Figuración','Representación artística','Producción','Técnicos','Servicios de rodaje','Vestuario','Maquillaje','Vehículos','Film Commission','Animales'],
+    'Productoras': ['Cine','Cortometrajes','Series','Documentales','Publicidad','Videoclips','Animación','Contenido digital','Coproducción','Producción ejecutiva','Servicios de producción'],
+    'Distribuidoras': ['Cine','Cortometrajes','Largometrajes','Documentales','Animación','Festivales','Salas de cine','Plataformas digitales','Distribución internacional','Ventas internacionales','Agentes de ventas'],
     'Portales de empleo': ['Ofertas de trabajo','Prácticas','Freelance','Casting','Convocatorias','Bolsas de empleo','Colaboraciones'],
     'Formación': ['Centros educativos','Universidades','Escuelas de cine','Cursos','Talleres','Tutoriales','Másteres','Becas','Formación online','Presencial'],
     'Audio y sonido': ['Música','Efectos sonoros','Bibliotecas de sonido','Licencias','Grabación','Mezcla','Masterización','Foley','Doblaje','Composición'],
