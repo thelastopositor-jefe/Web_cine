@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { collection, deleteDoc, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { getDownloadURL, ref as storageRef, uploadBytes, deleteObject } from 'firebase/storage';
-import { ExternalLink, Newspaper, Pencil, Plus, Star, Trash2, Wrench, X } from 'lucide-react';
+import { ExternalLink, Newspaper, Pencil, Plus, Trash2, Wrench, X } from 'lucide-react';
 import { db, storage } from '../firebase';
 
-const EMPTY_FORM = { title: '', description: '', category: '', imagesText: '', url: '', priceLabel: 'Gratis', recommended: false, featured: false };
+const EMPTY_FORM = { title: '', description: '', category: '', imagesText: '', url: '', country: '', recommended: false, featured: false };
 const timestampValue = value => {
   if (!value) return 0;
   if (typeof value.toMillis === 'function') return value.toMillis();
@@ -30,6 +30,11 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
   const [saving, setSaving] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
   const [error, setError] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('Todas');
+  const [countryFilter, setCountryFilter] = useState('Todos');
+  const [expanded, setExpanded] = useState({});
+  const toggleExpanded = id => setExpanded(current => ({ ...current, [id]: !current[id] }));
+
 
   useEffect(() => onSnapshot(collection(db, collectionName), snapshot => {
     const next = snapshot.docs.map(item => ({ ...item.data(), id: item.id }));
@@ -45,11 +50,10 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
     setError('No se pudo cargar el contenido. Comprueba las reglas de Firestore.');
   }), [collectionName, isNews]);
 
-  const featuredNews = useMemo(() => isNews ? items.filter(item => item.featured) : [], [items, isNews]);
 
   const openNew = () => {
     setEditing(null);
-    setForm({ ...EMPTY_FORM, category: isNews ? 'Noticias' : 'Software' });
+    setForm({ ...EMPTY_FORM, category: isNews ? 'Noticias' : 'Software de edición' });
     setImageFiles([]);
     setShowEditor(true);
     setError('');
@@ -65,7 +69,7 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
       category: item.category || '',
       imagesText: (isNews ? (item.images || []) : [item.image].filter(Boolean)).join('\n'),
       url: isNews ? (item.externalUrl || '') : (item.url || ''),
-      priceLabel: item.priceLabel || 'Gratis',
+      country: item.country || '',
       recommended: item.recommended === true,
       featured: item.featured === true
     });
@@ -131,7 +135,7 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
         externalUrl, featured: form.featured
       } : {
         ...common, image: finalImages[0] || '', imagePath: finalPaths[0] || '',
-        url: externalUrl, priceLabel: form.priceLabel, recommended: form.recommended
+        url: externalUrl, country: form.country, recommended: form.recommended
       };
       await setDoc(targetRef, payload, { merge: Boolean(editing) });
       setEditing(null);
@@ -154,13 +158,67 @@ export default function ManagedContentSection({ type, isAdmin, user }) {
 
   const categories = isNews
     ? ['Noticias','Novedades','Estrenos','Festivales','Eventos','Convocatorias y concursos','Cineastas y productoras','Rodajes','Industria audiovisual','TuRodaje']
-    : ['Software de edición','Guiones y plantillas','LUTs y color','Audio y efectos sonoros','Música y licencias','Equipamiento','Preproducción','Rodaje','Postproducción','VFX y animación','Formación','Otros'];
+    : ['Software de edición','Guiones y plantillas','LUTs y color','Audio y efectos sonoros','Música y licencias','Equipamiento','Preproducción','Rodaje','Postproducción','VFX y animación','Formación','Portales de empleo','Agencias de actores','Centros educativos','Otros'];
+
+  const countries = [
+    'Argentina','Bolivia','Brasil','Chile','Colombia','Costa Rica','Cuba','Ecuador','El Salvador','Guatemala','Haití','Honduras','México','Nicaragua','Panamá','Paraguay','Perú','República Dominicana','Uruguay','Venezuela',
+    'Alemania','Andorra','Austria','Bélgica','Bielorrusia','Bosnia y Herzegovina','Bulgaria','Chipre','Croacia','Dinamarca','Eslovaquia','Eslovenia','España','Estonia','Finlandia','Francia','Grecia','Hungría','Irlanda','Islandia','Italia','Letonia','Liechtenstein','Lituania','Luxemburgo','Malta','Moldavia','Mónaco','Montenegro','Noruega','Países Bajos','Polonia','Portugal','Reino Unido','República Checa','Rumanía','San Marino','Serbia','Suecia','Suiza','Ucrania','Vaticano',
+    'Estados Unidos'
+  ].sort((a,b) => a.localeCompare(b,'es'));
+  const availableCategories = [...new Set([...categories, ...items.map(item => item.category).filter(Boolean)])];
+  const filteredItems = items.filter(item =>
+    (categoryFilter === 'Todas' || item.category === categoryFilter) &&
+    (isNews || countryFilter === 'Todos' || (countryFilter === 'Sin especificar' ? !item.country : item.country === countryFilter))
+  );
 
   return <section className="mx-auto max-w-7xl space-y-7 px-4 py-8 sm:px-6 lg:px-12">
     <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><span className="text-xs font-semibold uppercase tracking-wider text-red-400">{isNews ? 'ACTUALIDAD DEL CINE INDEPENDIENTE' : 'HERRAMIENTAS PARA CREADORES'}</span><h1 className="mt-2 flex items-center gap-3 text-3xl font-black text-white">{isNews ? <Newspaper className="h-8 w-8 text-red-400" /> : <Wrench className="h-8 w-8 text-red-400" />}{isNews ? 'Actualidad' : 'Recursos'}</h1><p className="mt-3 max-w-2xl text-sm leading-6 text-gray-400">{isNews ? 'Festivales, estrenos, concursos, eventos y novedades del cine independiente.' : 'Un directorio de herramientas, materiales y recursos útiles para cineastas y equipos audiovisuales.'}</p></div>{isAdmin && <button type="button" onClick={openNew} className="inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-3 text-sm font-bold text-white hover:bg-red-500"><Plus className="h-4 w-4" />{isNews ? 'Publicar noticia' : 'Añadir recurso'}</button>}</div>
     {error && <p role="alert" className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-200">{error}</p>}
-    {isNews && featuredNews.length > 0 && <div className="space-y-3"><h2 className="text-lg font-bold text-amber-300">Noticias destacadas</h2><div className="grid grid-cols-1 gap-4 md:grid-cols-2">{featuredNews.map(item => <article key={item.id} className="overflow-hidden rounded-2xl border border-amber-500/30 bg-[#1a1a1e]"><div className="grid grid-cols-2 gap-1">{(item.images || []).map((image, index) => <img key={image + index} src={image} alt="" className="h-40 w-full object-cover" />)}</div><div className="space-y-2 p-4"><span className="text-[10px] font-bold uppercase tracking-wider text-amber-300">{item.category}</span><h3 className="text-lg font-bold text-white">{item.title}</h3><p className="line-clamp-3 whitespace-pre-wrap text-sm text-gray-400">{item.description}</p></div></article>)}</div></div>}
-    {loading ? <p className="rounded-xl border border-[#2e2e34] p-10 text-center text-sm text-gray-400">Cargando...</p> : items.length === 0 ? <div className="rounded-2xl border border-dashed border-[#34343b] p-10 text-center text-sm text-gray-500">Todavía no hay {isNews ? 'noticias publicadas' : 'recursos añadidos'}.</div> : <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">{items.map(item => <article key={item.id} className="overflow-hidden rounded-2xl border border-[#2e2e34] bg-[#1a1a1e] transition hover:border-red-500/30">{isNews ? <div className="grid grid-cols-2 gap-1">{(item.images || []).map((image, index) => <img key={image + index} src={image} alt="" className="h-40 w-full object-cover" />)}{!(item.images || []).length && <div className="col-span-2 flex h-40 items-center justify-center bg-[#222226]"><Newspaper className="h-10 w-10 text-gray-700" /></div>}</div> : <div className="flex h-40 items-center justify-center bg-[#222226] p-4">{item.image ? <img src={item.image} alt={item.title} className="h-full max-w-full object-contain" /> : <Wrench className="h-10 w-10 text-gray-700" />}</div>}<div className="space-y-3 p-4"><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-red-500/10 px-2 py-1 text-[10px] font-semibold text-red-300">{item.category || 'Otros'}</span>{isNews && item.createdAt && <span className="text-[10px] text-gray-500">{new Date(timestampValue(item.createdAt)).toLocaleDateString('es-ES')}</span>}{isNews && item.featured && <span className="rounded-full bg-amber-500/10 px-2 py-1 text-[10px] font-semibold text-amber-300">Destacada</span>}{!isNews && item.recommended && <span className="rounded-full bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold text-emerald-300">Recomendado</span>}{!isNews && <span className="text-[10px] text-gray-500">{item.priceLabel || 'No especificado'}</span>}</div><h2 className="text-base font-bold text-white">{item.title}</h2><p className="whitespace-pre-wrap text-sm leading-6 text-gray-400">{item.description}</p>{(isNews ? item.externalUrl : item.url) && <a href={isNews ? item.externalUrl : item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-[#34343b] px-3 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/10">{isNews ? 'Leer más' : 'Visitar recurso'}<ExternalLink className="h-3.5 w-3.5" /></a>}{isAdmin && <div className="flex gap-2 border-t border-[#2e2e34] pt-3"><button type="button" onClick={() => openEdit(item)} className="inline-flex items-center gap-1.5 rounded-lg border border-[#34343b] px-3 py-2 text-xs text-gray-300 hover:text-white"><Pencil className="h-3.5 w-3.5" />Editar</button><button type="button" onClick={() => remove(item)} className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/20 px-3 py-2 text-xs text-red-300 hover:bg-red-500/10"><Trash2 className="h-3.5 w-3.5" />Eliminar</button></div>}</div></article>)}</div>}
-    {isAdmin && showEditor && <div className="fixed inset-0 z-[90] flex items-center justify-center overflow-y-auto bg-black/80 p-4"><form onSubmit={save} className="my-auto max-h-[90vh] w-full max-w-2xl space-y-4 overflow-y-auto rounded-2xl border border-[#34343b] bg-[#17171b] p-5 shadow-2xl"><div className="flex items-center justify-between"><h2 className="text-lg font-bold text-white">{editing ? 'Editar' : 'Crear'} {isNews ? 'noticia' : 'recurso'}</h2><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="rounded-lg p-2 text-gray-400 hover:bg-[#292930]"><X className="h-4 w-4" /></button></div><label className="block text-xs text-gray-400">Título<input required maxLength={160} value={form.title} onChange={event => setForm(current => ({ ...current, title: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Categoría<select value={form.category} onChange={event => setForm(current => ({ ...current, category: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white">{categories.map(category => <option key={category}>{category}</option>)}</select></label><label className="block text-xs text-gray-400">Descripción<textarea required rows={5} maxLength={8000} value={form.description} onChange={event => setForm(current => ({ ...current, description: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">{isNews ? 'Imágenes por URL (una por línea)' : 'Imagen por URL (opcional)'}<textarea rows={3} value={form.imagesText} onChange={event => setForm(current => ({ ...current, imagesText: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Subir imagen{isNews ? 'es' : ''} desde tu dispositivo<input type="file" accept="image/*" multiple={isNews} onChange={event => setImageFiles(Array.from(event.target.files || []))} className="mt-1 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292930] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" /><span className="mt-1 block text-[10px] text-gray-500">Hasta 5 MB por imagen. {isNews ? 'Máximo 8 imágenes combinando archivos y URLs.' : 'Un solo logotipo o imagen.'} {imageFiles.length ? `Seleccionadas: ${imageFiles.map(file => file.name).join(', ')}` : ''}</span></label><label className="block text-xs text-gray-400">{isNews ? 'Enlace externo (opcional)' : 'Enlace del recurso'}<input type="url" value={form.url} onChange={event => setForm(current => ({ ...current, url: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label>{!isNews && <><label className="block text-xs text-gray-400">Precio<select value={form.priceLabel} onChange={event => setForm(current => ({ ...current, priceLabel: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white"><option>Gratis</option><option>De pago</option><option>Freemium</option></select></label><label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.recommended} onChange={event => setForm(current => ({ ...current, recommended: event.target.checked }))} />Marcar como recomendado</label></>}{isNews && <label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.featured} onChange={event => setForm(current => ({ ...current, featured: event.target.checked }))} />Marcar como noticia destacada</label>}{error && <p role="alert" className="text-xs text-red-300">{error}</p>}<div className="flex gap-2"><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="flex-1 rounded-xl bg-[#292930] py-3 text-sm text-gray-200">Cancelar</button><button type="submit" disabled={saving} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-bold text-white disabled:opacity-50">{saving ? 'Guardando...' : 'Guardar'}</button></div></form></div>}
+    <div className="flex flex-wrap gap-3 rounded-xl border border-[#34343b] bg-[#1a1a1e] p-3">
+      <label className="min-w-44 flex-1 text-xs text-gray-400">Filtrar por categoría
+        <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)} className="mt-1 w-full rounded-lg border border-[#34343b] bg-[#111113] p-2 text-sm text-white">
+          <option value="Todas">Todas las categorías</option>{availableCategories.map(category => <option key={category} value={category}>{category}</option>)}
+        </select>
+      </label>
+      {!isNews && <label className="min-w-44 flex-1 text-xs text-gray-400">Filtrar por país
+        <select value={countryFilter} onChange={e => setCountryFilter(e.target.value)} className="mt-1 w-full rounded-lg border border-[#34343b] bg-[#111113] p-2 text-sm text-white">
+          <option value="Todos">Todos los países</option><option value="Sin especificar">Sin especificar</option>{countries.map(country => <option key={country} value={country}>{country}</option>)}
+        </select>
+      </label>}
+    </div>
+    {loading ? <p className="rounded-xl border border-[#2e2e34] p-8 text-center text-sm text-gray-400">Cargando...</p>
+      : filteredItems.length === 0 ? <p className="rounded-xl border border-[#34343b] p-8 text-center text-sm text-gray-400">{items.length ? 'No hay publicaciones con esos filtros.' : `Todavía no hay ${isNews ? 'noticias publicadas' : 'recursos añadidos'}.`}</p>
+      : <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {filteredItems.map(item => {
+          const images = isNews ? (item.images || []) : [item.image].filter(Boolean);
+          const isExpanded = Boolean(expanded[item.id]);
+          const description = item.description || '';
+          const hasMore = description.length > 170;
+          return <article key={item.id} className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-[#2e2e34] bg-[#1a1a1e] transition hover:border-red-500/30">
+            <div className="flex min-w-0 gap-3 p-3">
+              <div className="h-20 w-24 shrink-0 overflow-hidden rounded-lg bg-[#222226] sm:h-24 sm:w-28">
+                {images.length ? <img src={images[0]} alt={item.title} loading="lazy" className={`h-full w-full ${isNews ? 'object-cover' : 'object-contain p-1'}`} /> : <div className="flex h-full items-center justify-center">{isNews ? <Newspaper className="h-7 w-7 text-gray-600" /> : <Wrench className="h-7 w-7 text-gray-600" />}</div>}
+              </div>
+              <div className="min-w-0 flex-1 space-y-1">
+                <div className="flex flex-wrap gap-1.5 text-[10px]"><span className="rounded-full bg-red-500/10 px-2 py-0.5 text-red-300">{item.category || 'Otros'}</span>
+                  {!isNews && item.country && <span className="text-gray-400">{item.country}</span>}
+                  {isNews && item.createdAt && <span className="text-gray-500">{new Date(timestampValue(item.createdAt)).toLocaleDateString('es-ES')}</span>}
+                  {item.recommended && !isNews && <span className="text-emerald-300">Recomendado</span>}
+                  {item.featured && isNews && <span className="text-amber-300">Destacada</span>}
+                </div>
+                <h2 className="line-clamp-2 text-sm font-bold leading-snug text-white">{item.title}</h2>
+                <p className={`whitespace-pre-wrap break-words text-xs leading-5 text-gray-400 ${isExpanded ? '' : 'line-clamp-3'}`}>{description}</p>
+                {hasMore && <button type="button" onClick={() => toggleExpanded(item.id)} aria-expanded={isExpanded} className="text-xs font-semibold text-red-300 hover:text-red-200">{isExpanded ? 'Leer menos' : 'Leer más'}</button>}
+              </div>
+            </div>
+            {isExpanded && isNews && images.length > 1 && <div className="grid grid-cols-3 gap-1 px-3 pb-3">{images.slice(1).map((image, index) => <img key={image + index} src={image} alt="" loading="lazy" className="h-20 w-full rounded object-cover" />)}</div>}
+            <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-[#2e2e34] px-3 py-2">
+              {(isNews ? item.externalUrl : item.url) && <a href={isNews ? item.externalUrl : item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-red-300 hover:text-red-200">{isNews ? 'Abrir enlace' : 'Visitar recurso'}<ExternalLink className="h-3 w-3" /></a>}
+              {isAdmin && <div className="ml-auto flex gap-2"><button type="button" onClick={() => openEdit(item)} className="inline-flex items-center gap-1 text-xs text-gray-300 hover:text-white"><Pencil className="h-3.5 w-3.5" />Editar</button><button type="button" onClick={() => remove(item)} className="inline-flex items-center gap-1 text-xs text-red-300"><Trash2 className="h-3.5 w-3.5" />Eliminar</button></div>}
+            </div>
+          </article>;
+        })}
+      </div>}
+    {isAdmin && showEditor && <div className="fixed inset-0 z-[90] flex items-center justify-center overflow-y-auto bg-black/80 p-4"><form onSubmit={save} className="my-auto max-h-[90vh] w-full max-w-2xl space-y-4 overflow-y-auto rounded-2xl border border-[#34343b] bg-[#17171b] p-5 shadow-2xl"><div className="flex items-center justify-between"><h2 className="text-lg font-bold text-white">{editing ? 'Editar' : 'Crear'} {isNews ? 'noticia' : 'recurso'}</h2><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="rounded-lg p-2 text-gray-400 hover:bg-[#292930]"><X className="h-4 w-4" /></button></div><label className="block text-xs text-gray-400">Título<input required maxLength={160} value={form.title} onChange={event => setForm(current => ({ ...current, title: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Categoría<select value={form.category} onChange={event => setForm(current => ({ ...current, category: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white">{categories.map(category => <option key={category}>{category}</option>)}</select></label><label className="block text-xs text-gray-400">Descripción<textarea required rows={5} maxLength={8000} value={form.description} onChange={event => setForm(current => ({ ...current, description: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">{isNews ? 'Imágenes por URL (una por línea)' : 'Imagen por URL (opcional)'}<textarea rows={3} value={form.imagesText} onChange={event => setForm(current => ({ ...current, imagesText: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">Subir imagen{isNews ? 'es' : ''} desde tu dispositivo<input type="file" accept="image/*" multiple={isNews} onChange={event => setImageFiles(Array.from(event.target.files || []))} className="mt-1 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292930] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" /><span className="mt-1 block text-[10px] text-gray-500">Hasta 5 MB por imagen. {isNews ? 'Máximo 8 imágenes combinando archivos y URLs.' : 'Un solo logotipo o imagen.'} {imageFiles.length ? `Seleccionadas: ${imageFiles.map(file => file.name).join(', ')}` : ''}</span></label><label className="block text-xs text-gray-400">{isNews ? 'Enlace externo (opcional)' : 'Enlace del recurso'}<input type="url" value={form.url} onChange={event => setForm(current => ({ ...current, url: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white" /></label> {!isNews && <><label className="block text-xs text-gray-400">País<select value={form.country} onChange={event => setForm(current => ({ ...current, country: event.target.value }))} className="mt-1 w-full rounded-xl border border-[#34343b] bg-[#111113] p-3 text-sm text-white"><option value="">Sin especificar</option>{countries.map(country => <option key={country} value={country}>{country}</option>)}</select></label><label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.recommended} onChange={event => setForm(current => ({ ...current, recommended: event.target.checked }))} />Marcar como recomendado</label></>}{isNews && <label className="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" checked={form.featured} onChange={event => setForm(current => ({ ...current, featured: event.target.checked }))} />Marcar como noticia destacada</label>}{error && <p role="alert" className="text-xs text-red-300">{error}</p>}<div className="flex gap-2"><button type="button" onClick={() => { setEditing(null); setForm(EMPTY_FORM); setImageFiles([]); setShowEditor(false); }} className="flex-1 rounded-xl bg-[#292930] py-3 text-sm text-gray-200">Cancelar</button><button type="submit" disabled={saving} className="flex-1 rounded-xl bg-red-600 py-3 text-sm font-bold text-white disabled:opacity-50">{saving ? 'Guardando...' : 'Guardar'}</button></div></form></div>}
   </section>;
 }

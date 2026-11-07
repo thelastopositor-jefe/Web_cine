@@ -620,7 +620,7 @@ export default function App() {
   const [carouselStored, setCarouselStored] = useState(false);
   const [showCarouselEditor, setShowCarouselEditor] = useState(false);
   const [editingCarouselId, setEditingCarouselId] = useState(null);
-  const [carouselForm, setCarouselForm] = useState({ title: '', tagline: '', category: '', thumbnail: '', thumbnailPath: '', videoUrl: '', linkText: 'Ver proyecto' });
+  const [carouselForm, setCarouselForm] = useState({ title: '', tagline: '', category: '', thumbnail: '', thumbnailPath: '', videoUrl: '', linkText: 'Ver proyecto', darkOverlay: true });
   const [carouselImageFile, setCarouselImageFile] = useState(null);
   const [savingCarousel, setSavingCarousel] = useState(false);
   const [featuredOffset, setFeaturedOffset] = useState(0);
@@ -1353,6 +1353,7 @@ export default function App() {
     try {
       await Promise.all(CAROUSEL_ITEMS.slice(0, 8).map((item, index) => setDoc(doc(db, 'carouselItems', `slide-${item.id || index + 1}`), {
         ...item,
+        darkOverlay: item.darkOverlay !== false,
         order: index,
         createdBy: user?.id || '',
         updatedBy: user?.id || '',
@@ -1368,7 +1369,7 @@ export default function App() {
   const openNewCarouselItem = () => {
     if (!isAdmin || !carouselStored || carouselItems.length >= 8) return;
     setEditingCarouselId(null);
-    setCarouselForm({ title: '', tagline: '', category: '', thumbnail: '', thumbnailPath: '', videoUrl: '', linkText: 'Ver proyecto' });
+    setCarouselForm({ title: '', tagline: '', category: '', thumbnail: '', thumbnailPath: '', videoUrl: '', linkText: 'Ver proyecto', darkOverlay: true });
     setCarouselImageFile(null);
     setShowCarouselEditor(true);
   };
@@ -1377,7 +1378,7 @@ export default function App() {
     setEditingCarouselId(item.id);
     setCarouselForm({
       title: item.title || '', tagline: item.tagline || '', category: item.category || '',
-      thumbnail: item.thumbnail || '', thumbnailPath: item.thumbnailPath || '', videoUrl: item.videoUrl || '', linkText: item.linkText || 'Ver proyecto'
+      thumbnail: item.thumbnail || '', thumbnailPath: item.thumbnailPath || '', videoUrl: item.videoUrl || '', linkText: item.linkText || 'Ver proyecto', darkOverlay: item.darkOverlay !== false
     });
     setCarouselImageFile(null);
     setShowCarouselEditor(true);
@@ -2051,7 +2052,9 @@ export default function App() {
     className="w-full h-full object-contain sm:object-cover opacity-100 scale-100"
   />
   {/* Gradiente más suave: deja ver mejor la imagen sin perder legibilidad del texto */}
-  <div className="absolute inset-0 bg-gradient-to-t from-[#101113]/55 via-transparent to-transparent sm:bg-gradient-to-r sm:from-[#101113]/75 sm:via-[#101113]/35 sm:to-transparent" />
+  {carouselItems[heroIndex]?.darkOverlay !== false && (
+    <div className="absolute inset-0 bg-gradient-to-t from-[#101113]/55 via-transparent to-transparent sm:bg-gradient-to-r sm:from-[#101113]/75 sm:via-[#101113]/35 sm:to-transparent" />
+  )}
 </div>
 
                 {/* Contenido Hero */}
@@ -2337,15 +2340,15 @@ export default function App() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[#343537] bg-[#1B1D20] p-4">
-              <label className="text-xs text-gray-400">Categoría<select value={productCategoryFilter} onChange={e => setProductCategoryFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option><option>Software</option><option>Hardware</option><option>Accesorio</option></select></label>
+              <label className="text-xs text-gray-400">Categoría<select value={productCategoryFilter} onChange={e => setProductCategoryFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option><option>Software</option><option>Hardware</option><option>Accesorio</option><option>Equipo</option></select></label>
               <label className="text-xs text-gray-400">Área audiovisual<select value={productTechniqueFilter} onChange={e => setProductTechniqueFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
               <label className="text-xs text-gray-400">Uso profesional<select value={productUseFilter} onChange={e => setProductUseFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Grabación y cámara','Fotografía cinematográfica','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Postproducción','Efectos visuales','Producción','Preproducción','Guion y storyboard','Dirección','Streaming','Animación','Almacenamiento y copias','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
               <label className="text-xs text-gray-400">Tipo de equipo / subtipo<select value={productSubtypeFilter} onChange={e => setProductSubtypeFilter(e.target.value)} className="mt-1 w-full bg-[#101113] border border-[#343537] rounded-lg p-2 text-white"><option>Todos</option>{['Cámara','Objetivo','Trípode','Estabilizador / gimbal','Slider / dolly','Drone','Monitor de cámara','Grabador externo','Micrófono','Grabadora de audio','Auriculares','Kit de iluminación','Panel LED','Foco','Modificador de luz','Reflector','Soporte / grip','Teleprompter','Capturadora','Ordenador','Monitor de edición','Almacenamiento','Accesorio','Otro'].map(x => <option key={x}>{x}</option>)}</select></label>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {products.filter(prod => (productCategoryFilter === 'Todos' || prod.category === productCategoryFilter) && (productTechniqueFilter === 'Todos' || (prod.techniques || []).includes(productTechniqueFilter)) && (productUseFilter === 'Todos' || (prod.uses || []).includes(productUseFilter)) && (productSubtypeFilter === 'Todos' || prod.subtype === productSubtypeFilter)).map((prod) => (
                 <article key={prod.id} className="bg-[#1B1D20] border border-[#343537] rounded-2xl overflow-hidden flex flex-col hover:border-gold-500/40 transition-colors">
-                  <div className="relative aspect-[4/3] bg-[#111115] overflow-hidden">
+                  <div className="relative h-32 sm:h-36 bg-[#111115] overflow-hidden">
                     <img
                       src={prod.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80'}
                       alt={prod.title}
@@ -2353,31 +2356,25 @@ export default function App() {
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                  <div className="p-3.5 flex flex-col gap-2.5 flex-1">
+                  <div className="p-3 flex flex-col gap-2 flex-1">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded-full border border-gold-500/20">{prod.category}</span>
                       <span className="text-[11px] font-semibold text-gray-200 text-right">{prod.price}</span>
                     </div>
                     <h3 className="text-sm sm:text-base font-bold text-white leading-snug line-clamp-2" title={prod.title}>{prod.title}</h3>
-                    <details className="group/details text-xs">
-                      <summary className="cursor-pointer select-none text-gold-400 hover:text-gold-300 font-semibold py-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 rounded">
-                        <span className="group-open/details:hidden">Ver descripción +</span>
-                        <span className="hidden group-open/details:inline">Ocultar descripción −</span>
+                    {prod.description && <details className="group/details text-xs">
+                      <summary className="cursor-pointer select-none font-semibold text-gold-400 hover:text-gold-300">
+                        <span className="group-open/details:hidden">Leer más +</span>
+                        <span className="hidden group-open/details:inline">Leer menos −</span>
                       </summary>
-                      <div className="pt-2 space-y-2 text-gray-400 leading-relaxed">
-                        {prod.isAffiliate && (
-                          <p className="text-[11px] font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/20 rounded-lg px-2.5 py-2">
-                            Enlace de afiliado · TuRodaje podría recibir una comisión si compras a través de este enlace.
-                          </p>
-                        )}
-                        {prod.description && <p className="whitespace-pre-line">{prod.description}</p>}
-                        <div className="flex flex-wrap gap-1">
-                          {[...(prod.techniques || []), ...(prod.uses || []), ...(prod.subtype ? [prod.subtype] : [])].map(tag => (
-                            <span key={tag} className="text-[10px] rounded-full bg-[#292B2E] px-2 py-1 text-gray-300">{tag}</span>
-                          ))}
-                        </div>
+                      <div className="mt-2 space-y-2 text-gray-400 leading-relaxed">
+                        {prod.isAffiliate && <p className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-2 text-[11px] text-amber-300">Enlace de afiliado · TuRodaje podría recibir una comisión.</p>}
+                        <p className="whitespace-pre-line">{prod.description}</p>
+                        <div className="flex flex-wrap gap-1">{[...(prod.techniques || []), ...(prod.uses || []), ...(prod.subtype ? [prod.subtype] : [])].map(tag => <span key={tag} className="rounded-full bg-[#292B2E] px-2 py-1 text-[10px] text-gray-300">{tag}</span>)}</div>
                       </div>
-                    </details>
+                    </details>}
+                    {prod.description && <p className="line-clamp-2 text-xs leading-5 text-gray-400">{prod.description}</p>}
+                    {prod.isAffiliate && <span className="text-[10px] text-amber-300">Enlace de afiliado</span>}
                     <div className="mt-auto pt-1 space-y-2">
                       <a
                         href={prod.link}
@@ -3022,6 +3019,10 @@ export default function App() {
             <label className="block text-xs text-gray-400">Descripción breve<textarea rows={3} value={carouselForm.tagline} onChange={event => setCarouselForm(current => ({ ...current, tagline: event.target.value }))} maxLength={500} className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
             <label className="block text-xs text-gray-400">Categoría<input value={carouselForm.category} onChange={event => setCarouselForm(current => ({ ...current, category: event.target.value }))} maxLength={60} className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
             <label className="block text-xs text-gray-400">URL de imagen (opcional si subes un archivo)<input value={carouselForm.thumbnail} onChange={event => setCarouselForm(current => ({ ...current, thumbnail: event.target.value, thumbnailPath: event.target.value === current.thumbnail ? current.thumbnailPath : '' }))} placeholder="/images/carousel/imagen.jpg o https://..." className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label><label className="block text-xs text-gray-400">O subir imagen desde tu dispositivo<input type="file" accept="image/*" onChange={event => setCarouselImageFile(event.target.files?.[0] || null)} className="mt-1 block w-full text-xs text-gray-400 file:mr-3 file:rounded-lg file:border-0 file:bg-[#292B2E] file:px-3 file:py-2 file:text-xs file:font-semibold file:text-gray-200" /><span className="mt-1 block text-[10px] text-gray-500">Imagen de hasta 5 MB. {carouselImageFile ? `Seleccionada: ${carouselImageFile.name}` : ''}</span></label>
+            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#3A3B3E] bg-[#1B1D20] p-3">
+              <input type="checkbox" checked={carouselForm.darkOverlay !== false} onChange={event => setCarouselForm(current => ({ ...current, darkOverlay: event.target.checked }))} className="mt-0.5 h-4 w-4 accent-[#C6A76B]" />
+              <span className="text-sm text-gray-200"><span className="block font-semibold text-white">Aplicar degradado oscuro a esta imagen</span><span className="mt-1 block text-xs text-gray-400">Desmárcalo para mostrar el banner sin el oscurecimiento negro. Cada imagen conserva su propia elección.</span></span>
+            </label>
             <label className="block text-xs text-gray-400">Enlace del botón<input required type="url" value={carouselForm.videoUrl} onChange={event => setCarouselForm(current => ({ ...current, videoUrl: event.target.value }))} placeholder="https://..." className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
             <label className="block text-xs text-gray-400">Texto del botón<input value={carouselForm.linkText} onChange={event => setCarouselForm(current => ({ ...current, linkText: event.target.value }))} maxLength={40} className="mt-1 w-full rounded-xl border border-[#3A3B3E] bg-[#101113] p-3 text-sm text-white" /></label>
             <div className="flex gap-2"><button type="button" onClick={() => { setShowCarouselEditor(false); setCarouselImageFile(null); }} className="flex-1 rounded-xl bg-[#292B2E] py-3 text-sm text-gray-200">Cancelar</button><button type="submit" disabled={savingCarousel} className="flex-1 rounded-xl bg-gold-600 py-3 text-sm font-bold text-white disabled:opacity-50">{savingCarousel ? 'Guardando...' : 'Guardar'}</button></div>
@@ -3411,7 +3412,7 @@ export default function App() {
             <div className="flex items-center justify-between"><h2 className="text-xl font-bold text-white">{editingProductId ? 'Editar producto' : 'Agregar producto'}</h2><button onClick={() => setShowProductModal(false)} className="text-gray-400 hover:text-white" aria-label="Cerrar"><X className="w-5 h-5" /></button></div>
             <form onSubmit={handleSaveProduct} className="space-y-3">
               <div><label className="block text-xs text-gray-400 mb-1">Nombre del producto *</label><input required value={productForm.title} onChange={e => setProductForm({...productForm,title:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-xs text-gray-400 mb-1">Categoría *</label><select value={productForm.category} onChange={e => setProductForm({...productForm,category:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white"><option>Software</option><option>Hardware</option><option>Accesorio</option></select></div><div><label className="block text-xs text-gray-400 mb-1">Precio</label><input value={productForm.price} onChange={e => setProductForm({...productForm,price:e.target.value})} placeholder="Ej. Gratis o 29 €" className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label className="block text-xs text-gray-400 mb-1">Categoría *</label><select value={productForm.category} onChange={e => setProductForm({...productForm,category:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white"><option>Software</option><option>Hardware</option><option>Accesorio</option><option>Equipo</option></select></div><div><label className="block text-xs text-gray-400 mb-1">Precio</label><input value={productForm.price} onChange={e => setProductForm({...productForm,price:e.target.value})} placeholder="Ej. Gratis o 29 €" className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white" /></div></div>
               <div><label className="block text-xs text-gray-400 mb-1">Tipo de equipo (opcional)</label><select value={productForm.subtype} onChange={e => setProductForm({...productForm,subtype:e.target.value})} className="w-full bg-[#101113] border border-[#343537] rounded-xl px-3 py-2.5 text-sm text-white"><option value="">Sin subtipo</option>{['Cámara','Objetivo','Trípode','Estabilizador / gimbal','Slider / dolly','Drone','Monitor de cámara','Grabador externo','Micrófono','Grabadora de audio','Auriculares','Kit de iluminación','Panel LED','Foco','Modificador de luz','Reflector','Soporte / grip','Teleprompter','Capturadora','Ordenador','Monitor de edición','Almacenamiento','Accesorio','Otro'].map(x => <option key={x}>{x}</option>)}</select></div>
               <div><label className="block text-xs text-gray-400 mb-1">Áreas audiovisuales (puedes elegir varias)</label><div className="flex flex-wrap gap-2">{['Cine de ficción','Documental','Videoclip','Publicidad','Animación','Experimental','Producción virtual','Otro'].map(x => <label key={x} className="text-xs text-gray-300 flex gap-1 items-center"><input type="checkbox" checked={productForm.techniques.includes(x)} onChange={() => toggleArrayValue(productForm,setProductForm,'techniques',x)}/>{x}</label>)}</div></div>
               <div><label className="block text-xs text-gray-400 mb-1">Usos / especialidades</label><div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-32 overflow-y-auto">{['Grabación y cámara','Fotografía cinematográfica','Iluminación','Sonido directo','Diseño sonoro','Montaje y edición','Colorización','Postproducción','Efectos visuales','Producción','Preproducción','Guion y storyboard','Dirección','Streaming','Animación','Almacenamiento y copias','Otro'].map(x => <label key={x} className="text-xs text-gray-300 flex gap-1 items-center"><input type="checkbox" checked={productForm.uses.includes(x)} onChange={() => toggleArrayValue(productForm,setProductForm,'uses',x)}/>{x}</label>)}</div></div>
