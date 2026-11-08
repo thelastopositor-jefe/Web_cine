@@ -754,3 +754,77 @@ export const deleteUserAccount = onCall({ timeoutSeconds: 540, memory: '1GiB' },
   await auth.deleteUser(targetUid);
   return { deleted: true, projectsDeleted: projectRefs.size, jobsDeleted: ownedJobs.size, discussionsDeleted: ownedTopics.size, auditId: auditRef.id };
 });
+
+
+/** Resumen diario de moderación de TuRodaje. Solo envía correo si hay novedades o pendientes. */
+export const sendDailyModerationDigest = onSchedule({
+  schedule: '0 9 * * *',
+  timeZone: 'Europe/Madrid',
+  region: 'europe-west1',
+  maxInstances: 1,
+  secrets: ['RESEND_API_KEY']
+}, async () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error('Falta configurar RESEND_API_KEY');
+
+  const stateRef = db.collection('systemSettings').doc('dailyModerationDigest');
+  const state = await stateRef.get();
+  const now = Timestamp.now();
+  const lastRun = state.data()?.lastSentAt || Timestamp.fromMillis(Date.now() - 24 * 60 * 60 * 1000);
+
+  const [projects, reports, jobReports, discussions, jobs] = await Promise.all([
+    db.collection('projects').where('status', '==', 'pending').get(),
+    db.collection('reports').where('status', '==', 'pending').get(),
+    db.collection('jobReports').where('status', '==', 'pending').get(),
+    db.collection('discussions').where('createdAt', '>', lastRun).get(),
+    db.collection('jobListings').where('createdAt', '>', lastRun).get()
+  ]);
+
+  const pending = [
+    ['Proyectos por aprobar', projects.size],
+    ['Denuncias pendientes', reports.size],
+    ['Denuncias de ofertas laborales', jobReports.size],
+    ['Nuevos temas de la comunidad', discussions.size],
+    ['Nuevas ofertas de trabajo', jobs.size]
+  ];
+  const active = pending.filter(([, count]) => count > 0);
+  if (!active.length) {
+    console.log('TuRodaje: sin actividad pendiente; no se envía correo.');
+    return;
+  }
+
+  const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[character]);
+  const itemList = docs => docs.slice(0, 10).map(doc =>
+    `<li>${escapeHtml(doc.data().title || doc.data().reason || doc.id)}</li>`
+  ).join('');
+  const sections = [
+    ['Proyectos pendientes', projects.docs],
+    ['Denuncias pendientes', reports.docs],
+    ['Denuncias laborales pendientes', jobReports.docs],
+    ['Temas nuevos', discussions.docs],
+    ['Ofertas laborales nuevas', jobs.docs]
+  ].filter(([, docs]) => docs.length);
+  const html = `<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#202124">
+    <h1>TuRodaje · Informe diario</h1>
+    <p>Actividad que requiere revisión o seguimiento:</p>
+    <ul>${active.map(([label, count]) => `<li><strong>${escapeHtml(label)}:</strong> ${count}</li>`).join('')}</ul>
+    ${sections.map(([label, docs]) => `<h2>${escapeHtml(label)}</h2><ul>${itemList(docs)}</ul>${docs.length > 10 ? `<p>Y ${docs.length - 10} más.</p>` : ''}`).join('')}
+    <p>Entra al panel de administración de TuRodaje para revisarlo.</p>
+  </div>`;
+
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: 'TuRodaje <notificaciones@turodaje.com>',
+      to: ['thelastopositor@gmail.com'],
+      subject: 'TuRodaje · Informe diario de moderación',
+      html
+    })
+  });
+  if (!response.ok) throw new Error(`Resend rechazó el correo (${response.status}): ${(await response.text()).slice(0, 500)}`);
+  await stateRef.set({ lastSentAt: now, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+  console.log('TuRodaje: informe diario enviado correctamente.');
+});
